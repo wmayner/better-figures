@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 95340,
+ "stop_reason": "end_turn",
+ "session_id": "346486f0-b65c-4610-8e42-68663146f8ba",
+ "total_cost_usd": 0.5160492,
+ "usage": {
+  "input_tokens": 22,
+  "cache_creation_input_tokens": 32950,
+  "cache_read_input_tokens": 347106,
+  "output_tokens": 9147,
+  "output_tokens_details": {
+   "thinking_tokens": 3813
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 32950,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 684,
+    "cache_read_input_tokens": 43833,
+    "cache_creation_input_tokens": 939,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 939
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 22,
+   "outputTokens": 9147,
+   "cacheReadInputTokens": 347106,
+   "cacheCreationInputTokens": 32950,
+   "webSearchRequests": 0,
+   "costUSD": 0.5160492,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 3813,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 13,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've written `make_figure.py`, which reads `data.csv` and saves `figure.png`, and the caption is in `caption.md`. The script runs and I looked over the image.\n\n**The figure:** one line per concept showing probe accuracy at each layer, with a shaded confidence band and a gray line at chance. A dot marks the layer where each concept becomes decodable, and a label next to each curve gives the concept name and that layer. There's also a legend, so the concepts aren't told apart by color alone.\n\n**Where each concept becomes decodable** (the first layer from which the lower confidence bound stays above chance for every later layer):\n\n| Concept | Decodable from |\n|---|---|\n| part of speech | layer 1 |\n| sentiment | layer 5 |\n| named entity type | layer 10 |\n| statement truthfulness | layer 17 |\n\nI required accuracy to *stay* above chance because the noisy early layers sometimes cross it briefly. Under a plain \"first layer above chance\" rule, sentiment would start at layer 1 and truthfulness at layer 14, which would be misleading.\n\n**Assumptions to check** (the CSV doesn't state them):\n- **Chance is 50%.** Every concept sits at about 0.5 in the early layers, so I treated them all as balanced two-way probes. If part of speech actually has more than two classes, its chance level is lower and its decodable-from layer would change. The value is the `CHANCE` constant in the script.\n- **The intervals are 95%.** The caption says so, but the file just has `ci_low` and `ci_high`.\n- **No correction for testing 24 layers.** The decodable-from layers use the given intervals as they are; requiring accuracy to stay above chance makes a fluke less likely.\n\nThe caption also notes that truthfulness is still rising at the last layer (0.86, then 0.89, then 0.91), so unlike the other three it may not have levelled off.",
+ "ttft_ms": 2098,
+ "type": "result",
+ "duration_ms": 99859,
+ "uuid": "f86d8d23-083d-45bb-979b-0d86bf7f6b6d",
+ "ttft_stream_ms": 1552,
+ "time_to_request_ms": 157,
+ "first_content_frame_ms": 1552,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

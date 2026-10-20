@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 1746,
+ "stop_reason": "end_turn",
+ "session_id": "b8eb1fde-c2e8-479b-9302-847e5d2e56f6",
+ "total_cost_usd": 0.010257599999999999,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1032,
+  "cache_read_input_tokens": 1568,
+  "output_tokens": 84,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1032,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 84,
+    "cache_read_input_tokens": 1568,
+    "cache_creation_input_tokens": 1032,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1032
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 2,
+   "outputTokens": 84,
+   "cacheReadInputTokens": 1568,
+   "cacheCreationInputTokens": 1032,
+   "webSearchRequests": 0,
+   "costUSD": 0.010257599999999999,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 0,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 1,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "VERDICT: yes\nREASON: It states that integrated gradients best matches ablation on all three models (~0.8\u20130.9), clearly ahead of attribution patching (~0.6); the added detail on the other methods doesn't contradict the intended finding.",
+ "ttft_ms": 1855,
+ "type": "result",
+ "duration_ms": 1886,
+ "uuid": "cd05cb64-d64e-4628-8554-c2e3fbf57c37",
+ "ttft_stream_ms": 1134,
+ "time_to_request_ms": 142,
+ "first_content_frame_ms": 1135,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 3880,
+ "stop_reason": "end_turn",
+ "session_id": "37247568-5ab6-485f-979e-e43c7d150f20",
+ "total_cost_usd": 0.022417,
+ "usage": {
+  "input_tokens": 4,
+  "cache_creation_input_tokens": 2053,
+  "cache_read_input_tokens": 6385,
+  "output_tokens": 235,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2053,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 108,
+    "cache_read_input_tokens": 3396,
+    "cache_creation_input_tokens": 1646,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1646
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 4,
+   "outputTokens": 235,
+   "cacheReadInputTokens": 6385,
+   "cacheCreationInputTokens": 2053,
+   "webSearchRequests": 0,
+   "costUSD": 0.022417,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 0,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 2,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "Linear probes show that the model's representations become decodable in a set order across layers, with part of speech first (rising from about layer 1), then sentiment (about layer 5), named entity type (about layer 10), and statement truthfulness last (about layer 17), and all four end up at roughly 90\u201395% accuracy, up from 50% chance.",
+ "ttft_ms": 1830,
+ "type": "result",
+ "duration_ms": 4103,
+ "uuid": "c8a3ab76-29f3-48c1-bcd7-398c094dbf8a",
+ "ttft_stream_ms": 1101,
+ "time_to_request_ms": 145,
+ "first_content_frame_ms": 1102,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

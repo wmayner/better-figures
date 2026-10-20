@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 6931,
+ "stop_reason": "end_turn",
+ "session_id": "bb2ac1a8-a669-4f73-9046-389d8d89727e",
+ "total_cost_usd": 0.030021600000000002,
+ "usage": {
+  "input_tokens": 4,
+  "cache_creation_input_tokens": 3024,
+  "cache_read_input_tokens": 5068,
+  "output_tokens": 240,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 3024,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 111,
+    "cache_read_input_tokens": 3398,
+    "cache_creation_input_tokens": 1296,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1296
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 4,
+   "outputTokens": 240,
+   "cacheReadInputTokens": 5068,
+   "cacheCreationInputTokens": 3024,
+   "webSearchRequests": 0,
+   "costUSD": 0.030021600000000002,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 0,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 2,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "Across GPT-2 small, Pythia-410M, and Gemma-2-2B, integrated gradients matches ablation effects best of all the attribution methods tested (rank correlation of about 0.8\u20130.9), followed by attribution patching, gradient times input, saliency, and activation magnitude, and this ordering holds for all three models.",
+ "ttft_ms": 4383,
+ "type": "result",
+ "duration_ms": 7141,
+ "uuid": "b23f441e-089d-475c-9f19-421a11c99e74",
+ "ttft_stream_ms": 3482,
+ "time_to_request_ms": 159,
+ "first_content_frame_ms": 3482,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

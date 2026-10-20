@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 3568,
+ "stop_reason": "end_turn",
+ "session_id": "a6a73899-7f63-441d-a2dc-f244b2352878",
+ "total_cost_usd": 0.0330094,
+ "usage": {
+  "input_tokens": 4,
+  "cache_creation_input_tokens": 3470,
+  "cache_read_input_tokens": 5067,
+  "output_tokens": 211,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 3470,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 83,
+    "cache_read_input_tokens": 3397,
+    "cache_creation_input_tokens": 1743,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1743
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 4,
+   "outputTokens": 211,
+   "cacheReadInputTokens": 5067,
+   "cacheCreationInputTokens": 3470,
+   "webSearchRequests": 0,
+   "costUSD": 0.0330094,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 0,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 2,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "Removing almost any single attention head barely changes the loss, but three late-layer heads, 9.6 (+1.25), 9.9 (+0.91) and 10.0 (+0.72), each cause a large loss increase, so they carry most of the effect.",
+ "ttft_ms": 1860,
+ "type": "result",
+ "duration_ms": 3769,
+ "uuid": "59362433-3448-4c2c-ad44-43bdd82a41e9",
+ "ttft_stream_ms": 1132,
+ "time_to_request_ms": 158,
+ "first_content_frame_ms": 1133,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

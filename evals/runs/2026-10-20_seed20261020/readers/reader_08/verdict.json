@@ -1,0 +1,9 @@
+{
+ "reader": "reader_08",
+ "run": "task3_attribution__plugin__r1",
+ "task": "task3_attribution",
+ "reader_sentence": "Integrated gradients tracks ablation effects much more closely than the other attribution methods (Spearman \u03c1 \u2248 0.8\u20130.9 across GPT-2 small, Pythia-410M, and Gemma-2-2B), followed by attribution patching (~0.6), gradient \u00d7 input (~0.45), saliency (~0.3), and activation magnitude (~0.2), and this ranking holds across all three models.",
+ "intended": "Integrated gradients matches ablation best on all three models (rank correlation about 0.8 to 0.9), clearly ahead of the next best method, attribution patching (about 0.6).",
+ "verdict": "yes",
+ "reason": "It states that integrated gradients best matches ablation on all three models (~0.8\u20130.9), clearly ahead of attribution patching (~0.6); the added detail on the other methods doesn't contradict the intended finding."
+}

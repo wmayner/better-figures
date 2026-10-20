@@ -73,7 +73,29 @@ The plot templates the skill chooses from (bar, line, scaling law, calibration, 
 ## Does it work?
 
 <!-- EVIDENCE -->
-*Results of a test of the skill will go here.*
+We ran a small test on 20 October 2026. Claude Code (Opus 5.5, effort high, headless) got the same made-up dataset and the same one-line request in two setups. Plain Claude Code had no CLAUDE.md, user skills, plugins, hooks or MCP servers; it still had Claude Code's built-in skills, and it loaded the built-in `dataviz` skill in every run. The other setup was identical except for `--plugin-dir` pointing at this repository, and it loaded the figures skill in every run. Each run started in an empty directory holding only `data.csv`.
+
+There were three tasks, each with a planted answer: probe accuracy by layer for four concepts that become decodable at different depths ("Make a figure showing where each concept becomes decodable"), the loss increase from ablating each of 144 heads where three heads matter, and five attribution methods compared with ablation on three models where one method is clearly best. Each setup ran each task twice, for 12 runs.
+
+We measured two things. The first is the number of words in the image other than tick labels (axis labels, titles, legends, annotations), counted from the matplotlib text objects. The second is a fresh-reader check: a new session saw only the PNG and wrote one sentence on what it shows, and a separate session compared that sentence with the planted answer and said whether they match (yes, partly or no) without knowing which setup drew the figure.
+
+![Dot plot of words in each figure, by task: plain Claude Code's runs have 25 to 43 words, runs with better-figures have 7 to 12.](evals/results/figure_words.png)
+
+*Each dot is one run of Claude Code (Opus 5.5) given the same data and request; grey runs were plain Claude Code, orange runs had better-figures installed. Words exclude tick labels; 2 runs per setup per task. Fresh-reader agreement is in the table below.*
+
+| Task | Mean words: plain / with plugin | Fresh reader matched: plain / with plugin | Cost per run (USD): plain / with plugin |
+|---|---|---|---|
+| Probe accuracy by layer | 41 / 12 | 2 of 2 / 2 of 2 | 0.55 / 0.71 |
+| Effect of ablating heads | 41 / 8.5 | 2 of 2 / 2 of 2 | 0.50 / 0.38 |
+| Attribution against ablation | 27.5 / 10 | 2 of 2 / 1 of 2, 1 partly | 0.33 / 0.28 |
+
+With the plugin, figures carried 2.8 to 4.8 times fewer words depending on the task (geometric mean 3.6), and every plugin run used fewer words than every plain run. With only three tasks the statistical evidence is moderate: a Bayes factor of 4.9 for the per-task log ratio of mean words differing from zero (one-sample JZS test, Cauchy prior with scale 0.707), and 6.0 with scale 1.0. The fresh reader got the planted answer from almost every figure in both setups, so on these tasks plain Claude Code's figures were not harder to read; the plugin's figures said the same thing with less text. The one partial match was a plugin figure whose reader gave the ranking of methods without saying how far ahead the best one was. Cost per run was the same on average ($0.46 in both setups; this is the API-equivalent cost Claude Code reports). These are 12 runs on made-up data with one model, so treat them as a first check, not a benchmark.
+
+The first run of each setup on the attribution task:
+
+![Two figures side by side. Left, plain Claude Code: five methods with a coloured dot and interval per model, a legend, a shaded best row and a column of mean values. Right, with better-figures: the same intervals in grey with integrated gradients in orange and the three model names written next to its dots.](evals/results/before_after_task3.png)
+
+To rerun the test, from `evals/`: `python make_data.py --seed 20261020 --out runs/<new name>`, then `python run.py isolation`, `run.py draw`, `measure.py`, `run.py read` and `analyze.py` on that folder (the usage block at the top of `evals/run.py` lists them in order; `evals/requirements.txt` has the Python packages). Each run's transcript, cost and token counts are in `evals/runs/2026-10-20_seed20261020/`.
 <!-- /EVIDENCE -->
 
 ## License

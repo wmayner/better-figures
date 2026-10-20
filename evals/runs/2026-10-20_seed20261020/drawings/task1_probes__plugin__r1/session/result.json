@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 185845,
+ "stop_reason": "end_turn",
+ "session_id": "9110b1cb-f5f7-4123-a958-3449861a3986",
+ "total_cost_usd": 0.9147360000000001,
+ "usage": {
+  "input_tokens": 52,
+  "cache_creation_input_tokens": 46392,
+  "cache_read_input_tokens": 1005460,
+  "output_tokens": 17115,
+  "output_tokens_details": {
+   "thinking_tokens": 9450
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 46392,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 737,
+    "cache_read_input_tokens": 57970,
+    "cache_creation_input_tokens": 244,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 244
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 52,
+   "outputTokens": 17115,
+   "cacheReadInputTokens": 1005460,
+   "cacheCreationInputTokens": 46392,
+   "webSearchRequests": 0,
+   "costUSD": 0.9147360000000001,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 9450,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 29,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I wrote `make_figure.py` and `caption.md`, and the script runs cleanly to produce `figure.png`.\n\n**The figure:** one panel with probe accuracy across layers for the four concepts. Each line has a 95% confidence band, and a dotted line marks 50% chance. Each concept is labelled in its own colour next to its curve. A dot marks the layer where it becomes decodable, and the x-axis ticks are set to exactly those layers, coloured to match. The four rises are clearly staggered:\n\n| Concept | Decodable from layer |\n|---|---|\n| part of speech | 1 |\n| sentiment | 5 |\n| named entity type | 10 |\n| statement truthfulness | 17 |\n\nEvery concept peaks at 91\u201397% accuracy.\n\n**The caption** leads with that finding in bold. It then gives n = 2,000 test examples per point, says the bands are 95% CIs, and states how the onset layer is defined.\n\nThings to check:\n\n- **The onset definition is my choice.** It's the first layer whose CI lower bound is above 50% and stays there at every later layer. A threshold such as \"first layer at or above 75%\" shifts each onset by 3\u20134 layers (to 4, 9, 14 and 20), but the order stays the same. The rule is the `onset()` function in the script if you'd rather use a different one.\n- **50% chance is an assumption.** The CSV has no label counts. I inferred a balanced two-class task because every concept starts at about 50% at layer 0. If any concept has more classes or unbalanced labels, both the chance line and the onset layers are wrong.\n- **The caption doesn't name the model or the probe type**, since the data doesn't say. You may want to add them.\n- **The concept-name positions are fixed by hand** in `NAME_XY`. If the data changes, they may need moving.\n- **The script imports my plotting style file (`figkit.py`) from an absolute path** on your filesystem. To run it on another machine, copy `figkit.py` and its `fonts/` folder next to the script.",
+ "ttft_ms": 1971,
+ "type": "result",
+ "duration_ms": 202851,
+ "uuid": "504b7ac8-12a8-41d6-b428-c89e88c4e689",
+ "ttft_stream_ms": 1426,
+ "time_to_request_ms": 183,
+ "first_content_frame_ms": 1427,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

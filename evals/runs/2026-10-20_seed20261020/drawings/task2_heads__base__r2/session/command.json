@@ -1,0 +1,29 @@
+{
+ "arm": "base",
+ "cwd": "<work_root>/022c3364",
+ "exit": 0,
+ "seconds": 110.4,
+ "argv": [
+  "claude",
+  "-p",
+  "<prompt>",
+  "--model",
+  "claude-opus-5-5",
+  "--effort",
+  "high",
+  "--setting-sources",
+  "local",
+  "--strict-mcp-config",
+  "--permission-mode",
+  "bypassPermissions",
+  "--output-format",
+  "stream-json",
+  "--verbose",
+  "--no-session-persistence",
+  "--max-budget-usd",
+  "10.0",
+  "--settings",
+  "{\"autoMemoryEnabled\": false}"
+ ],
+ "prompt": "data.csv holds the increase in loss from ablating each attention head of a language model, one row per head. Make a figure showing which heads matter. Write a Python script make_figure.py that reads data.csv and saves figure.png, and write a caption for the figure in caption.md."
+}

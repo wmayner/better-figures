@@ -1,0 +1,9 @@
+{
+ "reader": "reader_04",
+ "run": "task2_heads__plugin__r2",
+ "task": "task2_heads",
+ "reader_sentence": "Removing almost any single attention head barely changes the loss, but three late-layer heads, 9.6 (+1.25), 9.9 (+0.91) and 10.0 (+0.72), each cause a large loss increase, so they carry most of the effect.",
+ "intended": "Three heads matter: layer 9 head 6, layer 9 head 9 and layer 10 head 0; ablating any of the other 141 heads barely changes the loss.",
+ "verdict": "yes",
+ "reason": "The summary names the same three heads (9.6, 9.9, 10.0) as the ones that matter and says ablating almost any other head barely changes the loss."
+}

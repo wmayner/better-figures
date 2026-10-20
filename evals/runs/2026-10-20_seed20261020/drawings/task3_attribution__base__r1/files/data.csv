@@ -1,0 +1,16 @@
+method,model,spearman_r,ci_low,ci_high,n_heads,bayes_factor_10
+integrated gradients,GPT-2 small,0.803,0.736,0.854,144,3.44e+30
+integrated gradients,Pythia-410M,0.822,0.787,0.852,384,9.14e+91
+integrated gradients,Gemma-2-2B,0.891,0.859,0.916,208,8.76e+68
+attribution patching,GPT-2 small,0.644,0.536,0.73,144,1570000000000000.0
+attribution patching,Pythia-410M,0.609,0.542,0.669,384,1.06e+37
+attribution patching,Gemma-2-2B,0.6,0.505,0.68,208,3.87e+18
+gradient times input,GPT-2 small,0.481,0.345,0.598,144,7860000.0
+gradient times input,Pythia-410M,0.461,0.378,0.536,384,2.38e+18
+gradient times input,Gemma-2-2B,0.419,0.3,0.525,208,21200000.0
+saliency,GPT-2 small,0.27,0.111,0.415,144,13.8
+saliency,Pythia-410M,0.262,0.167,0.353,384,32800.0
+saliency,Gemma-2-2B,0.329,0.202,0.445,208,7060.0
+activation magnitude,GPT-2 small,0.188,0.025,0.341,144,0.83
+activation magnitude,Pythia-410M,0.152,0.053,0.249,384,3.56
+activation magnitude,Gemma-2-2B,0.187,0.052,0.315,208,2.09

@@ -1,0 +1,9 @@
+{
+ "reader": "reader_07",
+ "run": "task1_probes__plugin__r2",
+ "task": "task1_probes",
+ "reader_sentence": "Linear probe accuracy shows that properties become decodable in sequence through the model's layers: part of speech appears first (~layer 4), then sentiment (~layer 9), named entity type (~layer 14), and statement truthfulness last (~layer 20), with each rising from chance (0.5) to above 0.9.",
+ "intended": "The four concepts become decodable at clearly different depths: part of speech first (around layer 3), then sentiment (around layer 8), named entity type (around layer 13 to 14), and statement truthfulness last (around layer 19).",
+ "verdict": "yes",
+ "reason": "The reader states the same order and depths (each within about one layer), and their extra detail about rising from chance to above 0.9 doesn't contradict the intended finding."
+}

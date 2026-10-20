@@ -1,0 +1,31 @@
+{
+ "arm": "base",
+ "cwd": "<work_root>/b2c09137",
+ "exit": 0,
+ "seconds": 5.7,
+ "argv": [
+  "claude",
+  "-p",
+  "<prompt>",
+  "--model",
+  "claude-opus-5-5",
+  "--effort",
+  "high",
+  "--setting-sources",
+  "local",
+  "--strict-mcp-config",
+  "--permission-mode",
+  "bypassPermissions",
+  "--output-format",
+  "stream-json",
+  "--verbose",
+  "--no-session-persistence",
+  "--max-budget-usd",
+  "2",
+  "--settings",
+  "{\"autoMemoryEnabled\": false}",
+  "--tools",
+  ""
+ ],
+ "prompt": "A reader looked at a figure and wrote this one-sentence summary of it:\n\nREADER: Linear probes become decodable in a clear order through the model's layers: part of speech crosses the 0.75 accuracy threshold first (layer 4), then sentiment (layer 9), then named entity type (layer 14), then statement truthfulness (layer 20), so more abstract properties show up at deeper layers.\n\nThe figure was meant to show this:\n\nINTENDED: The four concepts become decodable at clearly different depths: part of speech first (around layer 3), then sentiment (around layer 8), named entity type (around layer 13 to 14), and statement truthfulness last (around layer 19).\n\nDoes the reader's summary match the intended finding? Answer 'yes' if it states the intended finding (exact numbers are not needed), 'partly' if it states part of it or states it vaguely, and 'no' if it misses it or states something else. Reply in exactly two lines:\nVERDICT: yes | partly | no\nREASON: one line"
+}

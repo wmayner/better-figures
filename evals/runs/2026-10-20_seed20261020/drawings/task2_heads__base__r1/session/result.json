@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 87594,
+ "stop_reason": "end_turn",
+ "session_id": "f61a2f78-8e5a-42df-9a6d-fe3f9ab675cf",
+ "total_cost_usd": 0.49652480000000004,
+ "usage": {
+  "input_tokens": 22,
+  "cache_creation_input_tokens": 30389,
+  "cache_read_input_tokens": 321024,
+  "output_tokens": 9456,
+  "output_tokens_details": {
+   "thinking_tokens": 2590
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 30389,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 692,
+    "cache_read_input_tokens": 41452,
+    "cache_creation_input_tokens": 759,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 759
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 22,
+   "outputTokens": 9456,
+   "cacheReadInputTokens": 321024,
+   "cacheCreationInputTokens": 30389,
+   "webSearchRequests": 0,
+   "costUSD": 0.49652480000000004,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 2590,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 14,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I wrote `make_figure.py`, which reads `data.csv` and saves `figure.png`, plus a caption in `caption.md`. I ran the script and checked the rendered figure.\n\n**What the data shows:** three heads clearly matter, all in layers 9\u201310:\n\n| Head | Loss increase |\n|---|---|\n| L9H6 | 1.25 |\n| L9H9 | 0.91 |\n| L10H0 | 0.72 |\n\nThe next-largest head is only 0.064, about 11 times smaller than the third. The top three make up 54% of the summed loss increase across all 144 heads. The other 141 heads have a median of 0.017.\n\n**The figure has two panels:**\n- **(a) Heatmap of layer \u00d7 head**, with a linear blue scale starting at 0. It shows where the three heads sit, and their values are printed in their cells.\n- **(b) All heads ranked by loss increase**, with 95% confidence intervals (\u00b11.96 \u00d7 SEM). The three top heads are highlighted and labelled; the rest are grey. This panel shows how far the top three are above everything else, and how uncertain each estimate is.\n\n**Judgement calls you may want to change:**\n- **Smaller effects:** on a linear scale, heads in the 0.02\u20130.06 range look almost the same in the heatmap. Several of them are measurably above zero (up to 5.9 SEM). The caption says so, but the figure doesn't show them in detail. If those heads matter to you, I can add a zoomed-in panel.\n- **Negative values:** 20 heads have slightly negative values (lowest \u22120.022, none more than 1.5 SEM below zero). They are drawn in the lightest heatmap colour, and the caption mentions this.\n- **Units:** `data.csv` doesn't give the loss units, so the axes just say \"Loss increase\". If it's nats, it's worth adding that.\n- **Layer order:** layer 0 is at the top of the heatmap.",
+ "ttft_ms": 1480,
+ "type": "result",
+ "duration_ms": 93308,
+ "uuid": "4c5ed6f7-097f-4632-8c8c-da8f2be04f80",
+ "ttft_stream_ms": 763,
+ "time_to_request_ms": 167,
+ "first_content_frame_ms": 763,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

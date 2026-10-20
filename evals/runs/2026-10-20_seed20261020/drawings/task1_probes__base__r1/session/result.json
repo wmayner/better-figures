@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 125345,
+ "stop_reason": "end_turn",
+ "session_id": "f1282201-9dce-4305-9509-3bbeeb3441b6",
+ "total_cost_usd": 0.5761665999999999,
+ "usage": {
+  "input_tokens": 20,
+  "cache_creation_input_tokens": 32557,
+  "cache_read_input_tokens": 289853,
+  "output_tokens": 12883,
+  "output_tokens_details": {
+   "thinking_tokens": 5574
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 32557,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 763,
+    "cache_read_input_tokens": 44118,
+    "cache_creation_input_tokens": 900,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 900
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 20,
+   "outputTokens": 12883,
+   "cacheReadInputTokens": 289853,
+   "cacheCreationInputTokens": 32557,
+   "webSearchRequests": 0,
+   "costUSD": 0.5761665999999999,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 5574,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 16,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I wrote `make_figure.py`, which reads `data.csv` and saves `figure.png`, and put the caption in `caption.md`. I ran the script and checked the rendered image; no labels overlap.\n\nThe figure plots one line per concept: probe accuracy at each layer, with its confidence band. It also shows a chance line and a threshold line, and puts a marker and label at the layer where each concept becomes decodable:\n\n| Concept | Decodable from |\n|---|---|\n| Part of speech | layer 4 |\n| Sentiment | layer 9 |\n| Named entity type | layer 14 |\n| Statement truthfulness | layer 20 |\n\n**Choices to check:**\n- **What \"decodable\" means.** It's the first layer where accuracy reaches 0.75 (halfway between chance and perfect) and stays at or above it in every later layer. I tried two other definitions, and both give the same order of concepts but different layer numbers:\n  - **Accuracy's lower confidence bound first above 0.5:** layer 1 for part of speech and sentiment, 10 for named entity type, 14 for truthfulness. This is very noisy; for example, named entity type only clears 0.5 by 0.0007.\n  - **That same bound staying above 0.5 in every later layer:** layers 1, 5, 10 and 17.\n  \n  The threshold is set by `THRESHOLD` at the top of the script.\n- **Chance is set to 0.5.** The data has no chance column, but every concept starts at about 0.50, which suggests the tasks are binary. If any of them aren't, the chance line and the threshold need changing.\n- **Confidence level.** The data doesn't say what level the `ci_low`/`ci_high` intervals are, so the caption doesn't give one. Add it if you know it (e.g. \"95% CIs\").\n- **Truthfulness hasn't levelled off.** It is still rising at the last layer (0.91), so its curve isn't flat yet. The caption says this.\n\nColors come from the dataviz skill's built-in palette, and each color is tied to a concept name. I couldn't run the skill's color-blindness check because Node isn't installed here. Concept names are also written on the plot, so readers don't have to tell the lines apart by color alone.\n\nI haven't committed anything.",
+ "ttft_ms": 1513,
+ "type": "result",
+ "duration_ms": 130981,
+ "uuid": "873812c0-57f0-4904-a4a7-847f1ce1e029",
+ "ttft_stream_ms": 814,
+ "time_to_request_ms": 178,
+ "first_content_frame_ms": 815,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

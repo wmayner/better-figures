@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 77902,
+ "stop_reason": "end_turn",
+ "session_id": "34b51ecb-b391-49fc-980a-a857f73b8dc2",
+ "total_cost_usd": 0.3891672,
+ "usage": {
+  "input_tokens": 24,
+  "cache_creation_input_tokens": 23637,
+  "cache_read_input_tokens": 328776,
+  "output_tokens": 6711,
+  "output_tokens_details": {
+   "thinking_tokens": 1975
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 23637,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 741,
+    "cache_read_input_tokens": 35472,
+    "cache_creation_input_tokens": 625,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 625
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 24,
+   "outputTokens": 6711,
+   "cacheReadInputTokens": 328776,
+   "cacheCreationInputTokens": 23637,
+   "webSearchRequests": 0,
+   "costUSD": 0.3891672,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 1975,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 14,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I wrote `make_figure.py`, which saves `figure.png`, and `caption.md`. The figure is a heatmap with one cell per head (12 layers \u00d7 12 heads), shaded from white to orange by how much ablating that head increases loss.\n\nThe data has a clear answer: **three heads matter and the rest barely do.** They are layer 9 head 6 (loss increase 1.25), layer 9 head 9 (0.91) and layer 10 head 0 (0.72). No other head goes above 0.064. Those three cells are the only ones that stand out, and they have their values printed in them. The only text in the image is the axis labels and the colour-bar label.\n\nThe caption:\n\n> **Three attention heads matter far more than the rest: ablating head 9.6, 9.9 or 10.0 (layer.head) increases loss by 1.25, 0.91 and 0.72, while no other head increases it by more than 0.064.** Each cell shows the mean increase in loss when that one head of the 12-layer, 12-head model is ablated, averaged over 500 prompts; the standard error of the mean is at most 0.072 for the three highlighted heads and at most 0.023 for every other head. The colour scale is clipped at zero, which hides 20 small negative values (the smallest is \u22120.022), all within 1.5 standard errors of zero.\n\nI checked every number in the caption against `data.csv`. My first draft had two of them wrong, and I corrected both.\n\nA few things to know:\n- **Units:** the CSV doesn't say what the loss is measured in (nats, for example) or how heads were ablated (zero or mean), so the figure and caption don't mention either. You may want to add both to the caption.\n- **The small effects are hard to see:** because the colour scale runs up to 1.25, the next tier of heads (about 0.04\u20130.06) shows as only a faint tint. That suits the point that three heads dominate. If you also care about that weaker second tier, it would need a separate figure, such as a ranked plot with error bars.\n- **Dependency:** the script imports the `figkit` style module by absolute path from your `better-figures` skill directory. To run it on another machine, copy `figkit.py` and its `fonts/` folder next to the script.",
+ "ttft_ms": 3033,
+ "type": "result",
+ "duration_ms": 85720,
+ "uuid": "0efe2482-6487-48e3-a6d8-c3c744858019",
+ "ttft_stream_ms": 2187,
+ "time_to_request_ms": 163,
+ "first_content_frame_ms": 2188,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

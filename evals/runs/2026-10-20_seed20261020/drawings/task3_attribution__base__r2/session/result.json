@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 54176,
+ "stop_reason": "end_turn",
+ "session_id": "89034005-867f-462a-9316-02c4b07281ce",
+ "total_cost_usd": 0.36512079999999997,
+ "usage": {
+  "input_tokens": 18,
+  "cache_creation_input_tokens": 25060,
+  "cache_read_input_tokens": 233044,
+  "output_tokens": 5898,
+  "output_tokens_details": {
+   "thinking_tokens": 1388
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 25060,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 724,
+    "cache_read_input_tokens": 36410,
+    "cache_creation_input_tokens": 1136,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1136
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 18,
+   "outputTokens": 5898,
+   "cacheReadInputTokens": 233044,
+   "cacheCreationInputTokens": 25060,
+   "webSearchRequests": 0,
+   "costUSD": 0.36512079999999997,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 1388,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 14,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I wrote `make_figure.py` and `caption.md`, ran the script, and checked the resulting `figure.png`.\n\n**The figure** is a dot plot with one row per attribution method. The rows are sorted by the method's average agreement with ablation (Spearman \u03c1) across the three models, so the best method is at the top. Within each row there is a dot per model, with a horizontal bar for its confidence interval. Each model has its own color and its own marker shape, so the models can be told apart without relying on color. The title states the result, and the integrated gradients row has a light shaded background so it reads first. You can run it as `python make_figure.py`, or pass a different input file and output file as arguments.\n\n**What the data shows:**\n- **Integrated gradients matches ablation best in all three models**, with \u03c1 of 0.80 for GPT-2 small, 0.82 for Pythia-410M and 0.89 for Gemma-2-2B. In every model, its interval doesn't overlap with that of the runner-up, attribution patching (\u03c1 0.60\u20130.64).\n- **The five methods rank in the same order in all three models:** integrated gradients, attribution patching, gradient \u00d7 input, saliency, then activation magnitude.\n- **Activation magnitude barely agrees with ablation** (\u03c1 0.15\u20130.19). Its intervals exclude zero only narrowly, and its Bayes factors (0.8\u20133.6) don't show convincing evidence of any real correlation. The caption points this out.\n\n**Things to check:**\n- **Interval width:** The CSV doesn't say what level the intervals are, so the caption assumes they're 95% intervals. Correct that if it's wrong.\n- **Bayes factors:** The figure doesn't show them; they appear only in the caption.\n- **Colors:** I couldn't run the colorblind-safety check because Node isn't installed here. The three colors come from a reference palette that's documented as having passed that check, and the distinct marker shapes are a backup.",
+ "ttft_ms": 1291,
+ "type": "result",
+ "duration_ms": 57349,
+ "uuid": "3cd25d8c-615f-476d-bf95-e0a91570f7f7",
+ "ttft_stream_ms": 674,
+ "time_to_request_ms": 159,
+ "first_content_frame_ms": 675,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

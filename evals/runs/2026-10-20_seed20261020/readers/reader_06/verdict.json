@@ -1,0 +1,9 @@
+{
+ "reader": "reader_06",
+ "run": "task1_probes__plugin__r1",
+ "task": "task1_probes",
+ "reader_sentence": "Linear probes show that the model's representations become decodable in a set order across layers, with part of speech first (rising from about layer 1), then sentiment (about layer 5), named entity type (about layer 10), and statement truthfulness last (about layer 17), and all four end up at roughly 90\u201395% accuracy, up from 50% chance.",
+ "intended": "The four concepts become decodable at clearly different depths: part of speech first (around layer 3), then sentiment (around layer 8), named entity type (around layer 13 to 14), and statement truthfulness last (around layer 19).",
+ "verdict": "yes",
+ "reason": "The summary gives the same order (POS, sentiment, entity type, truthfulness) at clearly separated depths; its layer numbers run about 2\u20133 layers earlier, likely onset versus midpoint, but exact numbers aren't required."
+}

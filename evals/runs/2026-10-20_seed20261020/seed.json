@@ -1,0 +1,40 @@
+{
+ "seed": 20261020,
+ "planted": {
+  "task1_probes": {
+   "onset_layers": {
+    "part of speech": 3.0,
+    "sentiment": 8.0,
+    "named entity type": 13.5,
+    "statement truthfulness": 19.0
+   },
+   "order": [
+    "part of speech",
+    "sentiment",
+    "named entity type",
+    "statement truthfulness"
+   ]
+  },
+  "task2_heads": {
+   "key_heads": {
+    "L9H6": 1.3,
+    "L9H9": 0.95,
+    "L10H0": 0.7
+   }
+  },
+  "task3_attribution": {
+   "method_means": {
+    "integrated gradients": 0.84,
+    "attribution patching": 0.61,
+    "gradient times input": 0.47,
+    "saliency": 0.31,
+    "activation magnitude": 0.18
+   },
+   "models": {
+    "GPT-2 small": 144,
+    "Pythia-410M": 384,
+    "Gemma-2-2B": 208
+   }
+  }
+ }
+}

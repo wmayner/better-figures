@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 55583,
+ "stop_reason": "end_turn",
+ "session_id": "e42f1d31-3b18-4f04-8388-fc3c1518af06",
+ "total_cost_usd": 0.2907172,
+ "usage": {
+  "input_tokens": 20,
+  "cache_creation_input_tokens": 19619,
+  "cache_read_input_tokens": 251326,
+  "output_tokens": 4171,
+  "output_tokens_details": {
+   "thinking_tokens": 1380
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 19619,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 574,
+    "cache_read_input_tokens": 31986,
+    "cache_creation_input_tokens": 119,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 119
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 20,
+   "outputTokens": 4171,
+   "cacheReadInputTokens": 251326,
+   "cacheCreationInputTokens": 19619,
+   "webSearchRequests": 0,
+   "costUSD": 0.2907172,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 1380,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 12,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've written `make_figure.py`, `figure.png` and `caption.md`. The script runs cleanly and the figure passes the style check.\n\n**The figure** is a dot plot with one row per attribution method, ordered from the best match at the top to the worst. Each row has three points, one per model, with error bars. Integrated gradients is highlighted in orange and the other methods are grey. Each model name appears once, beside the top row, and the x-axis is the Spearman correlation with the ablation effect, from 0 to 1. Head counts and Bayes factors are in the caption, not the image.\n\n**The result:** integrated gradients matches ablation best on all three models (\u03c1 = 0.80\u20130.89). Next is attribution patching (0.60\u20130.64), then gradient times input, saliency, and activation magnitude, which barely tracks ablation at all (0.15\u20130.19, Bayes factors about 1\u20134).\n\nTwo things you should check:\n- **Interval level:** `data.csv` gives `ci_low` and `ci_high` but not the confidence level, so the caption just says \"confidence intervals\". Add the level (e.g. 95%) and how they were computed if you know.\n- **GPT-2 small is close:** the caption says integrated gradients' intervals sit above attribution patching's on every model. That's true, but on GPT-2 small the gap is tiny (0.736 vs 0.730). Soften the wording if that matters for your argument.\n\nThe script uses a style helper, `figkit.py`, and a `fonts/` folder. I copied both into this folder so `make_figure.py` runs on its own with `python make_figure.py`.",
+ "ttft_ms": 4325,
+ "type": "result",
+ "duration_ms": 59456,
+ "uuid": "2dd2c8c2-a034-4035-ba5d-18dd598dd284",
+ "ttft_stream_ms": 3658,
+ "time_to_request_ms": 173,
+ "first_content_frame_ms": 3659,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 54076,
+ "stop_reason": "end_turn",
+ "session_id": "ed419263-c047-4052-a760-9f1c28c3bf34",
+ "total_cost_usd": 0.28846780000000005,
+ "usage": {
+  "input_tokens": 16,
+  "cache_creation_input_tokens": 18987,
+  "cache_read_input_tokens": 183839,
+  "output_tokens": 4987,
+  "output_tokens_details": {
+   "thinking_tokens": 1074
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 18987,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 645,
+    "cache_read_input_tokens": 29799,
+    "cache_creation_input_tokens": 1010,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1010
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 16,
+   "outputTokens": 4987,
+   "cacheReadInputTokens": 183839,
+   "cacheCreationInputTokens": 18987,
+   "webSearchRequests": 0,
+   "costUSD": 0.28846780000000005,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 1074,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 10,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I wrote `make_figure.py` and `caption.md`, ran the script, and checked the resulting `figure.png` by eye.\n\n**The figure:** a horizontal dot plot. Each row is an attribution method, sorted so the method with the highest average Spearman \u03c1 is on top. Each row has one marker per model with its confidence-interval bar. The models differ by both color and marker shape, so they can be told apart without color. The average \u03c1 for each method is printed on the right edge, and the top row (integrated gradients) is shaded and in bold.\n\n**The result:** integrated gradients matches ablation best on all three models (\u03c1 = 0.80\u20130.89). On every model its interval lies entirely above that of the next-best method, attribution patching (0.60\u20130.64). Below that come gradient \u00d7 input, then saliency, then activation magnitude, in the same order on every model.\n\n**Bayes factors:** the figure doesn't show them, but the caption uses them for one point. For activation magnitude they are only 0.8\u20133.6, so the evidence that it tracks ablation at all is inconclusive. This holds even though its confidence intervals don't include zero.\n\nTwo things to check:\n- **Interval level:** `data.csv` doesn't say what confidence level `ci_low`/`ci_high` are, so the caption just says \"confidence intervals\". If they're 95% intervals (or bootstrap intervals), add that to the caption.\n- **Color check:** the plotting guidelines I followed include a script that tests whether colors stay distinguishable for colorblind readers. It needs Node, which isn't installed here, so I didn't run it. Instead I used three colors whose guidelines say they pass that test, and gave each model a different marker shape as a backup.\n\nFiles are in the working directory:\n- `make_figure.py`\n- `figure.png`\n- `caption.md`",
+ "ttft_ms": 2969,
+ "type": "result",
+ "duration_ms": 56815,
+ "uuid": "41d8f7c8-fe44-425a-89d6-bff6213ac515",
+ "ttft_stream_ms": 2415,
+ "time_to_request_ms": 177,
+ "first_content_frame_ms": 2416,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

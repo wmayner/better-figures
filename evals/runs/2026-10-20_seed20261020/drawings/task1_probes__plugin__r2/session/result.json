@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 108346,
+ "stop_reason": "end_turn",
+ "session_id": "37c946eb-e876-42c8-90bc-bdc04435d280",
+ "total_cost_usd": 0.5118902000000001,
+ "usage": {
+  "input_tokens": 24,
+  "cache_creation_input_tokens": 30710,
+  "cache_read_input_tokens": 375271,
+  "output_tokens": 9553,
+  "output_tokens_details": {
+   "thinking_tokens": 4851
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 30710,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 675,
+    "cache_read_input_tokens": 42174,
+    "cache_creation_input_tokens": 997,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 997
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 24,
+   "outputTokens": 9553,
+   "cacheReadInputTokens": 375271,
+   "cacheCreationInputTokens": 30710,
+   "webSearchRequests": 0,
+   "costUSD": 0.5118902000000001,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 4851,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 15,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've written `make_figure.py`, `figure.png` and `caption.md`. The script runs cleanly and passes the figure style check.\n\n**The figure:** a single plot with one line per concept and its confidence band. A dot marks where each concept \"becomes decodable\", which I defined as the first layer where probe accuracy reaches 0.75, halfway between chance (0.5) and perfect. A thin line drops from each dot to the concept's name along the bottom, so you can read off the layer directly:\n\n| Concept | Becomes decodable at layer |\n|---|---|\n| part of speech | 4 |\n| sentiment | 9 |\n| named entity type | 14 |\n| statement truthfulness | 20 |\n\nThe four onsets are evenly staggered through the model's depth, and the concepts are coloured in that order.\n\n**Assumptions you should check before using this:**\n- **Chance is 0.5.** I assumed every probe task is binary and balanced, because all four curves start near 0.5. If any task has more classes, its chance line and the 0.75 threshold are wrong.\n- **The 0.75 threshold is my choice.** If you use a stricter rule, such as the lower edge of the band clearing chance, the onsets move a layer or two earlier. Truthfulness is the noisiest; it briefly rises around layer 14. The threshold is `ONSET` at the top of the script.\n- **I don't know what the confidence intervals are.** They're much wider than a simple 95% interval from 2,000 test examples would be, so they probably come from seeds or bootstrapping. The caption just calls them \"the confidence intervals reported with each estimate\". Add the level and method, and the model and probe type if you want them named.\n\nTo run it: `python make_figure.py [data.csv] [figure.png]`. The script loads `figkit` (the figure style helper) from `<repository>/skills/figures`. To run it on another machine, copy `figkit.py` and its `fonts/` folder next to the script.",
+ "ttft_ms": 2061,
+ "type": "result",
+ "duration_ms": 114141,
+ "uuid": "100b6787-3e3f-4015-ba72-fc8e63c18c4b",
+ "ttft_stream_ms": 1635,
+ "time_to_request_ms": 198,
+ "first_content_frame_ms": 1636,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

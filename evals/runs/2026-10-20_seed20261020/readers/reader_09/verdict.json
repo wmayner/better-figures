@@ -1,0 +1,9 @@
+{
+ "reader": "reader_09",
+ "run": "task1_probes__base__r1",
+ "task": "task1_probes",
+ "reader_sentence": "Linear probes become decodable in a clear order through the model's layers: part of speech crosses the 0.75 accuracy threshold first (layer 4), then sentiment (layer 9), then named entity type (layer 14), then statement truthfulness (layer 20), so more abstract properties show up at deeper layers.",
+ "intended": "The four concepts become decodable at clearly different depths: part of speech first (around layer 3), then sentiment (around layer 8), named entity type (around layer 13 to 14), and statement truthfulness last (around layer 19).",
+ "verdict": "yes",
+ "reason": "The reader gives the same order (POS, sentiment, entity type, truthfulness) at clearly separated depths, and their layer numbers are within about one layer of the intended ones."
+}

@@ -1,0 +1,9 @@
+{
+ "reader": "reader_11",
+ "run": "task2_heads__plugin__r1",
+ "task": "task2_heads",
+ "reader_sentence": "Ablating any one of just three attention heads (L9H6, L9H9, and L10H0) raises loss sharply, by about 0.7\u20131.25, while ablating any of the other 141 heads changes it by less than about 0.07, so the effect is concentrated almost entirely in those three late-layer heads.",
+ "intended": "Three heads matter: layer 9 head 6, layer 9 head 9 and layer 10 head 0; ablating any of the other 141 heads barely changes the loss.",
+ "verdict": "yes",
+ "reason": "The summary names the same three heads (L9H6, L9H9, L10H0) as the ones that matter and says ablating the other 141 barely changes the loss."
+}

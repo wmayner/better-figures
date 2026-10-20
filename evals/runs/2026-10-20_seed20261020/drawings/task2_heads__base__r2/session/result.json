@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 98374,
+ "stop_reason": "end_turn",
+ "session_id": "09de9a5d-db23-49ca-bfe7-d31fb801e1ad",
+ "total_cost_usd": 0.5033422,
+ "usage": {
+  "input_tokens": 26,
+  "cache_creation_input_tokens": 28465,
+  "cache_read_input_tokens": 376491,
+  "output_tokens": 10011,
+  "output_tokens_details": {
+   "thinking_tokens": 2641
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 28465,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 603,
+    "cache_read_input_tokens": 40215,
+    "cache_creation_input_tokens": 710,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 710
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 26,
+   "outputTokens": 10011,
+   "cacheReadInputTokens": 376491,
+   "cacheCreationInputTokens": 28465,
+   "webSearchRequests": 0,
+   "costUSD": 0.5033422,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 2641,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 15,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I wrote `make_figure.py`, ran it to produce `figure.png`, and checked the rendered image. The caption is in `caption.md`.\n\n**What the data shows:** three heads matter far more than the rest. Ablating **L9H6** raises loss by 1.25, **L9H9** by 0.91 and **L10H0** by 0.72. No other head goes above 0.064, and the median among the rest is 0.017.\n\n**The figure has two panels:**\n- **(a) Heatmap of layer \u00d7 head**, using one blue color scale running linearly from 0. Only the three dominant cells stand out, which is the main message, and they're labeled with their values. A dot marks the 9 other heads whose effect is statistically different from zero (z-test on mean/SEM, Bonferroni-corrected across the 144 heads). Their effects are real but small: 0.027\u20130.063, about 20\u00d7 below the weakest of the top three.\n- **(b) The top 15 heads ranked, with 95% confidence intervals.** The confidence intervals show the gap between the top three and everything else is far larger than the noise.\n\n**Choices you may want to revisit:**\n- **Negative values are shown as 0.** Twenty heads have small negative means (as low as \u22120.022), none of them significant, and the color scale displays them as 0. The caption says so.\n- **The significance test is my addition.** It isn't in the data. I chose a strict version (two-sided with Bonferroni correction); you can drop it or change it via `ALPHA` in the script.\n- **The loss units are unstated.** I didn't know whether the loss is measured in nats or bits, so the axis just says \"Increase in loss\". Add the unit if you know it.\n- **Run the script from the folder that holds `data.csv`.** The file paths in the script are relative to it.",
+ "ttft_ms": 2534,
+ "type": "result",
+ "duration_ms": 109068,
+ "uuid": "854f6933-957d-48d8-bb07-23ad9a36c92c",
+ "ttft_stream_ms": 1828,
+ "time_to_request_ms": 155,
+ "first_content_frame_ms": 1829,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

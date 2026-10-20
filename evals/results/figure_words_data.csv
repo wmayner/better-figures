@@ -1,0 +1,13 @@
+run,task,arm,rep,words,task_name,series
+task1_probes__base__r1,task1_probes,base,1,40,Probe accuracy by layer,Claude Code
+task1_probes__base__r2,task1_probes,base,2,42,Probe accuracy by layer,Claude Code
+task1_probes__plugin__r1,task1_probes,plugin,1,12,Probe accuracy by layer,with better-figures
+task1_probes__plugin__r2,task1_probes,plugin,2,12,Probe accuracy by layer,with better-figures
+task2_heads__base__r1,task2_heads,base,1,43,Effect of ablating heads,Claude Code
+task2_heads__base__r2,task2_heads,base,2,39,Effect of ablating heads,Claude Code
+task2_heads__plugin__r1,task2_heads,plugin,1,10,Effect of ablating heads,with better-figures
+task2_heads__plugin__r2,task2_heads,plugin,2,7,Effect of ablating heads,with better-figures
+task3_attribution__base__r1,task3_attribution,base,1,25,Attribution against ablation,Claude Code
+task3_attribution__base__r2,task3_attribution,base,2,30,Attribution against ablation,Claude Code
+task3_attribution__plugin__r1,task3_attribution,plugin,1,11,Attribution against ablation,with better-figures
+task3_attribution__plugin__r2,task3_attribution,plugin,2,9,Attribution against ablation,with better-figures

@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 64247,
+ "stop_reason": "end_turn",
+ "session_id": "04f64304-f952-495c-b06b-2de9888bbf0d",
+ "total_cost_usd": 0.3688941999999999,
+ "usage": {
+  "input_tokens": 24,
+  "cache_creation_input_tokens": 24118,
+  "cache_read_input_tokens": 332971,
+  "output_tokens": 5463,
+  "output_tokens_details": {
+   "thinking_tokens": 1272
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 24118,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 567,
+    "cache_read_input_tokens": 35356,
+    "cache_creation_input_tokens": 584,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 584
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 24,
+   "outputTokens": 5463,
+   "cacheReadInputTokens": 332971,
+   "cacheCreationInputTokens": 24118,
+   "webSearchRequests": 0,
+   "costUSD": 0.3688941999999999,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 1272,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 14,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've written `make_figure.py`, which reads `data.csv` and saves `figure.png`, and the caption is in `caption.md`. The script runs and passes the figure style check, and I looked at the rendered image.\n\n**What the figure shows:** all 144 heads (12 layers \u00d7 12 heads) as bars, sorted by how much the loss rises when each one is ablated. Three heads stand far above the rest, so they're drawn in orange and labelled by name; every other head is grey.\n\n| Head | Loss increase | \u00b11 SEM |\n|---|---|---|\n| L9H6 | 1.25 | 0.07 |\n| L9H9 | 0.91 | 0.06 |\n| L10H0 | 0.72 | 0.05 |\n\n- **The other 141 heads:** none raises the loss by more than 0.064, and the median is 0.017. 20 heads lower the loss slightly when ablated.\n- **The gap:** the smallest of the top three (0.72) is about 11 times the largest of the rest. The caption's bold first sentence states this as \"more than ten times\".\n- **Error bars:** they're drawn only on the three highlighted heads. On the others they would be too small to see at this scale, and the caption says so.\n\n**Caption wording:** I wrote \"loss increase\" without a unit and didn't name the ablation method (zero, mean, etc.), because `data.csv` doesn't record either. Add them to the caption if you know them.\n\n**Running it elsewhere:** the script imports a shared plotting style (`figkit`) from `<repository>/skills/figures`. On another machine, copy `figkit.py` and its `fonts/` folder next to the script.",
+ "ttft_ms": 2358,
+ "type": "result",
+ "duration_ms": 69064,
+ "uuid": "2d20affb-40b9-4355-8e69-cfb78776a4fb",
+ "ttft_stream_ms": 1516,
+ "time_to_request_ms": 184,
+ "first_content_frame_ms": 1516,
+ "queued_turn_count": 0,
+ "result_index": 0
+}

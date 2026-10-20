@@ -1,0 +1,7 @@
+task,arm,mean_words,runs,reader_yes,reader_partly,reader_no,mean_cost_usd,mean_total_tokens,mean_output_tokens
+task1_probes,base,41.0,2,2,0,0,0.5461079,362269.0,11015.0
+task1_probes,plugin,12.0,2,2,0,0,0.7133131,742288.5,13334.0
+task2_heads,base,41.0,2,2,0,0,0.4999335,387942.0,9733.5
+task2_heads,plugin,8.5,2,2,0,0,0.37903069999999994,360862.0,6087.0
+task3_attribution,base,27.5,2,2,0,0,0.3267943,235924.5,5442.5
+task3_attribution,plugin,10.0,2,1,1,0,0.28121419999999997,240326.5,4436.0

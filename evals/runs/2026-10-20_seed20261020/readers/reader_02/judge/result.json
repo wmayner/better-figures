@@ -1,0 +1,99 @@
+{
+ "duration_api_ms": 2416,
+ "stop_reason": "end_turn",
+ "session_id": "585de6d4-a733-4239-bf5f-9961fd102523",
+ "total_cost_usd": 0.0098936,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 989,
+  "cache_read_input_tokens": 1568,
+  "output_tokens": 83,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 989,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 83,
+    "cache_read_input_tokens": 1568,
+    "cache_creation_input_tokens": 989,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 989
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 2,
+   "outputTokens": 83,
+   "cacheReadInputTokens": 1568,
+   "cacheCreationInputTokens": 989,
+   "webSearchRequests": 0,
+   "costUSD": 0.0098936,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 0,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 1,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "VERDICT: yes\nREASON: It names the same three heads (L9H6, L9H9, L10H0) as the only ones that matter and says all other heads have near-zero effect; the significance-dot remark is extra and doesn't contradict the finding.",
+ "ttft_ms": 2541,
+ "type": "result",
+ "duration_ms": 2576,
+ "uuid": "8f48b06e-798e-408b-8f07-2f929b52fdf5",
+ "ttft_stream_ms": 1777,
+ "time_to_request_ms": 162,
+ "first_content_frame_ms": 1778,
+ "queued_turn_count": 0,
+ "result_index": 0
+}
