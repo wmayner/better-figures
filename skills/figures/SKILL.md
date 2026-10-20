@@ -34,6 +34,16 @@ Caption:  at most 3 sentences under the image: what is plotted, how it was measu
 Sketch:   a 4-line ASCII sketch
 ```
 
+Write the claim first, then choose the template that makes that argument. Each of six common templates usually makes one claim:
+- bar plot: this one is higher than this one;
+- line plot: the numbers go up or down;
+- scaling law plot: the trend is linear in log or logit space;
+- calibration plot: model A is much better calibrated than model B;
+- diverging line plot: this line goes up, this one doesn't;
+- Pareto frontier plot: we push the Pareto frontier.
+
+Scatter plots and heatmaps cover a relation between two measures and a grid of values. If no template fits, the figure is probably trying to say more than one thing; split it or simplify it.
+
 At the spec stage, the person approves this block, not a prose description of encodings ("rows: methods × targets; filled vs open markers; verdict in the margin" reads as simple and draws as a wall). Better still, draw the figure once from fake data and show the image.
 
 ## 2. Choose what to show
