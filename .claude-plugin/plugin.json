@@ -1,0 +1,10 @@
+{
+  "name": "figures",
+  "version": "0.1.0",
+  "description": "A skill that helps Claude make research figures a busy reader understands at a glance: one claim per figure, text kept out of the image, a matplotlib house style with a check on save, HTML routes for interactive figures and diagrams, and summary figures.",
+  "author": { "name": "Will Mayner" },
+  "homepage": "https://github.com/wmayner/claude-figures",
+  "repository": "https://github.com/wmayner/claude-figures",
+  "license": "MIT",
+  "keywords": ["figures", "plots", "matplotlib", "visualization", "interpretability", "research"]
+}
