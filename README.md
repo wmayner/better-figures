@@ -4,9 +4,9 @@ A Claude Code skill for making research figures that a busy researcher understan
 
 Left to itself, Claude tends to make figures that show every result at once and put the caption's job into the image: sentence titles, definitions, statistics and verdicts drawn above the data. Asking it to "define every term" makes the labels longer. This skill asks a different question before and after drawing: what can be removed?
 
-![A summary figure drawn with the skill: three heads chosen by attribution patching keep the model's answer when every other head is ablated, and three random heads do not. The result is made up.](skills/figures/examples/summary_example.png)
+![A summary figure drawn with the skill: three heads chosen by attribution patching keep the model's answer when all other heads are ablated, and three random heads do not. The result is made up.](skills/figures/examples/summary_example.png)
 
-*A summary figure drawn with the skill's HTML parts. The result it shows is made up: three attention heads chosen by attribution patching keep the model's answer to the prompt when every other head is ablated, and three random heads do not.*
+*A summary figure drawn with the skill's HTML parts. The result it shows is made up: three attention heads chosen by attribution patching keep the model's answer to the prompt when all other heads are ablated, and three random heads do not.*
 
 ## What it does
 
@@ -89,7 +89,7 @@ We measured two things. The first is the number of words in the image other than
 | Effect of ablating heads | 41 / 8.5 | 2 of 2 / 2 of 2 | 0.50 / 0.38 |
 | Attribution against ablation | 27.5 / 10 | 2 of 2 / 1 of 2, 1 partly | 0.33 / 0.28 |
 
-With the plugin, figures carried 2.8 to 4.8 times fewer words depending on the task (geometric mean 3.6), and every plugin run used fewer words than every plain run. With only three tasks the statistical evidence is moderate: a Bayes factor of 4.9 for the per-task log ratio of mean words differing from zero (one-sample JZS test, Cauchy prior with scale 0.707), and 6.0 with scale 1.0. The fresh reader got the planted answer from almost every figure in both setups, so on these tasks plain Claude Code's figures were not harder to read; the plugin's figures said the same thing with less text. The one partial match was a plugin figure whose reader gave the ranking of methods without saying how far ahead the best one was. Cost per run was the same on average ($0.46 in both setups; this is the API-equivalent cost Claude Code reports). These are 12 runs on made-up data with one model, so treat them as a first check, not a benchmark.
+With the plugin, figures carried 2.8 to 4.8 times fewer words depending on the task (geometric mean 3.6), and every plugin run used fewer words than every plain run. With only three tasks the statistical evidence is moderate: a Bayes factor of 4.9 for the per-task log ratio of mean words differing from zero (one-sample JZS test, Cauchy prior with scale 0.707), and 6.0 with scale 1.0. Fresh readers got the planted answer from nearly every figure in both setups (6 of 6 without the plugin, 5 of 6 and one partial match with it), so the test shows that the plugin's figures carry less text, not that readers understand them better. Word count is the measure because less text in the image is what the skill aims for. The one partial match was a plugin figure whose reader gave the ranking of methods without saying how far ahead the best one was. Cost per run was the same on average ($0.46 in both setups; this is the API-equivalent cost Claude Code reports). These are 12 runs on made-up data with one model, so treat them as a first check, not a benchmark.
 
 The first run of each setup on the attribution task:
 
