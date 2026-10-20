@@ -7,13 +7,15 @@
      On the prompt "When Mary and John went to the store, John gave a drink to", we keep three attention heads,
      mean-ablate every other head, and compare the model's probabilities for " Mary" and " John" with the full
      model's. Top: the three heads that attribution patching ranks highest keep " Mary" as the answer. Bottom: three
-     heads drawn at random flip the answer to " John" (made-up result; the output bars are schematic).
+     heads drawn at random flip the answer to " John". Each network is the model's heads only, one column per layer;
+     lines join chosen heads in adjacent layers. The random row shows one draw (made-up result; the output bars are
+     schematic).
      Render, from this folder: sh ../render_html.sh summary_example.html summary_example.png 1600 760 -->
 <html><head><meta charset="utf-8">
 <link rel="stylesheet" href="../summary.css">
 <style>
-  .canvas { height: 760px; padding: 32px 48px; display: grid; align-items: center; justify-items: center;
-            grid-template-columns: 190px 260px 110px 260px 110px 380px 90px; grid-template-rows: 46px 108px 1fr 1fr;
+  .canvas { height: 760px; padding: 32px 24px; display: grid; align-items: center; justify-items: center;
+            grid-template-columns: 250px 260px 110px 260px 110px 380px 90px; grid-template-rows: 46px 108px 1fr 1fr;
             row-gap: 8px; column-gap: 0; }
   .row-label { justify-self: end; padding-right: 20px; width: auto; }
   .panel-head { white-space: nowrap; }
@@ -28,19 +30,21 @@
   <div></div>
   <div class="panel-head">Choose three heads</div>
   <div></div>
-  <div class="panel-head">Ablate every other head</div>
+  <div class="panel-head">Ablate all other heads</div>
   <div></div>
   <div class="panel-head" style="grid-column: 6 / 8">Compare the answer</div>
 
   <div></div>
-  <div class="chat prompt"><div class="user">When Mary and John went to the store, John gave a drink to</div><div class="assistant"><b class="ex">Mary</b></div></div>
+  <div class="chat grey prompt"><div class="text">When Mary and John went to the store, John gave a drink to <span class="tok accent">Mary</span></div></div>
   <div></div>
 
-  <!-- Row 1: heads chosen by attribution patching form a connected circuit. -->
-  <div class="row-label"><span class="stamp" data-icon="magnifier">attribution</span></div>
-  <svg class="net" width="230" height="230" data-layers="3,5,4,2" data-on="1.1 2.2 3.0"></svg>
+  <!-- Each network is the model's attention heads only: three layers of four heads, input at left. No circle is an
+       input or output unit, so every circle can be kept or ablated. -->
+  <!-- Row 1: heads chosen by attribution patching form a connected circuit, one head per layer. -->
+  <div class="row-label"><span class="stamp" data-icon="magnifier">attribution patching</span></div>
+  <svg class="net" width="230" height="230" data-layers="4,4,4" data-on="0.1 1.2 2.1"></svg>
   <span class="arrow" data-icon="arrow"></span>
-  <svg class="net" width="230" height="230" data-layers="3,5,4,2" data-on="1.1 2.2 3.0" data-ablate="1 2"></svg>
+  <svg class="net" width="230" height="230" data-layers="4,4,4" data-on="0.1 1.2 2.1" data-ablate="0 1 2"></svg>
   <span class="arrow" data-icon="arrow"></span>
   <div class="out">
     <figure><div class="bars"><div class="bar target" style="height:74px"></div><div class="bar target" style="height:16px"></div></div>
@@ -52,9 +56,9 @@
 
   <!-- Row 2: three random heads, not connected to one another. -->
   <div class="row-label"><span class="stamp light">random</span></div>
-  <svg class="net" width="230" height="230" data-layers="3,5,4,2" data-on="1.0 1.4 3.1"></svg>
+  <svg class="net" width="230" height="230" data-layers="4,4,4" data-on="0.0 0.3 2.3"></svg>
   <span class="arrow" data-icon="arrow"></span>
-  <svg class="net" width="230" height="230" data-layers="3,5,4,2" data-on="1.0 1.4 3.1" data-ablate="1 2"></svg>
+  <svg class="net" width="230" height="230" data-layers="4,4,4" data-on="0.0 0.3 2.3" data-ablate="0 1 2"></svg>
   <span class="arrow" data-icon="arrow"></span>
   <div class="out">
     <figure><div class="bars"><div class="bar target" style="height:74px"></div><div class="bar target" style="height:16px"></div></div>

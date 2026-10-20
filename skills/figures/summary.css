@@ -28,6 +28,7 @@
 .chat .assistant { background: var(--tint-strong); }
 .chat .user::before { content: "User: "; font-weight: 600; }
 .chat .assistant::before { content: "Assistant: "; font-weight: 600; }
+.chat .text { background: var(--tint); }                                   /* a completion prompt for a base model: no role label */
 .chat .hl { outline: 2.5px solid var(--bad); outline-offset: 2px; }       /* the one line that matters */
 .chat.accent { --tint: #fdeee4; --tint-strong: #f6c9a8; }
 .chat.green  { --tint: #e3f0e1; --tint-strong: #bddbb7; }

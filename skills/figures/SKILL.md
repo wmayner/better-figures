@@ -121,7 +121,7 @@ Rules:
 - **Two to four panels, laid out in one of two ways.** Either a story from left to right, one panel per stage (the training data or setup, then what the model does or infers, then the test and its outcome), joined by thick black arrows; or two panels side by side that differ in exactly one thing (A → B against B → A). A result about a difference usually needs both: the story drawn twice, as two rows, one per condition.
 - **Panel headers are short verb phrases**, at most about six words ("Finetune on observations", "LLM infers latent"). They carry no jargon that the image has not shown.
 - **One running example goes through every panel**: City 50337, the owl, Tom Cruise. Bold it inside the text where it appears.
-- **Concrete examples carry the content.** Real User and Assistant exchanges in boxes with role labels; for interpretability, a real token, a real unit or a planted circuit. Show two or three examples and a "..." for the rest of a dataset.
+- **Concrete examples carry the content.** Real User and Assistant exchanges in boxes with role labels, or a base model's prompt in a box without them; for interpretability, a real token, a real unit or a planted circuit. Show two or three examples and a "..." for the rest of a dataset.
 - **Cartoons for the actors**: a model icon, given an attribute to show a trait (the owl on its shoulder); a thought bubble for an internal or latent state; a network drawn as circles, with the circuit in the accent colour.
 - **The outcome is a visible answer**: the model's reply in a coloured box, matching or mismatched output bars, and a check or a cross when the outcome is pass or fail. Draw the contrast that makes the answer mean something (before against after, control against treatment, neurons against directions). Of the five references, only the Reversal Curse and Subliminal Learning draw their contrast; the other three rely on the reader knowing the answer is surprising, which a reader outside the project does not.
 - **No prose outside the examples, and no numbers.** None of the five references prints a result number. If one number is truly needed, it goes in one small inset. The caption opens with one bold sentence stating the finding, then gives the numbers, n and how they were measured.
@@ -145,6 +145,7 @@ Draw it in HTML that links `_kit/summary.css` and `_kit/summary.js` (the network
 | Part | Markup |
 |---|---|
 | Chat box, User and Assistant rows; colour by kind of example | `<div class="chat accent"><div class="user">..</div><div class="assistant">..</div></div>`, inside `.frame`, `.more` for "..." |
+| Completion prompt for a base model, no role labels | `<div class="chat grey"><div class="text">.. gave a drink to <span class="tok accent">Mary</span></div></div>` |
 | Model icon, with an attribute at the shoulder | `<span class="model trait" data-icon="model"><span class="attr tok">owl</span></span>` |
 | Thought bubble | `<div class="thought">City 50337 is Paris</div>` above the model |
 | Network: circuit, greyed and ablated units, directions | `<svg class="net" width="230" height="230" data-layers="3,5,4,2" data-on="1.1 2.2" data-ablate="1 2" data-dim="0" data-dirs="1" data-broken="1">` |
@@ -154,7 +155,7 @@ Draw it in HTML that links `_kit/summary.css` and `_kit/summary.js` (the network
 | Token chip | `<span class="tok accent">Paris</span>` |
 | Output bars, target against intervention | `.out` > `figure` > `.bars` > `.bar` (`.target`, `.on`) |
 
-`examples/summary_components.html` shows each part once, and `examples/summary_example.html` is a whole figure.
+`examples/summary_components.html` shows each part once, `examples/summary_example.html` is a whole figure, and `examples/summary_example_check.md` records how fresh readers read it.
 
 **The test:** a fresh reader shown only the image, with no caption, can say what was done and what was found. Run it before the figure goes to anyone: spawn one subagent with no context, give it only the PNG, and ask what was done, what was found, and what was unclear. Fix what it misreads, and stop after three rounds. Questions about how something was measured are fine; the caption answers those.
 

@@ -59,7 +59,7 @@ Either way, Claude loads the skill when you ask for a figure. You can also call 
 | `line_direct_labels.py` | line plot with names at the line ends: probe accuracy by layer, against two controls |
 | `interactive_dots.html` | HTML figure with a tooltip: how closely four attribution methods rank heads the way ablation does |
 | `diagram.html` | method diagram: the three steps of activation patching |
-| `summary_example.html` | summary figure, shown above |
+| `summary_example.html` | summary figure, shown above; `summary_example_check.md` records how three fresh readers read it |
 | `summary_components.html` | each HTML part of a summary figure once, to copy from |
 
 To re-render them, run the Python scripts with any working directory, and `sh skills/figures/render_html.sh <file>.html <file>.png <width> <height>` for the HTML files (the size of each is in a comment at its top).
