@@ -41,7 +41,7 @@ git clone https://github.com/wmayner/better-figures
 cp -r better-figures/skills/figures ~/.claude/skills/
 ```
 
-Either way, Claude loads the skill when you ask for a figure. You can also call it directly: `/figures:figures` for the plugin, `/figures` for the copy.
+Either way, Claude loads the skill when you ask for a figure. You can also call it directly: `/better-figures:figures` for the plugin, `/figures` for the copy.
 
 ### Requirements
 
