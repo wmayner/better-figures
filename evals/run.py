@@ -11,7 +11,8 @@ usage (from evals/):
 Every session runs in its own fresh directory outside this repository (under --work-root, a new temporary
 directory by default), so a base-arm session cannot find the plugin's files by looking around. The drawing
 directory holds only data.csv; the reader directory holds only figure.png. Outputs are copied back into the
-run folder. Existing outputs are skipped, never overwritten, so an interrupted run can be resumed.
+run folder; full transcripts go to its transcripts/ folder, which git ignores, and the files kept in git have
+this machine's paths replaced by <work_root>, <repository> and ~. Existing outputs are skipped, never overwritten, so an interrupted run can be resumed.
 """
 import argparse
 import json
@@ -35,6 +36,18 @@ def fresh_dir(root):
     return d
 
 
+def transcripts(run_dir, out):
+    """Where a session's full transcript goes: run_dir/transcripts/, which .gitignore keeps out of git."""
+    return run_dir / "transcripts" / out.relative_to(run_dir)
+
+
+def scrub(folder, cwd):
+    """Replace this machine's paths in the text files a session wrote, before they are kept in git."""
+    for f in folder.rglob("*"):
+        if f.suffix in (".py", ".md", ".json", ".csv", ".txt", ".html") and f.is_file():
+            f.write_text(harness.public(f.read_text(), cwd))
+
+
 def seed_of(run_dir):
     return json.loads((run_dir / "seed.json").read_text())["seed"]
 
@@ -45,12 +58,13 @@ def isolation(run_dir, work_root):
         if out.exists():
             print("exists, skipping", out)
             continue
-        result, _ = harness.run(arm, SPEC["isolation_probe"], fresh_dir(work_root), out, budget=2)
-        init = json.loads((out / "init.json").read_text())
+        work = fresh_dir(work_root)
+        result, _ = harness.run(arm, SPEC["isolation_probe"], work, out, transcripts(run_dir, out), budget=2)
+        init = json.loads((transcripts(run_dir, out) / "init.json").read_text())
         summary = dict(arm=arm, plugins=init.get("plugins"), skills=init.get("skills"),
                        mcp_servers=init.get("mcp_servers"), memory_paths=init.get("memory_paths"),
                        answer=result.get("result"))
-        (out / "summary.json").write_text(json.dumps(summary, indent=1))
+        (out / "summary.json").write_text(harness.public(json.dumps(summary, indent=1), work))
         print(json.dumps(summary, indent=1))
 
 
@@ -63,9 +77,10 @@ def draw_one(job, run_dir, work_root):
     work = fresh_dir(work_root)
     shutil.copy(run_dir / "tasks" / task / "data.csv", work / "data.csv")
     prompt = SPEC["tasks"][task] + " " + SPEC["suffix"]
-    result, events = harness.run(arm, prompt, work, out / "session")
+    result, events = harness.run(arm, prompt, work, out / "session", transcripts(run_dir, out / "session"))
     shutil.copytree(work, out / "files", ignore=shutil.ignore_patterns("__pycache__", ".venv", "*.pyc"))
-    meta = dict(task=task, arm=arm, rep=rep, work_dir=str(work), skills_invoked=harness.skills_invoked(events),
+    scrub(out / "files", work)
+    meta = dict(task=task, arm=arm, rep=rep, work_dir=harness.public(work, work), skills_invoked=harness.skills_invoked(events),
                 is_error=result.get("is_error"), total_cost_usd=result.get("total_cost_usd"),
                 num_turns=result.get("num_turns"), duration_ms=result.get("duration_ms"), usage=result.get("usage"),
                 figure_exists=(work / "figure.png").exists())
@@ -105,11 +120,12 @@ def read_one(item, run_dir, work_root, answers):
     if not (reader_out / "result.json").exists():
         work = fresh_dir(work_root)
         shutil.copy(png, work / "figure.png")
-        harness.run("base", SPEC["reader"], work, reader_out, tools="Read", budget=2)
+        harness.run("base", SPEC["reader"], work, reader_out, transcripts(run_dir, reader_out), tools="Read", budget=2)
     sentence = json.loads((reader_out / "result.json").read_text()).get("result", "").strip()
     task = name.split("__")[0]
     prompt = SPEC["judge"].format(reader=sentence, answer=answers[task])
-    result, _ = harness.run("base", prompt, fresh_dir(work_root), judge_out, tools="", budget=2)
+    result, _ = harness.run("base", prompt, fresh_dir(work_root), judge_out, transcripts(run_dir, judge_out),
+                            tools="", budget=2)
     verdict, reason = parse_verdict(result.get("result"))
     rec = dict(reader=f"reader_{idx:02d}", run=name, task=task, reader_sentence=sentence, intended=answers[task],
                verdict=verdict, reason=reason)

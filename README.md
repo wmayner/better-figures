@@ -95,7 +95,7 @@ The first run of each setup on the attribution task:
 
 ![Two figures side by side. Left, plain Claude Code: five methods with a coloured dot and interval per model, a legend, a shaded best row and a column of mean values. Right, with better-figures: the same intervals in grey with integrated gradients in orange and the three model names written next to its dots.](evals/results/before_after_task3.png)
 
-To rerun the test, from `evals/`: `python make_data.py --seed 20261020 --out runs/<new name>`, then `python run.py isolation`, `run.py draw`, `measure.py`, `run.py read` and `analyze.py` on that folder (the usage block at the top of `evals/run.py` lists them in order; `evals/requirements.txt` has the Python packages). Each run's transcript, cost and token counts are in `evals/runs/2026-10-20_seed20261020/`.
+To rerun the test, from `evals/`: `python make_data.py --seed 20261020 --out runs/<new name>`, then `python run.py isolation`, `run.py draw`, `measure.py`, `run.py read` and `analyze.py` on that folder (the usage block at the top of `evals/run.py` lists them in order; `evals/requirements.txt` has the Python packages). Each run's script, figure, caption, cost and token counts are in `evals/runs/2026-10-20_seed20261020/`, with the paths of the machine it ran on replaced by `<repository>` and `<work_root>`. The full session transcripts are not in the repository: `run.py` writes them to a `transcripts/` folder in the run folder, which git ignores.
 <!-- /EVIDENCE -->
 
 ## License

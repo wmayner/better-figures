@@ -50,26 +50,36 @@ def command(arm, prompt, tools=None, budget=10.0):
     return cmd
 
 
-def run(arm, prompt, cwd, out_dir, tools=None, timeout=1800, budget=10.0):
-    """Run a session in cwd; write transcript.jsonl, result.json and command.json to out_dir. Returns the result."""
+def public(text, cwd):
+    """text with this machine's paths replaced by <work_root>, <repository> and ~, for files kept in git."""
+    return (str(text).replace(str(Path(cwd).parent), "<work_root>").replace(str(PLUGIN_ROOT), "<repository>")
+            .replace(os.path.expanduser("~"), "~"))
+
+
+def run(arm, prompt, cwd, out_dir, transcript_dir=None, tools=None, timeout=1800, budget=10.0):
+    """Run a session in cwd. Write result.json, command.json and stderr.txt to out_dir, and the full transcript
+    (transcript.jsonl and its init event, init.json) to transcript_dir, which defaults to out_dir. The
+    transcripts hold this machine's paths and are kept out of git; the other files have them replaced."""
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+    transcript_dir = Path(transcript_dir or out_dir)
+    transcript_dir.mkdir(parents=True, exist_ok=True)
     cmd = command(arm, prompt, tools, budget)
     t0 = time.time()
-    with open(out_dir / "transcript.jsonl", "w") as f, open(out_dir / "stderr.txt", "w") as e:
+    with open(transcript_dir / "transcript.jsonl", "w") as f, open(out_dir / "stderr.txt", "w") as e:
         try:
             p = subprocess.run(cmd, cwd=cwd, env=env(), stdout=f, stderr=e, timeout=timeout)
             code = p.returncode
         except subprocess.TimeoutExpired:
             code = "timeout"
-    events = [json.loads(line) for line in open(out_dir / "transcript.jsonl") if line.strip().startswith("{")]
+    events = [json.loads(line) for line in open(transcript_dir / "transcript.jsonl") if line.strip().startswith("{")]
     result = next((ev for ev in reversed(events) if ev.get("type") == "result"), {})
     init = next((ev for ev in events if ev.get("type") == "system" and ev.get("subtype") == "init"), {})
-    (out_dir / "result.json").write_text(json.dumps(result, indent=1))
-    (out_dir / "init.json").write_text(json.dumps(init, indent=1))
-    (out_dir / "command.json").write_text(json.dumps(dict(
+    (out_dir / "result.json").write_text(public(json.dumps(result, indent=1), cwd))
+    (transcript_dir / "init.json").write_text(json.dumps(init, indent=1))
+    (out_dir / "command.json").write_text(public(json.dumps(dict(
         arm=arm, cwd=str(cwd), exit=code, seconds=round(time.time() - t0, 1),
-        argv=[c if c != prompt else "<prompt>" for c in cmd], prompt=prompt), indent=1))
+        argv=[c if c != prompt else "<prompt>" for c in cmd], prompt=prompt), indent=1), cwd))
     return result, events
 
 
