@@ -1,5 +1,5 @@
 // Draws the SVG parts of summary figures (see summary.css). Load it at the end of <body>:
-//   <script src="../summary.js"></script>
+//   <script src="_kit/summary.js"></script>   (the project's copy; the skill's examples use ../summary.js)
 // 1. Icons: any element with data-icon="model | magnifier | check | cross | arrow | arrow-dashed" gets an inline SVG.
 // 2. Networks: <svg class="net" width="220" height="200" ...> with these attributes (units are "layer.index", from 0):
 //    data-layers="3,5,4,2"      units per layer, drawn left (input) to right (output)

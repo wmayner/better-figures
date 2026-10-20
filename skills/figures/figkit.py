@@ -8,9 +8,9 @@
     fk.label_lines(ax)                # names at the line ends, no legend
     fk.save(fig, "fig1.png")          # runs check() and prints what to fix
 
-Single file on purpose: copy it next to a figure script when the code must run
-somewhere without this skill. Fonts are read from the fonts/ folder next to this
-file; without it they fall back to DejaVu Sans.
+Single file on purpose: the figures skill copies it, with fonts/, into a _kit/
+folder in each project, and figure scripts import that copy. Fonts are read from
+the fonts/ folder next to this file; without it they fall back to DejaVu Sans.
 """
 from pathlib import Path
 

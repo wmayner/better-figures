@@ -9,6 +9,15 @@ The goal is a figure that a busy researcher understands in five seconds, made in
 
 The files named below (`figkit.py`, `render_html.sh`, the CSS and JS, `examples/`, `references/`) are in this skill's directory, `${CLAUDE_SKILL_DIR}`.
 
+**On first use in a project, copy the kit into the project.** `${CLAUDE_SKILL_DIR}` can be a folder in Claude Code's plugin cache whose name includes the plugin's version, so a script or page that points there breaks when the plugin updates, and on a collaborator's machine. Copy `figkit.py`, `fonts/` and the CSS and JS once, into a `_kit/` folder beside the figure scripts, and refer to that copy by a path relative to each script or HTML file. If the project already has a `_kit/` folder, use it.
+
+```
+mkdir -p figures/_kit
+for f in figkit.py fonts diagram.css summary.css summary.js; do cp -R "${CLAUDE_SKILL_DIR}/$f" figures/_kit/; done
+```
+
+`render_html.sh` is a command rather than something a script saves, so run it from `${CLAUDE_SKILL_DIR}`.
+
 Figures go wrong in two ways. They try to show every result, so the figure becomes a table drawn as a plot. And they put the caption's job into the image: definitions, statistics, verdicts, and titles written as sentences. Writing "one idea per figure" doesn't prevent this, because the idea becomes the title and everything is still drawn below it. Reviewing a figure by asking "is every term defined?" makes labels longer. The question to ask is "what can I remove?"
 
 ## 1. Decide before drawing
@@ -59,8 +68,9 @@ Write one standalone script per figure, about 100 lines or fewer. It reads saved
 
 ```python
 import sys
-sys.path.insert(0, "${CLAUDE_SKILL_DIR}")
-import figkit as fk          # for code that must run elsewhere, copy figkit.py (and fonts/) next to the script
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent / "_kit"))   # the project's copy of the kit
+import figkit as fk
 
 fk.use()                     # house style and the Inter font; call after any sns.set_theme, or instead of it
 fig, ax = plt.subplots()     # 7 x 4 in default; don't enlarge to fit more, since text shrinks when the image is scaled
@@ -69,7 +79,7 @@ ax.plot(k, loss_rand, color=fk.GREY, label="random heads")
 ax.set(xscale="log", xlabel="Heads ablated", ylabel="Loss increase (nats)")
 fk.plain_ticks(ax.xaxis)     # 1, 10, 100 rather than powers of ten
 fk.label_lines(ax)           # names at line ends; fk.label_bars(ax) for bar charts
-fk.save(fig, "results/figures/fig1.png")   # prints FIGURE CHECK with anything to fix
+fk.save(fig, "fig1.png")   # prints FIGURE CHECK with anything to fix
 ```
 
 - Colours: `fk.ACCENT` for the claim, `fk.GREY` or `fk.LIGHT` for context, `fk.BLUE` for a second highlighted series, and `fk.CATEGORICAL` only when the categories themselves are the point. Keep each colour's meaning fixed across a set of figures.
@@ -119,7 +129,7 @@ Text:      every string that will appear in the image, listed
 Caption:   bold finding, then what was measured, the numbers and n
 ```
 
-Draw it in HTML with `summary.css` and `summary.js` (the network cartoon and the icons are inline SVG, so headless rendering is reliable), and render with `render_html.sh`. The parts:
+Draw it in HTML that links `_kit/summary.css` and `_kit/summary.js` (the network cartoon and the icons are inline SVG, so headless rendering is reliable), and render with `render_html.sh`. The parts:
 
 | Part | Markup |
 |---|---|
@@ -139,7 +149,7 @@ Draw it in HTML with `summary.css` and `summary.js` (the network cartoon and the
 
 ## 8. Diagrams of a method, pipeline or setup
 
-Don't draw these in matplotlib. Write HTML that links `diagram.css` (cards, pills, numbered steps, chevrons, accent and muted colours, Inter), and render it to a PNG:
+Don't draw these in matplotlib. Write HTML that links `_kit/diagram.css` (cards, pills, numbered steps, chevrons, accent and muted colours, Inter), and render it to a PNG:
 
 ```
 sh ${CLAUDE_SKILL_DIR}/render_html.sh diagram.html diagram.png 1600 500   # width and height of .canvas
@@ -166,6 +176,6 @@ When a figure will live on an HTML page, draw it in HTML and SVG rather than mat
 
 ## Requirements
 
-- `figkit.py` needs matplotlib; seaborn is optional. It loads the Inter font from `fonts/` next to it and falls back to DejaVu Sans.
+- `figkit.py` needs matplotlib; seaborn is optional. It loads the Inter font from `fonts/` next to it, which is why `fonts/` is copied into `_kit/` with it, and falls back to DejaVu Sans.
 - `render_html.sh` needs a headless Chromium: Playwright's headless shell (`uvx playwright install chromium-headless-shell` or `npx playwright install chromium-headless-shell`), Google Chrome or chromium, or a browser path in `$CHROME`.
 - `examples/interactive_dots.html` loads D3 from a CDN (jsDelivr) and Inter from Google Fonts, so the page and its render need a network connection.
