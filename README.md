@@ -1,4 +1,4 @@
-# claude-figures
+# better-figures
 
 A Claude Code skill for making research figures that a busy researcher understands in five seconds. It is written for interpretability researchers who use Claude Code to run experiments and plot the results, though nothing in it is specific to interpretability.
 
@@ -28,17 +28,17 @@ The plugin has two parts.
 As a plugin, inside Claude Code:
 
 ```
-/plugin marketplace add wmayner/claude-figures
-/plugin install figures@wmayner-figures
+/plugin marketplace add wmayner/better-figures
+/plugin install better-figures@better-figures
 ```
 
-On Claude Code 2.1.275 or later, `/plugin install figures --marketplace wmayner/claude-figures` does both in one step.
+On Claude Code 2.1.275 or later, `/plugin install better-figures --marketplace wmayner/better-figures` does both in one step.
 
 Or copy the skill into your personal skills folder:
 
 ```
-git clone https://github.com/wmayner/claude-figures
-cp -r claude-figures/skills/figures ~/.claude/skills/
+git clone https://github.com/wmayner/better-figures
+cp -r better-figures/skills/figures ~/.claude/skills/
 ```
 
 Either way, Claude loads the skill when you ask for a figure. You can also call it directly: `/figures:figures` for the plugin, `/figures` for the copy.

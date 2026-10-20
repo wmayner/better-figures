@@ -1,12 +1,12 @@
 {
-  "name": "wmayner-figures",
+  "name": "better-figures",
   "owner": {
     "name": "Will Mayner"
   },
   "description": "The figures skill for Claude Code: research figures a busy reader understands at a glance.",
   "plugins": [
     {
-      "name": "figures",
+      "name": "better-figures",
       "source": "./",
       "description": "A skill that helps Claude make research figures a busy reader understands at a glance."
     }
