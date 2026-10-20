@@ -1,0 +1,37 @@
+<!doctype html>
+<!-- Claim: activation patching finds the heads that carry the answer by copying one head's output from a clean
+     run into a corrupted run and measuring how much of the answer comes back. Made-up numbers.
+     Render, from this folder: sh ../render_html.sh diagram.html diagram.png 1600 470 -->
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../diagram.css">
+</head><body>
+<div class="canvas" style="height:470px">
+  <div class="col">
+    <div class="step-head"><span class="num">1</span><span class="name">Run two prompts</span></div>
+    <div class="sub">the same sentence with the names swapped</div>
+    <div class="card stack">
+      <div class="row"><span class="pill dark">clean</span><span class="sub">… John gave it to</span><b>Mary</b></div>
+      <div class="row"><span class="pill">corrupted</span><span class="sub">… Mary gave it to</span><b>John</b></div>
+    </div>
+  </div>
+  <div class="chevron" style="align-self:center">›</div>
+  <div class="col">
+    <div class="step-head"><span class="num">2</span><span class="name">Patch one head</span></div>
+    <div class="sub">copy its clean output into the corrupted run</div>
+    <div class="card accent stack">
+      <div class="row"><span class="pill accent">head 7.3</span><span class="sub">clean output</span></div>
+      <div class="row"><span class="pill off">head 7.0</span><span class="pill off">head 7.1</span><span class="sub">left corrupted</span></div>
+    </div>
+  </div>
+  <div class="chevron" style="align-self:center">›</div>
+  <div class="col">
+    <div class="step-head"><span class="num">3</span><span class="name">Measure what comes back</span></div>
+    <div class="sub">logit of Mary minus logit of John</div>
+    <div class="card stack">
+      <div class="bubble">clean <b>3.1</b> · corrupted <b>−2.9</b></div>
+      <div class="bubble accent">head 7.3 patched: <b>2.4</b></div>
+      <div class="good">✓ 88% of the difference restored</div>
+    </div>
+  </div>
+</div>
+</body></html>
