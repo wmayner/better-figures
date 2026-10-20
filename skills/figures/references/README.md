@@ -1,6 +1,6 @@
 # Summary figures to learn from
 
-Section 7 of `SKILL.md` describes the summary figure: the first figure of a paper, card or update, which shows the idea, the method and the result at once, with concrete examples and cartoons and almost no prose. Its rules come from the figures below. Five are from papers by Owain Evans's group; the sixth, from How to Catch an AI Liar, shows a method more than a result, and it is here because its license lets the image ship with this repository.
+Section 7 of `SKILL.md` describes the summary figure: the first figure of a paper, post or update, which shows the idea, the method and the result at once, with concrete examples and cartoons and almost no prose. Its rules come from the figures below. Five are from papers by Owain Evans's group; the sixth, from How to Catch an AI Liar, shows a method more than a result, and it is here because its license lets the image ship with this repository.
 
 ## Licenses and how to get the images
 

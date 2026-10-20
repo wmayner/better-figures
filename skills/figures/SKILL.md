@@ -69,10 +69,10 @@ There are no annotation boxes, no paragraphs, no rotated tick labels, no variabl
 ## 4. Draw
 
 Choose the medium first:
-- A figure that will sit on an HTML page (a results page or an artifact): use HTML, as described in section 9.
+- A figure that will sit on an HTML page (a results page or an artifact): use HTML by default, as described in section 9. Use matplotlib when the page can't run scripts (a GitHub README, a forum post, most wikis and note apps) or the venue wants static images.
 - A figure for a paper, or a quick look during analysis: use matplotlib, as below.
 - A diagram of a method: use HTML, as described in section 8.
-- The summary figure that opens a card, deck, update or paper: use HTML, as described in section 7.
+- The summary figure that opens a post, deck, update or paper: use HTML, as described in section 7.
 
 Write one standalone script per figure, about 100 lines or fewer. It reads saved tidy data (CSV or parquet) and does nothing else. Don't draw inside the analysis script: helpers built to take any number of rows let rows pile up.
 
@@ -92,6 +92,7 @@ fk.label_lines(ax)           # names at line ends; fk.label_bars(ax) for bar cha
 fk.save(fig, "fig1.png")   # prints FIGURE CHECK with anything to fix
 ```
 
+- The Inter font and the palette below are defaults; keep them unless your venue or page requires otherwise. To match a venue's font or a lab's palette, set `rcParams` or the colours after `fk.use()`, and still keep one accent colour with the rest grey.
 - Colours: `fk.ACCENT` for the claim, `fk.GREY` or `fk.LIGHT` for context, `fk.BLUE` for a second highlighted series, and `fk.CATEGORICAL` only when the categories themselves are the point. Keep each colour's meaning fixed across a set of figures.
 - With seaborn, pass `saturation=1` to bar plots and `palette={level: colour}` so the accent stays exact.
 - Log axes need `fk.plain_ticks`. Draw the reference line (chance, threshold, y = x) thin and grey, and explain it in the caption.
@@ -99,7 +100,7 @@ fk.save(fig, "fig1.png")   # prints FIGURE CHECK with anything to fix
 
 ## 5. Check it once (cheap; do it every time)
 
-1. `fk.save` prints `FIGURE CHECK`. Fix every item, or say in one line why it's deliberate.
+1. `fk.save` prints `FIGURE CHECK`. Fix every item, or say in one line why it's deliberate. The limits are defaults: when a figure needs more, change them for that figure with `fk.save(fig, path, words=35, max_panels=6)` (also `max_series`, `min_pt` and `title_words`).
 2. Read the PNG once and answer, one line each:
    - Without the caption, what does the figure say? Is that the Claim?
    - What can you remove (text, series, panels, legend, gridlines) without losing the claim? Remove it.
@@ -112,9 +113,9 @@ Spawn one subagent that has none of your context. Give it only the PNG path and 
 
 ## 7. The summary figure (Figure 1)
 
-The first figure of every card, deck, update or paper about a result is a summary figure. It shows the idea, the method and the result at once, with concrete examples and cartoons and almost no prose, so that a busy reader who looks at nothing else still knows what was done and what was found. It comes before any plot; quantitative results go in the figures after it.
+By default, the first figure of a post, deck, update or paper about a result is a summary figure, unless your venue or page requires otherwise. It shows the idea, the method and the result at once, with concrete examples and cartoons and almost no prose, so that a busy reader who looks at nothing else still knows what was done and what was found. It comes before any plot; quantitative results go in the figures after it.
 
-The grammar comes from the first figures of five papers from Owain Evans's group: Connecting the Dots ([arXiv:2406.14546](https://arxiv.org/abs/2406.14546)), the Reversal Curse ([arXiv:2309.12288](https://arxiv.org/abs/2309.12288)), Subliminal Learning ([arXiv:2507.14805](https://arxiv.org/abs/2507.14805)), Emergent Misalignment ([arXiv:2502.17424](https://arxiv.org/abs/2502.17424)) and Tell Me About Yourself ([arXiv:2501.11120](https://arxiv.org/abs/2501.11120)). Look at one before drawing. `${CLAUDE_SKILL_DIR}/references/README.md` has notes on what each does well. One of the figures, from How to Catch an AI Liar, ships in that folder; `sh ${CLAUDE_SKILL_DIR}/references/fetch-references.sh` downloads the pages with the other five from arXiv, for personal use.
+The grammar comes from the first figures of five papers from Owain Evans's group: Connecting the Dots ([arXiv:2406.14546](https://arxiv.org/abs/2406.14546)), the Reversal Curse ([arXiv:2309.12288](https://arxiv.org/abs/2309.12288)), Subliminal Learning ([arXiv:2507.14805](https://arxiv.org/abs/2507.14805)), Emergent Misalignment ([arXiv:2502.17424](https://arxiv.org/abs/2502.17424)) and Tell Me About Yourself ([arXiv:2501.11120](https://arxiv.org/abs/2501.11120)). Before drawing, look at `${CLAUDE_SKILL_DIR}/examples/summary_example.png`, and at one of the five pages in `${CLAUDE_SKILL_DIR}/references/fetched/` if that folder exists (`sh ${CLAUDE_SKILL_DIR}/references/fetch-references.sh` downloads them from arXiv, for personal use). `${CLAUDE_SKILL_DIR}/references/README.md` has notes on what each does well. A figure from How to Catch an AI Liar also ships in `references/`; it shows how to draw chat bubbles and a classifier, not a layout to copy.
 
 Rules:
 - **Two to four panels, laid out in one of two ways.** Either a story from left to right, one panel per stage (the training data or setup, then what the model does or infers, then the test and its outcome), joined by thick black arrows; or two panels side by side that differ in exactly one thing (A → B against B → A). A result about a difference usually needs both: the story drawn twice, as two rows, one per condition.
@@ -178,7 +179,7 @@ See `examples/diagram.html`.
 
 ## 9. Figures for a page: HTML, with a PNG rendered from the same file
 
-When a figure will live on an HTML page, draw it in HTML and SVG rather than matplotlib, for two reasons. First, Claude's design judgment is much better in HTML and CSS. Second, a page can show details on demand. The static view stays clean, and the exact values, intervals, n, verdicts and identifiers appear on hover or click. That takes away the pull to print statistics in the image.
+When a figure will live on an HTML page that can run scripts, draw it in HTML and SVG rather than matplotlib by default, unless your venue or page requires otherwise. There are two reasons. First, Claude's design judgment is much better in HTML and CSS. Second, a page can show details on demand. The static view stays clean, and the exact values, intervals, n, verdicts and identifiers appear on hover or click. That takes away the pull to print statistics in the image.
 
 - Start from `examples/interactive_dots.html`. It has colour tokens for light and dark mode, the Inter font, D3 from a CDN, the data inline as JSON, and a tooltip. Have your Python script write the data JSON into a copy of the file, and adapt `draw()`.
 - The static view obeys sections 2 and 3. The tooltip, or a panel that opens on click, carries everything else.
