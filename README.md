@@ -16,9 +16,11 @@ The plugin has two parts.
 
 - write a short plan before drawing: the one claim the figure argues, the plot template that makes that argument, the one comparison it shows, and every string that will appear in the image;
 - keep definitions, n, intervals and verdicts in the caption, with axis labels and series names next to the data the only text in the image;
+- write each caption as the takeaway in bold, then the key numbers, then what a reader needs to interpret the figure;
 - draw with a matplotlib house style (`figkit.py`) that labels lines and bars directly and runs a check on save, which prints what to fix: too many words, a legend that could be direct labels, sentence titles, small or overlapping text;
 - draw figures for web pages in HTML and SVG, with exact values in a tooltip, and render a PNG from the same file for slides;
 - draw method diagrams and summary figures (the Figure 1 that opens a paper) from HTML parts: chat boxes, a model icon, thought bubbles, network cartoons, ablation marks, check and cross badges;
+- draw a story figure when a result compares several methods on one task: one tall image with the data, the task, the result and how each method works, for a reader who sees nothing else;
 - look at the rendered PNG once, and for figures going to a mentor or a paper, ask a fresh subagent with none of the context what the figure says.
 
 **The workflow** ([`WORKFLOW.md`](WORKFLOW.md)) covers the part a skill can't enforce on its own: figures are designed at the spec stage, before an experiment runs. You approve each figure as its plan block, or as a mock drawn from fake data, never as a prose description of its encodings. Each figure argues one claim, a set of experiments gets at most five figures, and they are published together on one page, each with a short caption. `WORKFLOW.md` ends with a block of rules you can paste into your own `CLAUDE.md`.
@@ -61,6 +63,7 @@ Either way, Claude loads the skill when you ask for a figure. You can also call 
 | `diagram.html` | method diagram: the three steps of activation patching |
 | `summary_example.html` | summary figure, shown above; `summary_example_check.md` records how three fresh readers read it |
 | `summary_components.html` | each HTML part of a summary figure once, to copy from |
+| `story_figure.html` | story figure: which of six methods finds the circuit planted in a toy network, with the data, the task and how each method works; `story_figure_check.md` records how a fresh reader read it |
 
 To re-render them, run the Python scripts with any working directory, and `sh skills/figures/render_html.sh <file>.html <file>.png <width> <height>` for the HTML files (the size of each is in a comment at its top).
 

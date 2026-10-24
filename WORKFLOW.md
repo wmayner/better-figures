@@ -16,7 +16,7 @@ Figures go wrong when no one decides which result each one is for. Sometimes the
 1. **Draw the approved figures** with the skill. Fill in each claim from the actual results; if a result goes the other way, the claim says so.
 2. **Report every figure that was dropped or changed**, and why.
 3. **Save the PNG, a PDF, and the plotted data** next to each other, so a figure can be redrawn without rerunning anything.
-4. **Publish the figures together on one page**, each with a caption of at most three sentences: what is plotted, how it was measured, n, and what the error bars are. The page holds the figures and their captions and nothing else; other results go in tables on the results page. The figures are a deliverable in their own right, separate from any written report, which can show them too.
+4. **Publish the figures together on one page**, each with a caption written as in section 3a of `SKILL.md`: the takeaway in bold, up to three sentences on the finding, then what is plotted, how it was measured, n, and what the error bars are. The page holds the figures and their captions and nothing else; other results go in tables on the results page. The figures are a deliverable in their own right, separate from any written report, which can show them too.
 
 ## What every figure must do
 
@@ -41,8 +41,8 @@ Paste this into your project's `CLAUDE.md` (or `~/.claude/CLAUDE.md`) so the rul
   every string in the image, caption) or as a mock drawn from fake data. A prose description
   of the encodings is not enough to approve.
 - No experiment runs before I approve its spec, figures included.
-- Each figure stands on its own with a caption of at most three sentences. Definitions,
-  statistics, n and verdicts go in the caption, not the image.
+- Each figure stands on its own with a caption that opens with the takeaway in bold.
+  Definitions, statistics, n and verdicts go in the caption, not the image.
 - Publish the figures together on one page, each with its caption. Report any figure that was
   dropped or changed after the results came in, and why.
 ```
