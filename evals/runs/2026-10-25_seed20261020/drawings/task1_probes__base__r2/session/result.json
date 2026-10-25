@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 87208,
+ "stop_reason": "end_turn",
+ "session_id": "58e759e5-045d-4c19-975e-50e26be08d84",
+ "total_cost_usd": 0.448949,
+ "usage": {
+  "input_tokens": 20,
+  "cache_creation_input_tokens": 27655,
+  "cache_read_input_tokens": 279045,
+  "output_tokens": 8591,
+  "output_tokens_details": {
+   "thinking_tokens": 3274
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 27655,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 729,
+    "cache_read_input_tokens": 39921,
+    "cache_creation_input_tokens": 598,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 598
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 20,
+   "outputTokens": 8591,
+   "cacheReadInputTokens": 279045,
+   "cacheCreationInputTokens": 27655,
+   "webSearchRequests": 0,
+   "costUSD": 0.448949,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 3274,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 13,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've written `make_figure.py`, which reads `data.csv` and saves `figure.png`, and `caption.md`. The script runs cleanly and I checked the rendered image: no labels overlap.\n\n**What the figure shows:** one line per concept, plotting probe accuracy across the 24 layers (0\u201323), with its confidence band and a dashed line at chance. A dot on each line marks where that concept becomes decodable, and each line is labelled with the concept's name and that layer. The concepts appear one after another:\n\n| Concept | Decodable from | Reaches its plateau |\n|---|---|---|\n| part of speech | layer 1 | ~layer 7 |\n| sentiment | layer 5 | ~layer 11 |\n| named entity type | layer 10 | ~layer 17 |\n| statement truthfulness | layer 17 | not reached (still rising at layer 23, 91%) |\n\n**How \"becomes decodable\" is defined:** the first layer from which the lower end of the confidence interval stays above chance at every later layer. Requiring it to stay above chance stops a brief early rise from counting. For example, truthfulness's lower bound edges above chance at layer 14 but drops back below at layers 15\u201316, so it isn't marked until layer 17. The caption states this definition.\n\n**Assumptions to check:**\n- **Chance is 50%.** I assumed each probe is a balanced two-way classification, because every concept starts at about 0.50 at layer 0. If any task has more classes or unbalanced classes, change `CHANCE` in the script, and the onset layers will change with it.\n- **Confidence level.** The CSV doesn't say what level `ci_low`/`ci_high` are, so the caption just says \"confidence interval\". The band widths vary too much to be simple 95% intervals for 2,000 examples, so they may come from bootstrapping. Add the level and method to the caption if you know them.\n- **Colours not machine-checked.** I couldn't run the colour-blind-safety checker because Node isn't installed here. The four colours come from a palette that's documented as passing for line charts, and every line is labelled directly, so you don't need to tell them apart by colour.",
+ "ttft_ms": 1594,
+ "type": "result",
+ "duration_ms": 93863,
+ "uuid": "4e81442c-1833-491a-a5c6-b930e510ac75",
+ "ttft_stream_ms": 1174,
+ "time_to_request_ms": 169,
+ "first_content_frame_ms": 1175,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 20,
+   "outputTokens": 8591,
+   "cacheReadInputTokens": 279045,
+   "cacheCreationInputTokens": 27655,
+   "webSearchRequests": 0,
+   "costUSD": 0.448949,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 3274,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

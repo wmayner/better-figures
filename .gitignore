@@ -3,3 +3,4 @@ __pycache__/
 .DS_Store
 skills/figures/references/fetched/
 evals/runs/*/transcripts/
+evals/runs/*/drawings/*/files/_kit/fonts/

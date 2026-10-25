@@ -1,0 +1,11 @@
+task,arm,mean_words,runs,reader_yes,reader_partly,reader_no,mean_cost_usd,mean_total_tokens,mean_output_tokens,mean_words_body,with_title
+task1_probes,base,41.0,2,2,0,0,0.4571821,358958.5,8386.5,29.5,2
+task1_probes,plugin,30.0,2,2,0,0,0.613102,562207.0,10520.0,14.0,2
+task2_heads,base,44.5,2,2,0,0,0.4338854,343267.5,7589.0,29.0,0
+task2_heads,plugin,20.5,2,2,0,0,0.44136329999999996,486472.5,5602.5,4.5,2
+task3_attribution,base,35.5,2,2,0,0,0.28691259999999996,230091.0,4416.5,14.0,2
+task3_attribution,plugin,19.0,2,2,0,0,0.3106768,225246.0,3432.0,6.0,2
+task4_set,base,19.5,6,0,0,0,0.45254189999999994,274757.5,9018.0,10.5,6
+task4_set,plugin,19.0,6,0,0,0,0.4592211,316082.5,6780.5,5.666666666666667,6
+task5_column,base,16.5,2,0,0,0,0.5782559,425893.0,12001.5,12.5,0
+task5_column,plugin,18.0,2,0,0,0,0.5848152,538556.5,9685.0,12.0,1

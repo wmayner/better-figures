@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 114383,
+ "stop_reason": "end_turn",
+ "session_id": "eabafc92-d851-4d61-808e-211874699a59",
+ "total_cost_usd": 0.5594164,
+ "usage": {
+  "input_tokens": 22,
+  "cache_creation_input_tokens": 35953,
+  "cache_read_input_tokens": 388222,
+  "output_tokens": 9703,
+  "output_tokens_details": {
+   "thinking_tokens": 4813
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 35953,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 796,
+    "cache_read_input_tokens": 48516,
+    "cache_creation_input_tokens": 301,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 301
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 22,
+   "outputTokens": 9703,
+   "cacheReadInputTokens": 388222,
+   "cacheCreationInputTokens": 35953,
+   "webSearchRequests": 0,
+   "costUSD": 0.5594164,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 4813,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 17,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've written `make_figure.py`, which reads `data.csv` and saves `figure.png`, and put the caption in `caption.md`. The script runs cleanly and the figure passes the style checker's automated check.\n\n**The figure:** each concept's probe accuracy is plotted by layer as a line, with its 95% confidence interval shaded. Each concept is named next to its own rising section, where the curves are far apart; at the right end they bunch together. A dot marks where each concept becomes decodable, which the figure defines as the first layer where accuracy reaches 80%; a dotted line shows that 80% level.\n\n| Concept | First layer at 80% or above |\n|---|---|\n| Part of speech | 4 |\n| Sentiment | 9 |\n| Named entity type | 15 |\n| Statement truthfulness | 21 |\n\nThe title is \"Part of speech reaches 80% at layer 4, truthfulness at layer 21\". The script calculates those numbers from the data, so the title stays correct if the data changes.\n\n**The caption** opens with that ordering in bold. It then gives a few numbers:\n- All four probes start at 49\u201353% at layer 0.\n- Each concept goes from about 50% to its plateau of 91\u201397% within about five layers.\n- At the last layer, all four end up within 5 points of each other.\n\nIt also says what the lines, bands and 2,000 test examples are, and how \"decodable\" is defined.\n\n**Things to check:**\n- **The 80% threshold is my choice.** It's one constant (`THRESHOLD`) at the top of the script. Part of speech only just reaches it at layer 4 (80.4%). Requiring the whole confidence interval to be above 80% would move it to layer 5; the other three concepts wouldn't change.\n- **The caption doesn't say:**\n  - what kind of probe was used;\n  - whether 50% is chance accuracy for these tasks (all four start there, which suggests balanced two-way tasks, but the data doesn't say);\n  - how the confidence intervals were computed.\n\n  Please add those details if you have them.\n- **Style kit:** the figure uses a small style kit (`figkit.py` and the Inter font). I copied it into `_kit/` next to the script, so the script runs on its own.\n\nFiles are in `<work_root>/3dc6c846/`:\n- `make_figure.py`\n- `figure.png`\n- `caption.md`\n- `_kit/`",
+ "ttft_ms": 2661,
+ "type": "result",
+ "duration_ms": 124931,
+ "uuid": "c6556890-3bd1-47f6-a296-24465e601778",
+ "ttft_stream_ms": 2068,
+ "time_to_request_ms": 200,
+ "first_content_frame_ms": 2069,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 22,
+   "outputTokens": 9703,
+   "cacheReadInputTokens": 388222,
+   "cacheCreationInputTokens": 35953,
+   "webSearchRequests": 0,
+   "costUSD": 0.5594164,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 4813,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

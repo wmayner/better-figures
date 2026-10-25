@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 63894,
+ "stop_reason": "end_turn",
+ "session_id": "aad016ac-1b87-4684-9cb7-12666601a90f",
+ "total_cost_usd": 0.3658674,
+ "usage": {
+  "input_tokens": 14,
+  "cache_creation_input_tokens": 23607,
+  "cache_read_input_tokens": 167277,
+  "output_tokens": 7175,
+  "output_tokens_details": {
+   "thinking_tokens": 1580
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 23607,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 952,
+    "cache_read_input_tokens": 34812,
+    "cache_creation_input_tokens": 1116,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1116
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 14,
+   "outputTokens": 7175,
+   "cacheReadInputTokens": 167277,
+   "cacheCreationInputTokens": 23607,
+   "webSearchRequests": 0,
+   "costUSD": 0.3658674,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 1580,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 13,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I wrote the three scripts and the captions file, and ran all three scripts. Each one reads `data.csv` and saves its figure: `figure1.png`, `figure2.png` and `figure3.png`. I looked at all three images to check them. The data was clean: 3 conditions \u00d7 5 seeds, sycophancy measured every 100 steps from 0 to 2000, and helpfulness measured once at step 2000.\n\n**What the figures show**\n- **Figure 1, final sycophancy:** the rate drops from 37.2% with no honesty data to 20.5% with honesty data, and to 8.6% with honesty data plus steering.\n- **Figure 2, sycophancy over training:** all three conditions start near 40%. Without honesty data the rate stays flat. With honesty data it levels off near 21%. With steering added it falls faster and ends below 10%.\n- **Figure 3, final helpfulness:** about the same in every condition (7.08, 6.97 and 6.90), and the confidence intervals overlap.\n\n**How they're drawn**\n- **Same look in all three:** each condition keeps the same order and the same colour in every figure, so readers can match them across the write-up.\n- **Figures 1 and 3:** the faint dots are the five individual seeds. The solid marker with an error bar is the mean and its 95% confidence interval. With only five seeds, showing each one is more honest than a bar chart.\n- **Figure 2:** each line is the mean across seeds, with a shaded 95% confidence band. Each line has its final value labelled at the right end, and there is also a legend.\n- **Figure 1 axis:** the y-axis starts at 0 because sycophancy is a percentage.\n- **Figure 3 axis:** the y-axis covers the full 1\u201310 scale. Zooming in would make gaps of about 0.1 point look like real differences. The downside is that the spread between seeds is hard to see. If you'd rather zoom in, change `ax.set_ylim(1, 10)` in `make_figure3.py`.\n\n**Caveat on the Figure 3 caption:** it says lower sycophancy \"comes without a clear loss in helpfulness.\" That's based only on overlapping confidence intervals across five seeds, not a formal test. It means no large drop was seen, not that the conditions are shown to be equally helpful. You may want to soften that sentence or add a test.\n\nFiles are in `<work_root>/1259bb05/`:\n- make_figure1.py\n- make_figure2.py\n- make_figure3.py\n- figure1.png\n- figure2.png\n- figure3.png\n- captions.md",
+ "ttft_ms": 1530,
+ "type": "result",
+ "duration_ms": 73670,
+ "uuid": "7582ee25-b4bc-40d4-b879-a0eb4ad0bdcc",
+ "ttft_stream_ms": 925,
+ "time_to_request_ms": 168,
+ "first_content_frame_ms": 925,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 14,
+   "outputTokens": 7175,
+   "cacheReadInputTokens": 167277,
+   "cacheCreationInputTokens": 23607,
+   "webSearchRequests": 0,
+   "costUSD": 0.3658674,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 1580,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

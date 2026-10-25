@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 130761,
+ "stop_reason": "end_turn",
+ "session_id": "10d27cea-89db-40e8-b250-bfebfbb8b9b7",
+ "total_cost_usd": 0.6667875999999999,
+ "usage": {
+  "input_tokens": 34,
+  "cache_creation_input_tokens": 38985,
+  "cache_read_input_tokens": 640158,
+  "output_tokens": 11337,
+  "output_tokens_details": {
+   "thinking_tokens": 5806
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 38985,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 724,
+    "cache_read_input_tokens": 49709,
+    "cache_creation_input_tokens": 1597,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1597
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 34,
+   "outputTokens": 11337,
+   "cacheReadInputTokens": 640158,
+   "cacheCreationInputTokens": 38985,
+   "webSearchRequests": 0,
+   "costUSD": 0.6667875999999999,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 5806,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 19,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've written `make_figure.py`, which reads `data.csv` and saves `figure.png`, and the caption is in `caption.md`. The script runs cleanly.\n\nThe figure has one panel with a line of probe accuracy by layer for each concept, and shaded bands for the confidence intervals from the CSV. Each concept's name sits beside its curve rather than in a legend. A dot and number mark the layer where each concept becomes decodable:\n\n| Concept | Decodable from layer | Accuracy at layer 23 |\n|---|---|---|\n| Part of speech | 4 | 93% |\n| Sentiment | 9 | 96% |\n| Named entity type | 15 | 94% |\n| Statement truthfulness | 21 | 91% (still rising) |\n\nThe title reads \"Part of speech is decodable from layer 4, statement truthfulness from 21\". The script calculates the numbers in the title and markers from the data, so they update if `data.csv` changes.\n\nThree things you should check:\n- **What \"decodable\" means is my choice.** I defined it as the first layer where accuracy reaches 80% (`THRESHOLD` at the top of the script). The threshold is applied to the accuracy value itself, not the lower end of its interval. At part of speech's marked layer, accuracy is 80.4% [77.4%, 83.4%], and the caption says so. A different threshold would shift the marked layers.\n- **The caption doesn't name the interval type.** The CSV gives `ci_low`/`ci_high` without saying whether they are 95% intervals or how they were computed, so the caption only calls them \"the confidence intervals given with the data\". Add the level and method if you know them.\n- **Chance level is assumed.** All four probes start near 50%, which looks like balanced two-class tasks. The caption only says the dotted line marks 50% and doesn't claim that's chance. Give the probe type and task setup if you want them in the caption.\n\nTo keep the script self-contained, I copied a small plotting helper (`figkit.py` and its fonts) into a `_kit/` folder next to it. That folder needs to stay with the script.",
+ "ttft_ms": 3077,
+ "type": "result",
+ "duration_ms": 144141,
+ "uuid": "5aa8c792-6704-4c22-aff1-1904be6d8066",
+ "ttft_stream_ms": 2438,
+ "time_to_request_ms": 159,
+ "first_content_frame_ms": 2439,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 34,
+   "outputTokens": 11337,
+   "cacheReadInputTokens": 640158,
+   "cacheCreationInputTokens": 38985,
+   "webSearchRequests": 0,
+   "costUSD": 0.6667875999999999,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 5806,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

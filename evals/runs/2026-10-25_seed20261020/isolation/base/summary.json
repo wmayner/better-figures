@@ -1,0 +1,44 @@
+{
+ "arm": "base",
+ "plugins": [
+  {
+   "name": "cc-plugin-agents-md",
+   "path": "builtin",
+   "source": "cc-plugin-agents-md@builtin"
+  },
+  {
+   "name": "cc-plugin-telemetry",
+   "path": "builtin",
+   "source": "cc-plugin-telemetry@builtin"
+  },
+  {
+   "name": "cc-plugin-plugin-authoring",
+   "path": "builtin",
+   "source": "cc-plugin-plugin-authoring@builtin"
+  }
+ ],
+ "skills": [
+  "deep-research",
+  "design",
+  "design-sync",
+  "dataviz",
+  "update-config",
+  "verify",
+  "debug",
+  "code-review",
+  "simplify",
+  "batch",
+  "fewer-permission-prompts",
+  "doctor",
+  "loop",
+  "schedule",
+  "claude-api",
+  "workflow-authoring",
+  "run",
+  "run-skill-generator",
+  "plugin-authoring"
+ ],
+ "mcp_servers": [],
+ "memory_paths": null,
+ "answer": "1. **Skills available through the Skill tool:**\n   - dataviz\n   - update-config\n   - keybindings-help\n   - code-review\n   - simplify\n   - fewer-permission-prompts\n   - loop\n   - schedule\n   - claude-api\n   - workflow-authoring\n   - run\n   - plugin-authoring\n   - init\n   - security-review\n\n2. **Plugins loaded:** None are listed in my context. No skills have a `plugin:skill` name, and nothing names a loaded plugin.\n\n3. **MCP servers or MCP tools:** None. No MCP servers are listed, and none of my tools (direct or deferred) have MCP-style names. MCP only comes up inside skill descriptions, such as `claude-api` mentioning MCP as a topic and `fewer-permission-prompts` mentioning MCP tool calls.\n\n4. **CLAUDE.md, memory files, or other user or project instructions:** None. There's no CLAUDE.md or memory file in my context. What I do have is system or harness context: the auto-attached email reminder, the git commit and pull request attribution reminder, the environment details, and the bypass-permissions guidance.\n\n5. **Instructions or guidance for making figures or plots:** Only the description of the **dataviz** skill, which appears in the skill list. It says, in part:\n\n   > \"Use this skill whenever you are about to create ANY chart, graph, plot, dashboard, or data visualization, in ANY output medium \u2014 an HTML or React artifact, inline SVG, plotting code in any library (matplotlib, plotly, d3, Recharts, \u2026), an image/PNG you will render and upload, or a chart shared into Slack. Read it BEFORE writing the first line of chart code, choosing chart colors, building a stat tile / meter / KPI row, or laying out a dashboard.\"\n\n   It also says that when the output goes to a first-party document connector that renders live charts, I should \"hand it the rows (inline, or as an uploaded data file the chart cites) rather than a rendered PNG/SVG.\" It mentions a validated default palette in `references/palette.md`. I haven't loaded the skill, so I don't have its full contents. Beyond that description, nothing in my context gives figure or plotting instructions."
+}

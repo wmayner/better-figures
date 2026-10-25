@@ -1,0 +1,31 @@
+{
+ "arm": "plugin",
+ "cwd": "<work_root>/b9dc838b",
+ "exit": 0,
+ "seconds": 103.1,
+ "argv": [
+  "claude",
+  "-p",
+  "<prompt>",
+  "--model",
+  "claude-opus-5-5",
+  "--effort",
+  "high",
+  "--setting-sources",
+  "local",
+  "--strict-mcp-config",
+  "--permission-mode",
+  "bypassPermissions",
+  "--output-format",
+  "stream-json",
+  "--verbose",
+  "--no-session-persistence",
+  "--max-budget-usd",
+  "10.0",
+  "--settings",
+  "{\"autoMemoryEnabled\": false}",
+  "--plugin-dir",
+  "<repository>"
+ ],
+ "prompt": "data.csv holds probe accuracy at each layer of a language model for four concepts. Make a figure for one column of a two-column paper, 3.25 inches wide, showing where each concept becomes decodable. Write a Python script make_figure.py that reads data.csv and saves figure.pdf and figure.png, and write a caption for the figure in caption.md."
+}

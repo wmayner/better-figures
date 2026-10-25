@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 72478,
+ "stop_reason": "end_turn",
+ "session_id": "4881fe9e-f308-4d5c-b84e-f070eebc7135",
+ "total_cost_usd": 0.3846058,
+ "usage": {
+  "input_tokens": 20,
+  "cache_creation_input_tokens": 27702,
+  "cache_read_input_tokens": 309649,
+  "output_tokens": 5049,
+  "output_tokens_details": {
+   "thinking_tokens": 911
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 27702,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 619,
+    "cache_read_input_tokens": 39884,
+    "cache_creation_input_tokens": 681,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 681
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 20,
+   "outputTokens": 5049,
+   "cacheReadInputTokens": 309649,
+   "cacheCreationInputTokens": 27702,
+   "webSearchRequests": 0,
+   "costUSD": 0.3846058,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 911,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 14,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've made the figure, the script and the caption. The figure is a layer \u00d7 head heatmap, and it shows that three of the 144 heads matter far more than the rest.\n\n- **What it shows:** Head 9.6 raises loss by 1.25 nats when ablated, head 9.9 by 0.91 and head 10.0 by 0.72. The next largest is head 10.5, at 0.064, so there's a gap of more than 10\u00d7. The three big heads are named in their cells in layer.head form. The title, \"Only 3 of 144 heads raised loss by over 0.1 nats\", is worked out from the data in the script.\n- **Something the colours hide:** The other 141 heads look almost white, but they aren't all zero. 45 of them are more than twice their standard error, and together they add up to 46% of the total effect summed over all heads. The caption says this so the figure doesn't overstate how concentrated the effect is.\n- **Negative values:** 20 heads have small negative values, down to \u22120.022 nats. The colour scale starts at 0, so they're drawn white, and the caption says so.\n\n**Please add to the caption:** data.csv doesn't say which model, task or ablation method (zero, mean or resample) was used, so the caption leaves them out.\n\n**Files:**\n- `make_figure.py`: reads `data.csv` and saves `figure.png`. It needs pandas, matplotlib and seaborn, and imports a small plotting-style module from `_kit/`, which I copied into the folder. Keep `_kit/` next to the script.\n- `figure.png`\n- `caption.md`: a bold one-sentence takeaway with the key numbers, then how to read the plot (cells, shading, 500 prompts, labels).",
+ "ttft_ms": 6402,
+ "type": "result",
+ "duration_ms": 83331,
+ "uuid": "81de3b00-739a-4703-8e73-7370eecb4000",
+ "ttft_stream_ms": 6097,
+ "time_to_request_ms": 181,
+ "first_content_frame_ms": 6098,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 20,
+   "outputTokens": 5049,
+   "cacheReadInputTokens": 309649,
+   "cacheCreationInputTokens": 27702,
+   "webSearchRequests": 0,
+   "costUSD": 0.3846058,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 911,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

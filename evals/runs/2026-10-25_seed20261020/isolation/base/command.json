@@ -1,0 +1,29 @@
+{
+ "arm": "base",
+ "cwd": "<work_root>/b430e0cb",
+ "exit": 0,
+ "seconds": 10.8,
+ "argv": [
+  "claude",
+  "-p",
+  "<prompt>",
+  "--model",
+  "claude-opus-5-5",
+  "--effort",
+  "high",
+  "--setting-sources",
+  "local",
+  "--strict-mcp-config",
+  "--permission-mode",
+  "bypassPermissions",
+  "--output-format",
+  "stream-json",
+  "--verbose",
+  "--no-session-persistence",
+  "--max-budget-usd",
+  "2",
+  "--settings",
+  "{\"autoMemoryEnabled\": false}"
+ ],
+ "prompt": "Answer from your context only; do not use any tools. 1. List every skill available to you through the Skill tool, by name. 2. List every plugin loaded. 3. List every MCP server or MCP tool. 4. Quote verbatim any CLAUDE.md, memory file or other user or project instructions in your context, or say 'none'. 5. Do you have any instructions or guidance about how to make figures or plots? If so, quote where they come from."
+}

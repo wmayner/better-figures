@@ -1,0 +1,331 @@
+condition,seed,step,measure,value
+no honesty data,0,0,sycophancy_rate_percent,38.94
+no honesty data,0,100,sycophancy_rate_percent,38.28
+no honesty data,0,200,sycophancy_rate_percent,37.81
+no honesty data,0,300,sycophancy_rate_percent,38.45
+no honesty data,0,400,sycophancy_rate_percent,37.4
+no honesty data,0,500,sycophancy_rate_percent,38.93
+no honesty data,0,600,sycophancy_rate_percent,38.9
+no honesty data,0,700,sycophancy_rate_percent,39.62
+no honesty data,0,800,sycophancy_rate_percent,38.23
+no honesty data,0,900,sycophancy_rate_percent,37.48
+no honesty data,0,1000,sycophancy_rate_percent,36.8
+no honesty data,0,1100,sycophancy_rate_percent,38.66
+no honesty data,0,1200,sycophancy_rate_percent,38.94
+no honesty data,0,1300,sycophancy_rate_percent,39.35
+no honesty data,0,1400,sycophancy_rate_percent,37.94
+no honesty data,0,1500,sycophancy_rate_percent,37.95
+no honesty data,0,1600,sycophancy_rate_percent,38.01
+no honesty data,0,1700,sycophancy_rate_percent,38.19
+no honesty data,0,1800,sycophancy_rate_percent,37.26
+no honesty data,0,1900,sycophancy_rate_percent,38.24
+no honesty data,0,2000,sycophancy_rate_percent,36.5
+no honesty data,0,2000,helpfulness_1_to_10,6.97
+no honesty data,1,0,sycophancy_rate_percent,39.98
+no honesty data,1,100,sycophancy_rate_percent,40.23
+no honesty data,1,200,sycophancy_rate_percent,40.1
+no honesty data,1,300,sycophancy_rate_percent,39.4
+no honesty data,1,400,sycophancy_rate_percent,39.11
+no honesty data,1,500,sycophancy_rate_percent,38.62
+no honesty data,1,600,sycophancy_rate_percent,39.68
+no honesty data,1,700,sycophancy_rate_percent,38.35
+no honesty data,1,800,sycophancy_rate_percent,41.98
+no honesty data,1,900,sycophancy_rate_percent,40.47
+no honesty data,1,1000,sycophancy_rate_percent,40.82
+no honesty data,1,1100,sycophancy_rate_percent,38.3
+no honesty data,1,1200,sycophancy_rate_percent,40.54
+no honesty data,1,1300,sycophancy_rate_percent,41.59
+no honesty data,1,1400,sycophancy_rate_percent,39.95
+no honesty data,1,1500,sycophancy_rate_percent,39.27
+no honesty data,1,1600,sycophancy_rate_percent,38.01
+no honesty data,1,1700,sycophancy_rate_percent,37.9
+no honesty data,1,1800,sycophancy_rate_percent,37.34
+no honesty data,1,1900,sycophancy_rate_percent,39.56
+no honesty data,1,2000,sycophancy_rate_percent,39.04
+no honesty data,1,2000,helpfulness_1_to_10,7.32
+no honesty data,2,0,sycophancy_rate_percent,39.19
+no honesty data,2,100,sycophancy_rate_percent,39.16
+no honesty data,2,200,sycophancy_rate_percent,38.59
+no honesty data,2,300,sycophancy_rate_percent,36.75
+no honesty data,2,400,sycophancy_rate_percent,37.48
+no honesty data,2,500,sycophancy_rate_percent,32.91
+no honesty data,2,600,sycophancy_rate_percent,35.69
+no honesty data,2,700,sycophancy_rate_percent,35.76
+no honesty data,2,800,sycophancy_rate_percent,34.71
+no honesty data,2,900,sycophancy_rate_percent,34.28
+no honesty data,2,1000,sycophancy_rate_percent,32.65
+no honesty data,2,1100,sycophancy_rate_percent,34.02
+no honesty data,2,1200,sycophancy_rate_percent,33.35
+no honesty data,2,1300,sycophancy_rate_percent,33.76
+no honesty data,2,1400,sycophancy_rate_percent,34.85
+no honesty data,2,1500,sycophancy_rate_percent,34.53
+no honesty data,2,1600,sycophancy_rate_percent,33.95
+no honesty data,2,1700,sycophancy_rate_percent,34.28
+no honesty data,2,1800,sycophancy_rate_percent,33.17
+no honesty data,2,1900,sycophancy_rate_percent,33.95
+no honesty data,2,2000,sycophancy_rate_percent,32.76
+no honesty data,2,2000,helpfulness_1_to_10,6.78
+no honesty data,3,0,sycophancy_rate_percent,38.49
+no honesty data,3,100,sycophancy_rate_percent,39.36
+no honesty data,3,200,sycophancy_rate_percent,40.03
+no honesty data,3,300,sycophancy_rate_percent,39.46
+no honesty data,3,400,sycophancy_rate_percent,40.93
+no honesty data,3,500,sycophancy_rate_percent,40.91
+no honesty data,3,600,sycophancy_rate_percent,40.67
+no honesty data,3,700,sycophancy_rate_percent,41.41
+no honesty data,3,800,sycophancy_rate_percent,40.49
+no honesty data,3,900,sycophancy_rate_percent,39.7
+no honesty data,3,1000,sycophancy_rate_percent,42.76
+no honesty data,3,1100,sycophancy_rate_percent,38.66
+no honesty data,3,1200,sycophancy_rate_percent,42.35
+no honesty data,3,1300,sycophancy_rate_percent,38.67
+no honesty data,3,1400,sycophancy_rate_percent,39.39
+no honesty data,3,1500,sycophancy_rate_percent,39.1
+no honesty data,3,1600,sycophancy_rate_percent,38.51
+no honesty data,3,1700,sycophancy_rate_percent,40.26
+no honesty data,3,1800,sycophancy_rate_percent,39.92
+no honesty data,3,1900,sycophancy_rate_percent,40.6
+no honesty data,3,2000,sycophancy_rate_percent,40.13
+no honesty data,3,2000,helpfulness_1_to_10,7.13
+no honesty data,4,0,sycophancy_rate_percent,39.37
+no honesty data,4,100,sycophancy_rate_percent,41.82
+no honesty data,4,200,sycophancy_rate_percent,38.0
+no honesty data,4,300,sycophancy_rate_percent,37.86
+no honesty data,4,400,sycophancy_rate_percent,38.38
+no honesty data,4,500,sycophancy_rate_percent,38.68
+no honesty data,4,600,sycophancy_rate_percent,37.74
+no honesty data,4,700,sycophancy_rate_percent,38.62
+no honesty data,4,800,sycophancy_rate_percent,39.15
+no honesty data,4,900,sycophancy_rate_percent,37.25
+no honesty data,4,1000,sycophancy_rate_percent,38.74
+no honesty data,4,1100,sycophancy_rate_percent,39.12
+no honesty data,4,1200,sycophancy_rate_percent,38.67
+no honesty data,4,1300,sycophancy_rate_percent,37.53
+no honesty data,4,1400,sycophancy_rate_percent,38.31
+no honesty data,4,1500,sycophancy_rate_percent,38.67
+no honesty data,4,1600,sycophancy_rate_percent,35.71
+no honesty data,4,1700,sycophancy_rate_percent,36.75
+no honesty data,4,1800,sycophancy_rate_percent,37.41
+no honesty data,4,1900,sycophancy_rate_percent,35.56
+no honesty data,4,2000,sycophancy_rate_percent,37.67
+no honesty data,4,2000,helpfulness_1_to_10,7.21
+honesty data,0,0,sycophancy_rate_percent,41.05
+honesty data,0,100,sycophancy_rate_percent,36.11
+honesty data,0,200,sycophancy_rate_percent,32.88
+honesty data,0,300,sycophancy_rate_percent,31.42
+honesty data,0,400,sycophancy_rate_percent,29.73
+honesty data,0,500,sycophancy_rate_percent,27.63
+honesty data,0,600,sycophancy_rate_percent,25.14
+honesty data,0,700,sycophancy_rate_percent,25.14
+honesty data,0,800,sycophancy_rate_percent,23.19
+honesty data,0,900,sycophancy_rate_percent,24.07
+honesty data,0,1000,sycophancy_rate_percent,23.8
+honesty data,0,1100,sycophancy_rate_percent,22.72
+honesty data,0,1200,sycophancy_rate_percent,22.54
+honesty data,0,1300,sycophancy_rate_percent,20.15
+honesty data,0,1400,sycophancy_rate_percent,21.48
+honesty data,0,1500,sycophancy_rate_percent,21.59
+honesty data,0,1600,sycophancy_rate_percent,20.89
+honesty data,0,1700,sycophancy_rate_percent,20.95
+honesty data,0,1800,sycophancy_rate_percent,20.05
+honesty data,0,1900,sycophancy_rate_percent,21.9
+honesty data,0,2000,sycophancy_rate_percent,19.06
+honesty data,0,2000,helpfulness_1_to_10,6.85
+honesty data,1,0,sycophancy_rate_percent,40.45
+honesty data,1,100,sycophancy_rate_percent,36.44
+honesty data,1,200,sycophancy_rate_percent,33.88
+honesty data,1,300,sycophancy_rate_percent,31.77
+honesty data,1,400,sycophancy_rate_percent,29.27
+honesty data,1,500,sycophancy_rate_percent,26.73
+honesty data,1,600,sycophancy_rate_percent,24.92
+honesty data,1,700,sycophancy_rate_percent,23.36
+honesty data,1,800,sycophancy_rate_percent,22.77
+honesty data,1,900,sycophancy_rate_percent,21.08
+honesty data,1,1000,sycophancy_rate_percent,22.42
+honesty data,1,1100,sycophancy_rate_percent,21.96
+honesty data,1,1200,sycophancy_rate_percent,20.98
+honesty data,1,1300,sycophancy_rate_percent,22.07
+honesty data,1,1400,sycophancy_rate_percent,20.96
+honesty data,1,1500,sycophancy_rate_percent,20.59
+honesty data,1,1600,sycophancy_rate_percent,21.24
+honesty data,1,1700,sycophancy_rate_percent,19.67
+honesty data,1,1800,sycophancy_rate_percent,20.57
+honesty data,1,1900,sycophancy_rate_percent,19.53
+honesty data,1,2000,sycophancy_rate_percent,20.55
+honesty data,1,2000,helpfulness_1_to_10,6.96
+honesty data,2,0,sycophancy_rate_percent,40.06
+honesty data,2,100,sycophancy_rate_percent,37.36
+honesty data,2,200,sycophancy_rate_percent,34.19
+honesty data,2,300,sycophancy_rate_percent,31.38
+honesty data,2,400,sycophancy_rate_percent,29.74
+honesty data,2,500,sycophancy_rate_percent,28.0
+honesty data,2,600,sycophancy_rate_percent,26.42
+honesty data,2,700,sycophancy_rate_percent,24.64
+honesty data,2,800,sycophancy_rate_percent,24.05
+honesty data,2,900,sycophancy_rate_percent,24.19
+honesty data,2,1000,sycophancy_rate_percent,22.92
+honesty data,2,1100,sycophancy_rate_percent,23.33
+honesty data,2,1200,sycophancy_rate_percent,21.26
+honesty data,2,1300,sycophancy_rate_percent,20.16
+honesty data,2,1400,sycophancy_rate_percent,20.58
+honesty data,2,1500,sycophancy_rate_percent,19.19
+honesty data,2,1600,sycophancy_rate_percent,20.72
+honesty data,2,1700,sycophancy_rate_percent,20.67
+honesty data,2,1800,sycophancy_rate_percent,21.11
+honesty data,2,1900,sycophancy_rate_percent,20.61
+honesty data,2,2000,sycophancy_rate_percent,21.04
+honesty data,2,2000,helpfulness_1_to_10,7.07
+honesty data,3,0,sycophancy_rate_percent,38.76
+honesty data,3,100,sycophancy_rate_percent,35.92
+honesty data,3,200,sycophancy_rate_percent,33.13
+honesty data,3,300,sycophancy_rate_percent,31.22
+honesty data,3,400,sycophancy_rate_percent,28.95
+honesty data,3,500,sycophancy_rate_percent,26.86
+honesty data,3,600,sycophancy_rate_percent,28.93
+honesty data,3,700,sycophancy_rate_percent,26.83
+honesty data,3,800,sycophancy_rate_percent,25.42
+honesty data,3,900,sycophancy_rate_percent,24.76
+honesty data,3,1000,sycophancy_rate_percent,24.19
+honesty data,3,1100,sycophancy_rate_percent,22.01
+honesty data,3,1200,sycophancy_rate_percent,23.95
+honesty data,3,1300,sycophancy_rate_percent,23.04
+honesty data,3,1400,sycophancy_rate_percent,21.53
+honesty data,3,1500,sycophancy_rate_percent,21.25
+honesty data,3,1600,sycophancy_rate_percent,21.81
+honesty data,3,1700,sycophancy_rate_percent,22.39
+honesty data,3,1800,sycophancy_rate_percent,21.18
+honesty data,3,1900,sycophancy_rate_percent,21.52
+honesty data,3,2000,sycophancy_rate_percent,21.37
+honesty data,3,2000,helpfulness_1_to_10,7.03
+honesty data,4,0,sycophancy_rate_percent,39.83
+honesty data,4,100,sycophancy_rate_percent,37.08
+honesty data,4,200,sycophancy_rate_percent,33.09
+honesty data,4,300,sycophancy_rate_percent,30.6
+honesty data,4,400,sycophancy_rate_percent,29.27
+honesty data,4,500,sycophancy_rate_percent,29.0
+honesty data,4,600,sycophancy_rate_percent,26.37
+honesty data,4,700,sycophancy_rate_percent,24.34
+honesty data,4,800,sycophancy_rate_percent,25.32
+honesty data,4,900,sycophancy_rate_percent,23.22
+honesty data,4,1000,sycophancy_rate_percent,23.76
+honesty data,4,1100,sycophancy_rate_percent,23.22
+honesty data,4,1200,sycophancy_rate_percent,19.85
+honesty data,4,1300,sycophancy_rate_percent,23.27
+honesty data,4,1400,sycophancy_rate_percent,22.44
+honesty data,4,1500,sycophancy_rate_percent,21.52
+honesty data,4,1600,sycophancy_rate_percent,21.74
+honesty data,4,1700,sycophancy_rate_percent,22.49
+honesty data,4,1800,sycophancy_rate_percent,20.71
+honesty data,4,1900,sycophancy_rate_percent,21.53
+honesty data,4,2000,sycophancy_rate_percent,20.72
+honesty data,4,2000,helpfulness_1_to_10,6.94
+honesty data and steering,0,0,sycophancy_rate_percent,40.24
+honesty data and steering,0,100,sycophancy_rate_percent,34.19
+honesty data and steering,0,200,sycophancy_rate_percent,29.6
+honesty data and steering,0,300,sycophancy_rate_percent,26.89
+honesty data and steering,0,400,sycophancy_rate_percent,22.84
+honesty data and steering,0,500,sycophancy_rate_percent,20.61
+honesty data and steering,0,600,sycophancy_rate_percent,16.99
+honesty data and steering,0,700,sycophancy_rate_percent,15.25
+honesty data and steering,0,800,sycophancy_rate_percent,14.51
+honesty data and steering,0,900,sycophancy_rate_percent,13.95
+honesty data and steering,0,1000,sycophancy_rate_percent,11.17
+honesty data and steering,0,1100,sycophancy_rate_percent,10.68
+honesty data and steering,0,1200,sycophancy_rate_percent,11.65
+honesty data and steering,0,1300,sycophancy_rate_percent,8.41
+honesty data and steering,0,1400,sycophancy_rate_percent,10.18
+honesty data and steering,0,1500,sycophancy_rate_percent,9.25
+honesty data and steering,0,1600,sycophancy_rate_percent,9.46
+honesty data and steering,0,1700,sycophancy_rate_percent,9.44
+honesty data and steering,0,1800,sycophancy_rate_percent,10.57
+honesty data and steering,0,1900,sycophancy_rate_percent,9.8
+honesty data and steering,0,2000,sycophancy_rate_percent,7.26
+honesty data and steering,0,2000,helpfulness_1_to_10,6.58
+honesty data and steering,1,0,sycophancy_rate_percent,39.47
+honesty data and steering,1,100,sycophancy_rate_percent,32.59
+honesty data and steering,1,200,sycophancy_rate_percent,26.62
+honesty data and steering,1,300,sycophancy_rate_percent,24.58
+honesty data and steering,1,400,sycophancy_rate_percent,21.98
+honesty data and steering,1,500,sycophancy_rate_percent,18.05
+honesty data and steering,1,600,sycophancy_rate_percent,17.56
+honesty data and steering,1,700,sycophancy_rate_percent,14.33
+honesty data and steering,1,800,sycophancy_rate_percent,14.63
+honesty data and steering,1,900,sycophancy_rate_percent,10.01
+honesty data and steering,1,1000,sycophancy_rate_percent,10.78
+honesty data and steering,1,1100,sycophancy_rate_percent,10.59
+honesty data and steering,1,1200,sycophancy_rate_percent,10.49
+honesty data and steering,1,1300,sycophancy_rate_percent,6.91
+honesty data and steering,1,1400,sycophancy_rate_percent,8.46
+honesty data and steering,1,1500,sycophancy_rate_percent,7.23
+honesty data and steering,1,1600,sycophancy_rate_percent,5.42
+honesty data and steering,1,1700,sycophancy_rate_percent,5.03
+honesty data and steering,1,1800,sycophancy_rate_percent,8.79
+honesty data and steering,1,1900,sycophancy_rate_percent,5.35
+honesty data and steering,1,2000,sycophancy_rate_percent,8.1
+honesty data and steering,1,2000,helpfulness_1_to_10,7.03
+honesty data and steering,2,0,sycophancy_rate_percent,39.38
+honesty data and steering,2,100,sycophancy_rate_percent,35.61
+honesty data and steering,2,200,sycophancy_rate_percent,28.3
+honesty data and steering,2,300,sycophancy_rate_percent,23.85
+honesty data and steering,2,400,sycophancy_rate_percent,21.92
+honesty data and steering,2,500,sycophancy_rate_percent,21.16
+honesty data and steering,2,600,sycophancy_rate_percent,18.92
+honesty data and steering,2,700,sycophancy_rate_percent,16.39
+honesty data and steering,2,800,sycophancy_rate_percent,14.26
+honesty data and steering,2,900,sycophancy_rate_percent,12.94
+honesty data and steering,2,1000,sycophancy_rate_percent,12.29
+honesty data and steering,2,1100,sycophancy_rate_percent,11.52
+honesty data and steering,2,1200,sycophancy_rate_percent,10.61
+honesty data and steering,2,1300,sycophancy_rate_percent,9.84
+honesty data and steering,2,1400,sycophancy_rate_percent,8.86
+honesty data and steering,2,1500,sycophancy_rate_percent,8.43
+honesty data and steering,2,1600,sycophancy_rate_percent,9.25
+honesty data and steering,2,1700,sycophancy_rate_percent,10.06
+honesty data and steering,2,1800,sycophancy_rate_percent,8.01
+honesty data and steering,2,1900,sycophancy_rate_percent,8.87
+honesty data and steering,2,2000,sycophancy_rate_percent,7.92
+honesty data and steering,2,2000,helpfulness_1_to_10,6.87
+honesty data and steering,3,0,sycophancy_rate_percent,40.43
+honesty data and steering,3,100,sycophancy_rate_percent,32.67
+honesty data and steering,3,200,sycophancy_rate_percent,30.1
+honesty data and steering,3,300,sycophancy_rate_percent,25.38
+honesty data and steering,3,400,sycophancy_rate_percent,23.05
+honesty data and steering,3,500,sycophancy_rate_percent,17.91
+honesty data and steering,3,600,sycophancy_rate_percent,18.45
+honesty data and steering,3,700,sycophancy_rate_percent,15.46
+honesty data and steering,3,800,sycophancy_rate_percent,13.95
+honesty data and steering,3,900,sycophancy_rate_percent,14.04
+honesty data and steering,3,1000,sycophancy_rate_percent,13.18
+honesty data and steering,3,1100,sycophancy_rate_percent,12.4
+honesty data and steering,3,1200,sycophancy_rate_percent,11.14
+honesty data and steering,3,1300,sycophancy_rate_percent,11.27
+honesty data and steering,3,1400,sycophancy_rate_percent,11.64
+honesty data and steering,3,1500,sycophancy_rate_percent,8.86
+honesty data and steering,3,1600,sycophancy_rate_percent,10.92
+honesty data and steering,3,1700,sycophancy_rate_percent,10.1
+honesty data and steering,3,1800,sycophancy_rate_percent,9.63
+honesty data and steering,3,1900,sycophancy_rate_percent,8.92
+honesty data and steering,3,2000,sycophancy_rate_percent,9.49
+honesty data and steering,3,2000,helpfulness_1_to_10,7.0
+honesty data and steering,4,0,sycophancy_rate_percent,39.67
+honesty data and steering,4,100,sycophancy_rate_percent,34.48
+honesty data and steering,4,200,sycophancy_rate_percent,28.89
+honesty data and steering,4,300,sycophancy_rate_percent,26.37
+honesty data and steering,4,400,sycophancy_rate_percent,22.4
+honesty data and steering,4,500,sycophancy_rate_percent,22.75
+honesty data and steering,4,600,sycophancy_rate_percent,18.87
+honesty data and steering,4,700,sycophancy_rate_percent,17.11
+honesty data and steering,4,800,sycophancy_rate_percent,16.07
+honesty data and steering,4,900,sycophancy_rate_percent,12.41
+honesty data and steering,4,1000,sycophancy_rate_percent,14.13
+honesty data and steering,4,1100,sycophancy_rate_percent,12.75
+honesty data and steering,4,1200,sycophancy_rate_percent,11.11
+honesty data and steering,4,1300,sycophancy_rate_percent,9.01
+honesty data and steering,4,1400,sycophancy_rate_percent,11.71
+honesty data and steering,4,1500,sycophancy_rate_percent,11.44
+honesty data and steering,4,1600,sycophancy_rate_percent,10.94
+honesty data and steering,4,1700,sycophancy_rate_percent,8.9
+honesty data and steering,4,1800,sycophancy_rate_percent,9.27
+honesty data and steering,4,1900,sycophancy_rate_percent,10.28
+honesty data and steering,4,2000,sycophancy_rate_percent,10.0
+honesty data and steering,4,2000,helpfulness_1_to_10,7.02

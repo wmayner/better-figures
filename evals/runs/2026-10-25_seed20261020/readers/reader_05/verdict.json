@@ -1,0 +1,9 @@
+{
+ "reader": "reader_05",
+ "run": "task1_probes__base__r2",
+ "task": "task1_probes",
+ "reader_sentence": "Linear probes show different concepts becoming decodable at progressively deeper layers: part of speech from layer 1, sentiment from about layer 5, named-entity type from about layer 10, and statement truthfulness only from about layer 17, with each rising from chance (50%) to roughly 90\u201395% held-out accuracy.",
+ "intended": "The four concepts become decodable at clearly different depths: part of speech first (around layer 3), then sentiment (around layer 8), named entity type (around layer 13 to 14), and statement truthfulness last (around layer 19).",
+ "verdict": "yes",
+ "reason": "The reader gives the same ordering at clearly separated depths (POS, then sentiment, then entity type, then truthfulness); their layer numbers run 2\u20133 layers earlier, likely onset rather than midpoint, but exact numbers aren't required."
+}

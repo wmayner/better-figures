@@ -1,0 +1,9 @@
+{
+ "reader": "reader_11",
+ "run": "task2_heads__plugin__r1",
+ "task": "task2_heads",
+ "reader_sentence": "Ablating attention heads one at a time in this 12-layer, 12-head model shows that loss is concentrated in just three late-layer heads: L9 H6 raises loss by about 1.2, L9 H9 by about 0.8 and L10 H0 by about 0.6, while the other 141 heads each add almost nothing.",
+ "intended": "Three heads matter: layer 9 head 6, layer 9 head 9 and layer 10 head 0; ablating any of the other 141 heads barely changes the loss.",
+ "verdict": "yes",
+ "reason": "The reader names the same three heads (L9 H6, L9 H9, L10 H0) and says the other 141 heads barely change the loss, which is the intended finding."
+}

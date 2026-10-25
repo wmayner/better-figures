@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 121091,
+ "stop_reason": "end_turn",
+ "session_id": "2e9fc016-ea2e-4050-a629-e60f2d105a67",
+ "total_cost_usd": 0.5934032,
+ "usage": {
+  "input_tokens": 24,
+  "cache_creation_input_tokens": 36198,
+  "cache_read_input_tokens": 443916,
+  "output_tokens": 10747,
+  "output_tokens_details": {
+   "thinking_tokens": 6124
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 36198,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 705,
+    "cache_read_input_tokens": 48769,
+    "cache_creation_input_tokens": 321,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 321
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 24,
+   "outputTokens": 10747,
+   "cacheReadInputTokens": 443916,
+   "cacheCreationInputTokens": 36198,
+   "webSearchRequests": 0,
+   "costUSD": 0.5934032,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 6124,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 16,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "The figure, the script that makes it and the caption are done. `python3 make_figure.py` reads `data.csv`, writes `figure.pdf` and `figure.png` at 3.25 \u00d7 2.4 inches, and the figure check passes. I looked at the PNG and nothing overlaps.\n\n**What it shows:** one panel with four probe-accuracy curves across the 24 layers, each with a shaded confidence band. The four concepts become decodable one after another: part of speech at layer 4, sentiment at 9, named entity type at 14 and statement truthfulness at 20. A dot and a number mark that layer on each curve. Each concept's name sits next to its curve where it rises, so there's no legend, and a dotted line marks 0.5.\n\n**Definition of \"decodable\":** the first layer from which accuracy stays at or above 0.75 through the last layer. That's halfway between chance and perfect. The threshold is a constant at the top of the script (`THRESHOLD`), and the onset layers are computed from the data. The caption states the definition.\n\n**Other choices:**\n- **No title in the image.** In a two-column paper the caption carries the finding, and a one-line title at 3.25 inches would be cut down to almost nothing. The caption opens with the finding in bold.\n- **The figure kit is copied into `_kit/`** next to the script. It holds the fonts and style helpers, and the script needs it to run.\n- **Label positions are set by hand** to fit this data. If the data changes, check the image again for overlapping labels.\n\n**Please check two things in `caption.md`:**\n- **Chance level:** I wrote that 0.5 is chance because every probe starts there. If any task, such as named entity type, has more than two classes or unbalanced classes, that line is wrong.\n- **Confidence intervals:** the caption just says \"confidence intervals\" because `data.csv` doesn't say what level or method `ci_low`/`ci_high` use. They're wider than a simple 95% interval for 2,000 test examples would be, so they may be bootstrap intervals or intervals over runs. Please add the method. I also left the figure number as \"Figure N\".",
+ "ttft_ms": 2160,
+ "type": "result",
+ "duration_ms": 125118,
+ "uuid": "298d0a2e-5121-4dd8-b854-7fbd927de496",
+ "ttft_stream_ms": 1748,
+ "time_to_request_ms": 186,
+ "first_content_frame_ms": 1749,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 24,
+   "outputTokens": 10747,
+   "cacheReadInputTokens": 443916,
+   "cacheCreationInputTokens": 36198,
+   "webSearchRequests": 0,
+   "costUSD": 0.5934032,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 6124,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

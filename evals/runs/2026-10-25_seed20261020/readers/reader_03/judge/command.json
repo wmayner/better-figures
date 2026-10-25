@@ -1,0 +1,31 @@
+{
+ "arm": "base",
+ "cwd": "<work_root>/9c9c7147",
+ "exit": 0,
+ "seconds": 4.3,
+ "argv": [
+  "claude",
+  "-p",
+  "<prompt>",
+  "--model",
+  "claude-opus-5-5",
+  "--effort",
+  "high",
+  "--setting-sources",
+  "local",
+  "--strict-mcp-config",
+  "--permission-mode",
+  "bypassPermissions",
+  "--output-format",
+  "stream-json",
+  "--verbose",
+  "--no-session-persistence",
+  "--max-budget-usd",
+  "2",
+  "--settings",
+  "{\"autoMemoryEnabled\": false}",
+  "--tools",
+  ""
+ ],
+ "prompt": "A reader looked at a figure and wrote this one-sentence summary of it:\n\nREADER: Ablating just three attention heads, L9.H6, L9.H9 and L10.H0, raises loss a lot (by 1.25, 0.91 and 0.72), while ablating any of the other 141 heads changes it very little (\u22120.022 to 0.064).\n\nThe figure was meant to show this:\n\nINTENDED: Three heads matter: layer 9 head 6, layer 9 head 9 and layer 10 head 0; ablating any of the other 141 heads barely changes the loss.\n\nDoes the reader's summary match the intended finding? Answer 'yes' if it states the intended finding (exact numbers are not needed), 'partly' if it states part of it or states it vaguely, and 'no' if it misses it or states something else. Reply in exactly two lines:\nVERDICT: yes | partly | no\nREASON: one line"
+}

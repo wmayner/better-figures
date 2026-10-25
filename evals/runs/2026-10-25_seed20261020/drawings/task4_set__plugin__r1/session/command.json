@@ -1,0 +1,31 @@
+{
+ "arm": "plugin",
+ "cwd": "<work_root>/e9052da5",
+ "exit": 0,
+ "seconds": 78.7,
+ "argv": [
+  "claude",
+  "-p",
+  "<prompt>",
+  "--model",
+  "claude-opus-5-5",
+  "--effort",
+  "high",
+  "--setting-sources",
+  "local",
+  "--strict-mcp-config",
+  "--permission-mode",
+  "bypassPermissions",
+  "--output-format",
+  "stream-json",
+  "--verbose",
+  "--no-session-persistence",
+  "--max-budget-usd",
+  "10.0",
+  "--settings",
+  "{\"autoMemoryEnabled\": false}",
+  "--plugin-dir",
+  "<repository>"
+ ],
+ "prompt": "data.csv holds results from one experiment with three training conditions, five seeds each: the rate of sycophantic answers over training and at the end, and a helpfulness score at the end. Make three figures for one write-up: the final sycophancy rate by condition, sycophancy over training, and final helpfulness by condition. Write one Python script per figure, make_figure1.py, make_figure2.py and make_figure3.py, each reading data.csv and saving figure1.png, figure2.png and figure3.png in that order, and write a caption for each figure in captions.md."
+}

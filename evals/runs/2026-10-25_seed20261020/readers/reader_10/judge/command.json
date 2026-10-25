@@ -1,0 +1,31 @@
+{
+ "arm": "base",
+ "cwd": "<work_root>/4b15cc4e",
+ "exit": 0,
+ "seconds": 7.5,
+ "argv": [
+  "claude",
+  "-p",
+  "<prompt>",
+  "--model",
+  "claude-opus-5-5",
+  "--effort",
+  "high",
+  "--setting-sources",
+  "local",
+  "--strict-mcp-config",
+  "--permission-mode",
+  "bypassPermissions",
+  "--output-format",
+  "stream-json",
+  "--verbose",
+  "--no-session-persistence",
+  "--max-budget-usd",
+  "2",
+  "--settings",
+  "{\"autoMemoryEnabled\": false}",
+  "--tools",
+  ""
+ ],
+ "prompt": "A reader looked at a figure and wrote this one-sentence summary of it:\n\nREADER: Across GPT-2 small, Pythia-410M and Gemma-2-2B, integrated gradients matches per-head ablation effects best (mean Spearman \u03c1 \u2248 0.84), ahead of attribution patching (0.62), gradient \u00d7 input (0.45) and saliency (0.29), while activation magnitude does worst (0.18) and is the only method whose evidence is weak on every model (BF\u2081\u2080 < 10).\n\nThe figure was meant to show this:\n\nINTENDED: Integrated gradients matches ablation best on all three models (rank correlation about 0.8 to 0.9), clearly ahead of the next best method, attribution patching (about 0.6).\n\nDoes the reader's summary match the intended finding? Answer 'yes' if it states the intended finding (exact numbers are not needed), 'partly' if it states part of it or states it vaguely, and 'no' if it misses it or states something else. Reply in exactly two lines:\nVERDICT: yes | partly | no\nREASON: one line"
+}

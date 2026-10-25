@@ -1,0 +1,51 @@
+{
+ "arm": "plugin",
+ "plugins": [
+  {
+   "name": "better-figures",
+   "path": "<repository>",
+   "source": "better-figures@inline",
+   "version": "0.3.0"
+  },
+  {
+   "name": "cc-plugin-agents-md",
+   "path": "builtin",
+   "source": "cc-plugin-agents-md@builtin"
+  },
+  {
+   "name": "cc-plugin-telemetry",
+   "path": "builtin",
+   "source": "cc-plugin-telemetry@builtin"
+  },
+  {
+   "name": "cc-plugin-plugin-authoring",
+   "path": "builtin",
+   "source": "cc-plugin-plugin-authoring@builtin"
+  }
+ ],
+ "skills": [
+  "deep-research",
+  "better-figures:figures",
+  "design",
+  "design-sync",
+  "dataviz",
+  "update-config",
+  "verify",
+  "debug",
+  "code-review",
+  "simplify",
+  "batch",
+  "fewer-permission-prompts",
+  "doctor",
+  "loop",
+  "schedule",
+  "claude-api",
+  "workflow-authoring",
+  "run",
+  "run-skill-generator",
+  "plugin-authoring"
+ ],
+ "mcp_servers": [],
+ "memory_paths": null,
+ "answer": "1. **Skills available through the Skill tool:**\n   - better-figures:figures\n   - dataviz\n   - update-config\n   - keybindings-help\n   - code-review\n   - simplify\n   - fewer-permission-prompts\n   - loop\n   - schedule\n   - claude-api\n   - workflow-authoring\n   - run\n   - plugin-authoring\n   - init\n   - security-review\n\n2. **Plugins loaded:** My context doesn't include a list of loaded plugins. The only sign of one is the skill name `better-figures:figures`. The Skill tool says plugin skills are named `plugin:skill`, so a plugin called **better-figures** is probably loaded. All the other skills have no prefix, so they look built-in or user-level.\n\n3. **MCP servers or tools:** None. No tool in my context has an MCP-style name (`mcp__\u2026`), and no MCP servers are listed. The deferred tools are CronCreate, CronDelete, CronList, DesignSync, EnterWorktree, ExitWorktree, Monitor, NotebookEdit, PushNotification, RemoteTrigger, SendMessage, TaskStop, WebFetch and WebSearch. None of them is marked as coming from MCP.\n\n4. **CLAUDE.md, memory or other user or project instructions:** None. My context has no CLAUDE.md content, memory files or project instructions. The only automatic context is the account email, which the system attached and which isn't an instruction. The commit and pull request attribution note is a system reminder, not a user or project instruction.\n\n5. **Guidance on figures or plots:** Only the descriptions of two skills in the skill listing. I haven't loaded either skill, so I don't know what's inside them.\n   - **better-figures:figures** (from the skill listing): \"Use before making any figure a person will read, such as a matplotlib or seaborn plot, a chart in a report or slide, or a diagram of a method or pipeline, and when designing the figures in an experiment spec. It covers choosing what to show, which text goes in the image (a one-line title that states the finding, values, direct labels) and which goes in the caption, a matplotlib house style with direct labels, colour roles shared by a set of figures, sizes for screens, slides and print, and a check that runs on save, \u2026 Not for dashboards (use dataviz).\"\n   - **dataviz** (from the skill listing): \"Use this skill whenever you are about to create ANY chart, graph, plot, dashboard, or data visualization, in ANY output medium \u2026 Read it BEFORE writing the first line of chart code, choosing chart colors, building a stat tile / meter / KPI row, or laying out a dashboard.\"\n   - The Skill tool's own description adds a general rule: \"When the task at hand is one a listed skill covers, call this tool first \u2014 the skill's instructions load into the turn for you to follow in place of your default approach.\"\n\n   The two descriptions overlap. better-figures:figures sends dashboards to dataviz, and dataviz claims every chart. For a figure in a report or slide I'd use better-figures:figures, and for a dashboard I'd use dataviz."
+}

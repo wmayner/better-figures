@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 6593,
+ "stop_reason": "end_turn",
+ "session_id": "0cde703c-787a-45ca-8503-3f920dcd7cd2",
+ "total_cost_usd": 0.032327999999999996,
+ "usage": {
+  "input_tokens": 4,
+  "cache_creation_input_tokens": 3506,
+  "cache_read_input_tokens": 4920,
+  "output_tokens": 164,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 3506,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 87,
+    "cache_read_input_tokens": 3250,
+    "cache_creation_input_tokens": 1926,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1926
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 4,
+   "outputTokens": 164,
+   "cacheReadInputTokens": 4920,
+   "cacheCreationInputTokens": 3506,
+   "webSearchRequests": 0,
+   "costUSD": 0.032327999999999996,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 0,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 2,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "Ablating just three attention heads, L9.H6, L9.H9 and L10.H0, raises loss a lot (by 1.25, 0.91 and 0.72), while ablating any of the other 141 heads changes it very little (\u22120.022 to 0.064).",
+ "ttft_ms": 2188,
+ "type": "result",
+ "duration_ms": 6807,
+ "uuid": "c21e9771-30d5-4e65-817d-f6dd1c135018",
+ "ttft_stream_ms": 1807,
+ "time_to_request_ms": 157,
+ "first_content_frame_ms": 1807,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 4,
+   "outputTokens": 164,
+   "cacheReadInputTokens": 4920,
+   "cacheCreationInputTokens": 3506,
+   "webSearchRequests": 0,
+   "costUSD": 0.032327999999999996,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 0,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

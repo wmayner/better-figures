@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 39680,
+ "stop_reason": "end_turn",
+ "session_id": "d129319c-cbc6-48bf-b9d3-1cd970ddfb54",
+ "total_cost_usd": 0.31406599999999996,
+ "usage": {
+  "input_tokens": 14,
+  "cache_creation_input_tokens": 25818,
+  "cache_read_input_tokens": 197830,
+  "output_tokens": 3395,
+  "output_tokens_details": {
+   "thinking_tokens": 673
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 25818,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 690,
+    "cache_read_input_tokens": 36540,
+    "cache_creation_input_tokens": 1599,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1599
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 14,
+   "outputTokens": 3395,
+   "cacheReadInputTokens": 197830,
+   "cacheCreationInputTokens": 25818,
+   "webSearchRequests": 0,
+   "costUSD": 0.31406599999999996,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 673,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 10,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've written `make_figure.py`, which makes `figure.png`, and the caption in `caption.md`. The script runs cleanly and the plotting kit's automatic checks found nothing to fix.\n\n**What it shows:** a dot plot with one row per attribution method, sorted so the best method is on top. Each method has three dots, one per model, and each dot is the Spearman correlation between the method's head scores and the ablation effect. The lines are the 95% intervals from `ci_low` and `ci_high`. Integrated gradients is in orange with the model names beside its dots; the other methods are grey. The title, \"Integrated gradients matched ablation best on all three models\", is built from the data in the script.\n\n**What the data says:**\n- **Integrated gradients is best on every model:** 0.80 on GPT-2 small, 0.82 on Pythia-410M and 0.89 on Gemma-2-2B.\n- **Attribution patching is next best,** at 0.60 to 0.64.\n- **The lead is narrow on GPT-2 small.** There, the bottom of integrated gradients' interval (0.736) only just clears the top of attribution patching's (0.730). The caption says so, and the script prints a warning if the intervals of the top method and any other method ever overlap.\n- **Activation magnitude agrees with ablation least,** at 0.15 to 0.19.\n\n**Caption:** it opens with the finding in bold, gives the key numbers with intervals, then says what the dots, lines and dot order mean, with the head counts. The Bayes factors appear only in the caption, not the figure. I read `bayes_factor_10` as the usual evidence for a nonzero correlation over zero; please check that's what your column means.\n\n`data.csv` doesn't say how the ablation was done (zero or mean), how many prompts were used, or how the intervals were computed, so the caption leaves these out. You may want to add them.\n\nThe script imports a small plotting helper (`figkit.py`, plus its fonts), which I copied into `_kit/` next to the script. Keep that folder alongside `make_figure.py`.",
+ "ttft_ms": 1752,
+ "type": "result",
+ "duration_ms": 41837,
+ "uuid": "87e98840-e11c-478a-b241-61fa219f7180",
+ "ttft_stream_ms": 1049,
+ "time_to_request_ms": 194,
+ "first_content_frame_ms": 1050,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 14,
+   "outputTokens": 3395,
+   "cacheReadInputTokens": 197830,
+   "cacheCreationInputTokens": 25818,
+   "webSearchRequests": 0,
+   "costUSD": 0.31406599999999996,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 673,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

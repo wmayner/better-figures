@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 39088,
+ "stop_reason": "end_turn",
+ "session_id": "851ce9b4-3329-4a7e-9e75-dc990550a0a9",
+ "total_cost_usd": 0.30728760000000005,
+ "usage": {
+  "input_tokens": 14,
+  "cache_creation_input_tokens": 24854,
+  "cache_read_input_tokens": 195098,
+  "output_tokens": 3469,
+  "output_tokens_details": {
+   "thinking_tokens": 678
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 24854,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 842,
+    "cache_read_input_tokens": 35289,
+    "cache_creation_input_tokens": 2454,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 2454
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 14,
+   "outputTokens": 3469,
+   "cacheReadInputTokens": 195098,
+   "cacheCreationInputTokens": 24854,
+   "webSearchRequests": 0,
+   "costUSD": 0.30728760000000005,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 678,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 10,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've written `make_figure.py`, which reads `data.csv` and saves `figure.png`, and the caption is in `caption.md`. The figure passed the plotting kit's style check, and I looked over the image myself.\n\n**What the figure shows:** each method gets a row, ordered by its average agreement with ablation, with the best method at the top. Each row has three dots, one per model, each with its 95% confidence interval. Integrated gradients is in orange with the model names beside it, and the other four methods are grey. The title states the finding: *\"Integrated gradients matched ablation best on all three models.\"*\n\n**What I checked in the data:**\n- **The winner is clear on every model.** Integrated gradients' lowest score (0.80 on GPT-2 small) is higher than the best score of any other method (0.64 for attribution patching on the same model). The script stops with an error if a future `data.csv` breaks this, so the title can't end up claiming something the data doesn't show.\n- **The ranking is the same on all three models,** from integrated gradients at the top to activation magnitude at the bottom.\n- **The intervals in the file are standard ones.** Recomputing them from each correlation and the number of heads (the Fisher z method) gives the values in `data.csv` to within 0.001, so the caption calls them 95% confidence intervals.\n- **Bayes factors are in the caption only.** They don't appear in the image. The caption notes that activation magnitude's Bayes factor for a nonzero correlation is below 4 on every model, which is weak evidence that it relates to ablation at all.\n\nI couldn't find two details in the data: what kind of ablation was used and how many prompts were run. So the caption just says \"the effect of ablating that head\"; add the specifics if you have them.\n\nI copied the plotting kit (`figkit.py` and its fonts) into a `_kit/` folder next to the script. The script imports it from there, so `_kit/` has to stay alongside `make_figure.py`.\n\nFiles are in `<work_root>/1cfca051/`:\n- `make_figure.py`\n- `figure.png`\n- `caption.md`\n- `_kit/`",
+ "ttft_ms": 1853,
+ "type": "result",
+ "duration_ms": 43426,
+ "uuid": "a6ab4053-2198-4133-a706-eae24901c96d",
+ "ttft_stream_ms": 1374,
+ "time_to_request_ms": 174,
+ "first_content_frame_ms": 1375,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 14,
+   "outputTokens": 3469,
+   "cacheReadInputTokens": 195098,
+   "cacheCreationInputTokens": 24854,
+   "webSearchRequests": 0,
+   "costUSD": 0.30728760000000005,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 678,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

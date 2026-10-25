@@ -1,0 +1,9 @@
+{
+ "reader": "reader_07",
+ "run": "task1_probes__plugin__r2",
+ "task": "task1_probes",
+ "reader_sentence": "Linear probes show a layered progression in which each property first passes 0.8 accuracy at a later layer, with part of speech at layer 4, sentiment at 9, named entity type at 15 and statement truthfulness at 21, so simpler linguistic features become decodable earlier and more abstract ones deeper in the model.",
+ "intended": "The four concepts become decodable at clearly different depths: part of speech first (around layer 3), then sentiment (around layer 8), named entity type (around layer 13 to 14), and statement truthfulness last (around layer 19).",
+ "verdict": "yes",
+ "reason": "The summary gives the same ordering at clearly distinct depths (POS, then sentiment, then NER, then truthfulness); its layer numbers run 1\u20132 layers later than intended, but exact values aren't required."
+}

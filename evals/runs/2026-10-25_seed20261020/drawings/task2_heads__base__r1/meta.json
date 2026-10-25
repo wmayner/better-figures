@@ -1,0 +1,48 @@
+{
+ "task": "task2_heads",
+ "arm": "base",
+ "rep": 1,
+ "work_dir": "<work_root>/9b758733",
+ "skills_invoked": [
+  "dataviz"
+ ],
+ "is_error": false,
+ "total_cost_usd": 0.465396,
+ "num_turns": 18,
+ "duration_ms": 102256,
+ "usage": {
+  "input_tokens": 24,
+  "cache_creation_input_tokens": 29414,
+  "cache_read_input_tokens": 353840,
+  "output_tokens": 7961,
+  "output_tokens_details": {
+   "thinking_tokens": 2016
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 29414,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 594,
+    "cache_read_input_tokens": 41491,
+    "cache_creation_input_tokens": 244,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 244
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "figure_exists": true
+}

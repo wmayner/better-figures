@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 40684,
+ "stop_reason": "end_turn",
+ "session_id": "b0ce2d0a-f93d-4aee-9b66-e92264c896fa",
+ "total_cost_usd": 0.22453099999999998,
+ "usage": {
+  "input_tokens": 14,
+  "cache_creation_input_tokens": 15061,
+  "cache_read_input_tokens": 147935,
+  "output_tokens": 3720,
+  "output_tokens_details": {
+   "thinking_tokens": 789
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 15061,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 684,
+    "cache_read_input_tokens": 26629,
+    "cache_creation_input_tokens": 753,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 753
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 14,
+   "outputTokens": 3720,
+   "cacheReadInputTokens": 147935,
+   "cacheCreationInputTokens": 15061,
+   "webSearchRequests": 0,
+   "costUSD": 0.22453099999999998,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 789,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 9,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've written `make_figure.py`, which reads `data.csv` and saves `figure.png`, and the caption is in `caption.md`. I ran the script and checked the image.\n\n**What the figure shows:** Integrated gradients agrees best with ablation on all three models (Spearman \u03c1 between 0.80 and 0.89). Every model ranks the five methods the same way: integrated gradients, then attribution patching, gradient \u00d7 input, saliency and activation magnitude.\n\n**How it's built:** It's a dot plot with one row per method, ordered best to worst by mean \u03c1, and that mean is printed in the right margin. Each row has a dot for each model, coloured by model, with a horizontal bar for its confidence interval. The x-axis runs from 0 to 1, so the gaps between methods are drawn to scale.\n\n**Bayes factors:** I added a hollow marker for any method\u2013model pair with BF\u2081\u2080 < 10, meaning weak evidence of any correlation. Only activation magnitude falls below that line (BF\u2081\u2080 between 0.8 and 3.6); every other pair is at least 13.8.\n\n**Two things to check:**\n- **Confidence level:** `data.csv` doesn't say what level the intervals are, so the caption just says \"confidence interval\". Add the level (probably 95%) if you know it.\n- **Narrow gap on GPT-2 small:** The caption says integrated gradients' intervals don't overlap any other method's. That's true, but on GPT-2 small the margin is tiny: its lower bound is 0.736 and attribution patching's upper bound is 0.730.",
+ "ttft_ms": 2057,
+ "type": "result",
+ "duration_ms": 43464,
+ "uuid": "512e9ddb-542a-4b96-b5bb-6398a4a32ed9",
+ "ttft_stream_ms": 1590,
+ "time_to_request_ms": 168,
+ "first_content_frame_ms": 1590,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 14,
+   "outputTokens": 3720,
+   "cacheReadInputTokens": 147935,
+   "cacheCreationInputTokens": 15061,
+   "webSearchRequests": 0,
+   "costUSD": 0.22453099999999998,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 789,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 5790,
+ "stop_reason": "end_turn",
+ "session_id": "39235b84-fa5f-4153-a49d-53cdc4258413",
+ "total_cost_usd": 0.0228368,
+ "usage": {
+  "input_tokens": 4,
+  "cache_creation_input_tokens": 1959,
+  "cache_read_input_tokens": 6144,
+  "output_tokens": 296,
+  "output_tokens_details": {
+   "thinking_tokens": 121
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1959,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 218,
+    "cache_read_input_tokens": 3251,
+    "cache_creation_input_tokens": 1601,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1601
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 4,
+   "outputTokens": 296,
+   "cacheReadInputTokens": 6144,
+   "cacheCreationInputTokens": 1959,
+   "webSearchRequests": 0,
+   "costUSD": 0.0228368,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 121,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 2,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "Linear probes reach 80% accuracy at progressively deeper layers as the property gets more abstract: part of speech at layer 4, sentiment at layer 9, named-entity type at layer 15 and statement truthfulness at layer 21, and all four end up near 90\u201395% in the final layers.",
+ "ttft_ms": 2879,
+ "type": "result",
+ "duration_ms": 6041,
+ "uuid": "9db99a2c-49a3-4a2e-b067-d7b9834fc880",
+ "ttft_stream_ms": 2492,
+ "time_to_request_ms": 167,
+ "first_content_frame_ms": 2493,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 4,
+   "outputTokens": 296,
+   "cacheReadInputTokens": 6144,
+   "cacheCreationInputTokens": 1959,
+   "webSearchRequests": 0,
+   "costUSD": 0.0228368,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 121,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

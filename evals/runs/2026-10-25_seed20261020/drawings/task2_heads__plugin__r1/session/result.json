@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 94476,
+ "stop_reason": "end_turn",
+ "session_id": "d597e6c3-5657-460f-b5e1-71b105680acb",
+ "total_cost_usd": 0.4981207999999999,
+ "usage": {
+  "input_tokens": 34,
+  "cache_creation_input_tokens": 32051,
+  "cache_read_input_tokens": 592284,
+  "output_tokens": 6156,
+  "output_tokens_details": {
+   "thinking_tokens": 1452
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 32051,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 690,
+    "cache_read_input_tokens": 44667,
+    "cache_creation_input_tokens": 247,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 247
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 34,
+   "outputTokens": 6156,
+   "cacheReadInputTokens": 592284,
+   "cacheCreationInputTokens": 32051,
+   "webSearchRequests": 0,
+   "costUSD": 0.4981207999999999,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 1452,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 20,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've written `make_figure.py`, `figure.png` and `caption.md`. The script runs cleanly and passes the layout check.\n\n**The figure** is a heatmap with one cell per head: layer runs up the side, head along the bottom, and colour shows how much the loss rose. Three heads stand far above the rest, and their names are written in their cells:\n\n| Head | Loss increase (\u00b1 standard error) |\n|---|---|\n| L9 H6 | 1.25 \u00b1 0.07 |\n| L9 H9 | 0.91 \u00b1 0.06 |\n| L10 H0 | 0.72 \u00b1 0.05 |\n\nNo other head goes above 0.064, and the typical one is around 0.017. The title, \"Only 3 of 144 heads raised loss by over 0.1 when ablated\", is calculated from the data, so it stays correct if the CSV changes.\n\n**The caption** opens with that finding in bold, gives the three values with their standard errors, then explains what each cell is, the 500 prompts, and how negative values are shown.\n\nThings to check:\n- **Units:** the CSV doesn't give a unit, so the colour bar just says \"Loss increase\". If it's in nats, add that to the label.\n- **Missing details:** the caption doesn't say how the heads were ablated (zero, mean, etc.) or what task the prompts were from, because the data doesn't say. Add those.\n- **Negative values:** 20 heads lowered the loss slightly when ablated (by at most 0.022, all within about 1.5 standard errors). The colour scale starts at 0, so they show as white, and the caption says so.\n- **Don't claim \"almost all\":** the other 141 heads each matter little, but their effects add up to 2.48, against 2.89 for the top three. Single-head effects don't really add up this way, but it means \"these three heads account for almost all of the effect\" isn't supported by this data. The title and caption only claim what each head does on its own.\n\nI also copied the plotting helper (`figkit.py` and its fonts) into `_kit/` next to the script. It needs that folder, matplotlib and seaborn.",
+ "ttft_ms": 2608,
+ "type": "result",
+ "duration_ms": 111091,
+ "uuid": "103bb861-2aa5-4086-8f43-4b3b728767ac",
+ "ttft_stream_ms": 2249,
+ "time_to_request_ms": 185,
+ "first_content_frame_ms": 2250,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 34,
+   "outputTokens": 6156,
+   "cacheReadInputTokens": 592284,
+   "cacheCreationInputTokens": 32051,
+   "webSearchRequests": 0,
+   "costUSD": 0.4981207999999999,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 1452,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

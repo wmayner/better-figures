@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 96545,
+ "stop_reason": "end_turn",
+ "session_id": "67ce2d6b-c0c1-4d36-a8b7-5ad9d2e56f66",
+ "total_cost_usd": 0.5762272,
+ "usage": {
+  "input_tokens": 28,
+  "cache_creation_input_tokens": 36941,
+  "cache_read_input_tokens": 540636,
+  "output_tokens": 8623,
+  "output_tokens_details": {
+   "thinking_tokens": 4492
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 36941,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 652,
+    "cache_read_input_tokens": 49491,
+    "cache_creation_input_tokens": 342,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 342
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 28,
+   "outputTokens": 8623,
+   "cacheReadInputTokens": 540636,
+   "cacheCreationInputTokens": 36941,
+   "webSearchRequests": 0,
+   "costUSD": 0.5762272,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 4492,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 16,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've made the figure, the script and the caption. The figure shows the four concepts becoming decodable in turn: **part of speech at layer 4, sentiment at 9, named entity type at 14 and statement truthfulness at 20.**\n\n**Files**\n- `make_figure.py` reads `data.csv` and saves `figure.pdf` and `figure.png` (300 dpi). It runs cleanly, and the built-in figure check reports no problems.\n- `caption.md` starts with a bold takeaway sentence, then gives the key numbers, then explains what the lines, bands, dots and dotted line are.\n- `_kit/` holds a copy of the plotting style helper and its font, which the script loads.\n\n**The figure** is 3.25 \u00d7 2.4 in. It has one panel, with one line per concept and a shaded band for its confidence interval. Each line is named in its own colour next to its rise, so there's no legend. A dot marks where each concept becomes decodable, and the x-axis ticks are placed at exactly those layers (4, 9, 14, 20), so you can read them straight off the axis. The title is \"Each concept becomes decodable at a deeper layer\".\n\n**Things to check before you submit**\n- **The threshold is my choice.** I defined \"decodable\" as the first layer where accuracy reaches 75%, halfway between chance and perfect. It's set as `THRESHOLD` at the top of the script; the dots and ticks are calculated from the data, so they update if you change it.\n- **The caption assumes things the CSV doesn't say.** It treats chance as 50% (every concept starts near 0.5, which suggests balanced binary tasks) and calls the bands 95% confidence intervals. Please confirm both, and add the probe type and model name if you want them in the caption.\n- **Statement truthfulness is still rising at the last layer** (91%, while the other three level off at 93\u201396%). I put this in the caption rather than on the plot, because a reader could take it for a plateau.",
+ "ttft_ms": 2470,
+ "type": "result",
+ "duration_ms": 101683,
+ "uuid": "b655679e-98bd-4b25-b6e4-0fdf9a9df54d",
+ "ttft_stream_ms": 2113,
+ "time_to_request_ms": 165,
+ "first_content_frame_ms": 2114,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 28,
+   "outputTokens": 8623,
+   "cacheReadInputTokens": 540636,
+   "cacheCreationInputTokens": 36941,
+   "webSearchRequests": 0,
+   "costUSD": 0.5762272,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 4492,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

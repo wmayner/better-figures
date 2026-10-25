@@ -1,0 +1,9 @@
+{
+ "reader": "reader_09",
+ "run": "task1_probes__base__r1",
+ "task": "task1_probes",
+ "reader_sentence": "Probe accuracy for four concepts climbs from chance (50%) to about 90\u201395% at successively deeper layers, crossing the 75% onset threshold at layer 3.4 for part of speech, 8.3 for sentiment, 13.8 for named entity type and 19.6 for statement truthfulness, which suggests more abstract concepts become decodable later in the network.",
+ "intended": "The four concepts become decodable at clearly different depths: part of speech first (around layer 3), then sentiment (around layer 8), named entity type (around layer 13 to 14), and statement truthfulness last (around layer 19).",
+ "verdict": "yes",
+ "reason": "The summary gives the same order and onset depths (POS ~3, sentiment ~8, NER ~14, truthfulness ~20), matching the intended finding of distinct, successively deeper decodability."
+}

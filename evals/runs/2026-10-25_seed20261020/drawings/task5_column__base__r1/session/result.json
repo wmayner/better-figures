@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 143276,
+ "stop_reason": "end_turn",
+ "session_id": "19e12957-cfde-40c6-8637-f7b82551e40a",
+ "total_cost_usd": 0.6687902,
+ "usage": {
+  "input_tokens": 28,
+  "cache_creation_input_tokens": 35763,
+  "cache_read_input_tokens": 479071,
+  "output_tokens": 14338,
+  "output_tokens_details": {
+   "thinking_tokens": 6206
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 35763,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 802,
+    "cache_read_input_tokens": 48179,
+    "cache_creation_input_tokens": 476,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 476
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 28,
+   "outputTokens": 14338,
+   "cacheReadInputTokens": 479071,
+   "cacheCreationInputTokens": 35763,
+   "webSearchRequests": 0,
+   "costUSD": 0.6687902,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 6206,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 20,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've written `make_figure.py`, which reads `data.csv` and saves `figure.pdf` (3.25 \u00d7 2.35 in, fonts embedded) and `figure.png` (300 dpi), plus a caption in `caption.md`. The script runs cleanly, and I looked at the rendered PNG.\n\n**What the figure shows:**\n- One line per concept: probe accuracy across layers 0\u201323, with the CI columns as shaded bands and a dashed line at chance.\n- A marker on each curve at the layer where the concept becomes decodable, labelled with that layer number.\n- A 2\u00d72 legend above the plot. Each concept has its own color and marker shape, so they can be told apart in grayscale or by colorblind readers.\n\n**How \"becomes decodable\" is defined:** the first layer where accuracy reaches halfway between chance and that concept's peak, and stays there for every later layer. I chose this so a single noisy layer can't trigger it. The results are well separated:\n\n| Concept | Layer |\n|---|---|\n| Part of speech | 4 |\n| Sentiment | 9 |\n| Named entity type | 14 |\n| Statement truthfulness | 20 |\n\nThe script also prints these values each time it runs.\n\n**Things to check before submitting:**\n- **Confidence level:** the data doesn't say what level the CIs are, so the caption just says \"confidence intervals.\" The bands are wider than a 95% interval on 2,000 examples would be, so they may come from bootstrapping or multiple seeds. Add the level and method.\n- **Chance is set to 50%:** this is an assumption. Every concept starts at about 0.5 at layer 0, so they look like binary tasks. If any task has more than two classes, change `CHANCE` in the script.\n- **Truthfulness is still rising at layer 23:** its true peak, and so its onset layer, may be underestimated. The caption says this.\n- **Font:** the figure uses sans-serif text. Helvetica and Arial aren't installed here, so it used DejaVu Sans. Change `font.sans-serif` if you want it to match your paper.\n- **Unchecked colors:** I couldn't run the palette's colorblind-safety checker because Node isn't installed here. The colors come from the skill's reference palette, and the marker shapes make up for the known orange/yellow overlap.",
+ "ttft_ms": 1730,
+ "type": "result",
+ "duration_ms": 153740,
+ "uuid": "9be2c1c6-9360-48b0-93bf-d01eaaeb4006",
+ "ttft_stream_ms": 1272,
+ "time_to_request_ms": 177,
+ "first_content_frame_ms": 1273,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 28,
+   "outputTokens": 14338,
+   "cacheReadInputTokens": 479071,
+   "cacheCreationInputTokens": 35763,
+   "webSearchRequests": 0,
+   "costUSD": 0.6687902,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 6206,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

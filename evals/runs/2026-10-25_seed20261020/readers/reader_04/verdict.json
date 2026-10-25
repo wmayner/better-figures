@@ -1,0 +1,9 @@
+{
+ "reader": "reader_04",
+ "run": "task2_heads__plugin__r2",
+ "task": "task2_heads",
+ "reader_sentence": "Across a 12-layer \u00d7 12-head grid, almost every one of the 144 attention heads barely changes the loss, and only three heads raise it by more than 0.1 nats: head 6 in layer 9 (about 1.2 nats, the largest), head 9 in layer 9 (about 0.85), and head 0 in layer 10 (about 0.7), with the cell labels \"9.6\", \"9.9\" and \"10.0\" naming these heads by layer and head rather than giving loss values.",
+ "intended": "Three heads matter: layer 9 head 6, layer 9 head 9 and layer 10 head 0; ablating any of the other 141 heads barely changes the loss.",
+ "verdict": "yes",
+ "reason": "The summary names the same three heads (9.6, 9.9, 10.0) as the only ones that raise the loss much, and says the other heads barely change it, which matches the intended finding."
+}

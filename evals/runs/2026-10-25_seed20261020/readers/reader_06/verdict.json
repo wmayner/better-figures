@@ -1,0 +1,9 @@
+{
+ "reader": "reader_06",
+ "run": "task1_probes__plugin__r1",
+ "task": "task1_probes",
+ "reader_sentence": "Linear probes reach 80% accuracy at progressively deeper layers as the property gets more abstract: part of speech at layer 4, sentiment at layer 9, named-entity type at layer 15 and statement truthfulness at layer 21, and all four end up near 90\u201395% in the final layers.",
+ "intended": "The four concepts become decodable at clearly different depths: part of speech first (around layer 3), then sentiment (around layer 8), named entity type (around layer 13 to 14), and statement truthfulness last (around layer 19).",
+ "verdict": "yes",
+ "reason": "The summary gives the same order (POS, sentiment, entity type, truthfulness) at clearly separated depths; its layer numbers run about one or two layers later, which doesn't change the finding."
+}

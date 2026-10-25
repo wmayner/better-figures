@@ -1,0 +1,9 @@
+{
+ "reader": "reader_12",
+ "run": "task3_attribution__base__r1",
+ "task": "task3_attribution",
+ "reader_sentence": "Across GPT-2 small, Pythia-410M and Gemma-2-2B, integrated gradients matches head-ablation effects most closely (mean Spearman \u03c1 \u2248 0.84), followed by attribution patching (0.62), gradient\u00d7input (0.45), saliency (0.29) and activation magnitude (0.18), and this ranking holds for all three models.",
+ "intended": "Integrated gradients matches ablation best on all three models (rank correlation about 0.8 to 0.9), clearly ahead of the next best method, attribution patching (about 0.6).",
+ "verdict": "yes",
+ "reason": "The reader says integrated gradients is best on all three models (\u03c1\u22480.84, within 0.8\u20130.9) and clearly ahead of attribution patching (0.62), which is the intended finding; the extra method rankings don't contradict it."
+}

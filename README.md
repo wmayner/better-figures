@@ -95,6 +95,8 @@ Several parts of `figkit.py` follow [viz](https://github.com/safety-research/viz
 ## Does it work?
 
 <!-- EVIDENCE -->
+### First run: version 0.1.0, 20 October 2026
+
 We ran a small test on 20 October 2026. Claude Code (Opus 5.5, effort high, headless) got the same made-up dataset and the same one-line request in two setups. Plain Claude Code had no CLAUDE.md, user skills, plugins, hooks or MCP servers; it still had Claude Code's built-in skills, and it loaded the built-in `dataviz` skill in every run. The other setup was identical except for `--plugin-dir` pointing at this repository, and it loaded the figures skill in every run. Each run started in an empty directory holding only `data.csv`.
 
 There were three tasks, each with a planted answer: probe accuracy by layer for four concepts that become decodable at different depths ("Make a figure showing where each concept becomes decodable"), the loss increase from ablating each of 144 heads where three heads matter, and five attribution methods compared with ablation on three models where one method is clearly best. Each setup ran each task twice, for 12 runs.
@@ -117,7 +119,28 @@ The first run of each setup on the attribution task:
 
 ![Two figures side by side. Left, plain Claude Code: five methods with a coloured dot and interval per model, a legend, a shaded best row and a column of mean values. Right, with better-figures: the same intervals in grey with integrated gradients in orange and the three model names written next to its dots.](evals/results/before_after_task3.png)
 
-To rerun the test, from `evals/`: `python make_data.py --seed 20261020 --out runs/<new name>`, then `python run.py isolation`, `run.py draw`, `measure.py`, `run.py read` and `analyze.py` on that folder (the usage block at the top of `evals/run.py` lists them in order; `evals/requirements.txt` has the Python packages). Each run's script, figure, caption, cost and token counts are in `evals/runs/2026-10-20_seed20261020/`, with the paths of the machine it ran on replaced by `<repository>` and `<work_root>`. The full session transcripts are not in the repository: `run.py` writes them to a `transcripts/` folder in the run folder, which git ignores.
+### Second run: version 0.3.0, 25 October 2026
+
+Version 0.3.0 allows a one-line title that states the finding, and values and counts at the ends of bars, so its figures were expected to carry more words than those of 0.1.0. We reran the three tasks on the same data, two runs per setup, with Claude Code 2.1.310, and added two tasks for parts of 0.3.0. Both setups again loaded their figure skill in every run.
+
+| Task | Words outside tick labels: plain / with plugin | Words outside the title, tick labels and numbers: plain / with plugin | Fresh reader matched: plain / with plugin |
+|---|---|---|---|
+| Probe accuracy by layer | 41 / 30 | 29.5 / 14 | 2 of 2 / 2 of 2 |
+| Effect of ablating heads | 44.5 / 20.5 | 29 / 4.5 | 2 of 2 / 2 of 2 |
+| Attribution against ablation | 35.5 / 19 | 14 / 6 | 2 of 2 / 2 of 2 |
+
+- Counting every word outside tick labels, as on 20 October, the plugin's figures carried 1.4 to 2.2 times fewer words (geometric mean 1.8, down from 3.6), and the evidence for a difference is weak: a Bayes factor of 2.5 (Cauchy prior with scale 0.707; 2.7 with scale 1.0). Most of the change from 0.1.0 is the titles. Every plugin figure had one, 11 words long on average, stating the finding with its numbers ("Only 3 of 144 heads raised loss by over 0.1 nats"). Plain Claude Code titled 4 of its 6 figures, with 5.5 words on average, mostly naming the topic ("Concepts become linearly decodable at different depths").
+- Leaving out the title and the numbers, which 0.3.0 allows, the plugin's figures carried 2.1 to 6.4 times fewer words (geometric mean 3.2). The Bayes factor is 1.9 with either prior, because the ratio varies too much across three tasks for strong evidence.
+- Every fresh reader got the planted answer from both setups (6 of 6 each), so this test again shows a difference in text, not in understanding.
+- Three figures for one write-up, one script each: in all four runs, each condition kept one colour across the three figures, in both setups. Plain Claude Code used the `dataviz` skill's palette the same way in each script, so this task showed no advantage for the colour roles. It does not test the case they are for, where separate sessions draw the figures.
+- One column of a paper, 3.25 in wide: both setups drew the figure at that width. Plain Claude Code's smallest text was 6 pt in both runs. The plugin used `fk.use(size="column")` both times, and its smallest text was 7 pt, the least figkit allows for print.
+- Cost per run on the three original tasks was $0.39 for plain Claude Code and $0.46 with the plugin; the whole run cost $9.81.
+
+These are two runs per setup on made-up data with one model, so treat them as a check that 0.3.0 does what it says, not as a benchmark.
+
+### Rerunning the test
+
+From `evals/`: `python make_data.py --seed 20261020 --out runs/<new name>`, then `python run.py isolation`, `run.py draw`, `measure.py`, `run.py read` and `analyze.py` on that folder (the usage block at the top of `evals/run.py` lists them in order; `evals/requirements.txt` has the Python packages). Each run's script, figure, caption, cost and token counts are in its folder under `evals/runs/`, with the paths of the machine it ran on replaced by `<repository>` and `<work_root>`; `evals/runs/2026-10-25_seed20261020/NOTES.md` says which of that run's measurements the analysis uses and why. The full session transcripts are not in the repository: `run.py` writes them to a `transcripts/` folder in the run folder, which git ignores.
 <!-- /EVIDENCE -->
 
 ## License

@@ -1,7 +1,7 @@
 """Summarize the figure test: words per arm, Bayes factors, fresh-reader matches, cost, and the checks of later runs.
 
-usage: python analyze.py <run_dir>
-Reads <run_dir>/measures.csv and <run_dir>/readers/*/verdict.json.
+usage: python analyze.py <run_dir> [measures file]
+Reads <run_dir>/measures.csv (or the measures file given, such as measures_v2.csv) and <run_dir>/readers/*/verdict.json.
 Writes <run_dir>/per_run.csv (one row per figure, long format), <run_dir>/summary.json and
 <run_dir>/table.csv (one row per task and arm); _v2 etc. if they exist.
 
@@ -63,6 +63,12 @@ def ratio_test(table, column):
                 bayes_factor_log_ratio_vs_zero=bf)
 
 
+def plain(label):
+    """A label as a condition name: lower case, "+" and "&" as "and", no punctuation or extra spaces."""
+    s = label.lower().replace("+", " and ").replace("&", " and ")
+    return " ".join("".join(ch if ch.isalnum() else " " for ch in s).split())
+
+
 def consistency(per_run):
     """task4_set: for each run, how many of the three conditions keep one colour across its three figures."""
     out = []
@@ -71,7 +77,9 @@ def consistency(per_run):
         for c in CONDITIONS:
             colours = set()
             for lc in d["label_colors"].dropna():
-                colours |= set(json.loads(lc).get(c, []))
+                for label, cols in json.loads(lc).items():
+                    if plain(label) == c:
+                        colours |= set(cols)
             seen[c] = sorted(colours)
             if colours:
                 found += 1
@@ -92,7 +100,7 @@ def column(per_run):
 
 def main():
     run_dir = Path(sys.argv[1]).resolve()
-    m = pd.read_csv(run_dir / "measures.csv")
+    m = pd.read_csv(run_dir / (sys.argv[2] if len(sys.argv) > 2 else "measures.csv"))
     verdicts = [json.loads(p.read_text()) for p in sorted((run_dir / "readers").glob("reader_*/verdict.json"))]
     v = pd.DataFrame(verdicts)[["run", "reader_sentence", "verdict", "reason"]] if verdicts else pd.DataFrame(
         columns=["run", "reader_sentence", "verdict", "reason"])

@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 63157,
+ "stop_reason": "end_turn",
+ "session_id": "8b36e6f6-d67a-420e-a950-224825b9e79d",
+ "total_cost_usd": 0.46371180000000006,
+ "usage": {
+  "input_tokens": 16,
+  "cache_creation_input_tokens": 34114,
+  "cache_read_input_tokens": 259179,
+  "output_tokens": 6945,
+  "output_tokens_details": {
+   "thinking_tokens": 1879
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 34114,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 705,
+    "cache_read_input_tokens": 45619,
+    "cache_creation_input_tokens": 1451,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1451
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 16,
+   "outputTokens": 6945,
+   "cacheReadInputTokens": 259179,
+   "cacheCreationInputTokens": 34114,
+   "webSearchRequests": 0,
+   "costUSD": 0.46371180000000006,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 1879,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 12,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've written the three scripts and `captions.md`. Each script reads `data.csv` and saves its figure (`figure1.png`, `figure2.png`, `figure3.png`), and all three passed the style check.\n\n- **Figure 1, final sycophancy by condition:** a bar for each condition's mean at step 2,000, with a dot for each of the five seeds. Title: \"Honesty data and steering cut final sycophancy from 37% to 9%\". Honesty data alone gives 21%, and no seed overlaps with another condition's seeds.\n- **Figure 2, sycophancy over training:** a faint line for each seed and a bold line for each condition's mean, with the condition names written at the line ends instead of a legend. All three conditions start at 39\u201340%. Without honesty data the rate stays flat; with it, the rate drops, mostly in the first 1,000 steps.\n- **Figure 3, final helpfulness by condition:** the same layout as Figure 1, on a 0\u201310 scale. The means are 7.1, 7.0 and 6.9, and the seeds overlap across conditions. The title says this plainly (\"Final helpfulness was 6.9 to 7.1 of 10 in every condition\") and doesn't claim a difference.\n\nEach condition has the same colour in all three figures: grey for no honesty data, blue for honesty data, and orange for honesty data with steering, which is the main result. The colours are set in `figure-roles.json`. The plotting style helper is copied into `_kit/`, which needs to stay next to the scripts.\n\n**Two placeholders to fill in:** the captions for Figures 1 and 3 have bracketed notes asking how sycophancy and helpfulness were measured, and on how many prompts. That isn't in `data.csv`, so I left it for you rather than guess.\n\nThe caption numbers come from the data, but I typed them in by hand, so update them if `data.csv` changes. The figure titles are computed from the data, except Figure 2's, which has no numbers.",
+ "ttft_ms": 1603,
+ "type": "result",
+ "duration_ms": 77285,
+ "uuid": "296a336c-5286-49dd-9324-eb7259808bd6",
+ "ttft_stream_ms": 1131,
+ "time_to_request_ms": 174,
+ "first_content_frame_ms": 1132,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 16,
+   "outputTokens": 6945,
+   "cacheReadInputTokens": 259179,
+   "cacheCreationInputTokens": 34114,
+   "webSearchRequests": 0,
+   "costUSD": 0.46371180000000006,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 1879,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

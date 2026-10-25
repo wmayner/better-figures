@@ -1,0 +1,115 @@
+{
+ "duration_api_ms": 97165,
+ "stop_reason": "end_turn",
+ "session_id": "b9904050-f1e5-4d21-bcea-32b5fa2c89d4",
+ "total_cost_usd": 0.48772160000000003,
+ "usage": {
+  "input_tokens": 20,
+  "cache_creation_input_tokens": 29713,
+  "cache_read_input_tokens": 283188,
+  "output_tokens": 9665,
+  "output_tokens_details": {
+   "thinking_tokens": 4481
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 29713,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 716,
+    "cache_read_input_tokens": 41038,
+    "cache_creation_input_tokens": 996,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 996
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "modelUsage": {
+  "claude-opus-5-5": {
+   "inputTokens": 20,
+   "outputTokens": 9665,
+   "cacheReadInputTokens": 283188,
+   "cacheCreationInputTokens": 29713,
+   "webSearchRequests": 0,
+   "costUSD": 0.48772160000000003,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 4481,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "fast_mode_disabled_reason": "sdk_opt_in_required",
+ "subagent_stats": {
+  "spawned": 0,
+  "requested": {
+   "background": 0,
+   "foreground": 0,
+   "unset": 0
+  },
+  "started_in_background": 0,
+  "max_depth": 0,
+  "spawned_by_subagents": 0,
+  "completed": 0,
+  "failed": 0,
+  "killed": {
+   "parent": 0,
+   "user": 0,
+   "system": 0
+  },
+  "refused": {
+   "depth_limit": 0,
+   "concurrency_limit": 0,
+   "budget": 0
+  },
+  "by_type": {}
+ },
+ "safety_stops": 0,
+ "is_error": false,
+ "num_turns": 13,
+ "subtype": "success",
+ "api_error_status": null,
+ "result": "I've written `make_figure.py`, which reads `data.csv` and saves `figure.pdf` and `figure.png` at 3.25 \u00d7 2.4 inches, plus a caption in `caption.md`. The script runs, and I looked at the rendered PNG to check that no labels overlap or run off the edge.\n\n**What the figure shows:**\n- **Curves:** one accuracy line per concept across the 24 layers, with its confidence interval as a light shaded band. A dotted line marks chance (0.5).\n- **Onset layers:** I counted a concept as \"decodable\" at the first layer where accuracy reaches **0.75**, halfway between chance and perfect, interpolating between layers. Each onset is marked on a faint threshold line and labelled with its layer: part of speech 3.4, sentiment 8.3, named entity type 13.8, statement truthfulness 19.6. The 0.75 cutoff was my choice; to use a different one, change `THRESHOLD` at the top of the script.\n- **Telling the concepts apart:** each concept has its own colour and onset marker shape (circle, square, triangle, diamond). The legend above the plot lists the concepts in onset order, so they can still be told apart if the paper is printed in black and white.\n- **Print details:** fonts are embedded in the PDF as TrueType, which camera-ready checkers usually require. The text is 6\u20137 pt and the PNG is 600 dpi.\n\n**Two things to check:**\n- **Confidence level:** `data.csv` doesn't say what level the `ci_low`/`ci_high` columns are, so the caption just says \"confidence intervals\". Add \"95%\" or whatever the level is.\n- **Colour check:** I couldn't run the colour-blind safety check on the four colours because Node isn't installed here. They are the first four colours of a palette already documented as passing that check for line charts.\n\nThe caption describes the staggered onsets and notes that statement truthfulness is still rising at the last layer (0.91), while the other three concepts level off at about 0.93\u20130.95.",
+ "ttft_ms": 1518,
+ "type": "result",
+ "duration_ms": 102296,
+ "uuid": "4f629a51-fdfb-4a26-a06f-4d0a20d1c98a",
+ "ttft_stream_ms": 1099,
+ "time_to_request_ms": 175,
+ "first_content_frame_ms": 1100,
+ "queued_turn_count": 0,
+ "result_index": 0,
+ "model_usage_since_last_result": {
+  "claude-opus-5-5": {
+   "inputTokens": 20,
+   "outputTokens": 9665,
+   "cacheReadInputTokens": 283188,
+   "cacheCreationInputTokens": 29713,
+   "webSearchRequests": 0,
+   "costUSD": 0.48772160000000003,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 4481,
+   "canonicalModel": "claude-opus-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ }
+}

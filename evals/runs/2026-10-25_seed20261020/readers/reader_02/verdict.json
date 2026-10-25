@@ -1,0 +1,9 @@
+{
+ "reader": "reader_02",
+ "run": "task2_heads__base__r2",
+ "task": "task2_heads",
+ "reader_sentence": "Ablating individual attention heads shows that only three of the 144 heads matter much: removing L9H6, L9H9 or L10H0 raises the loss by 1.25, 0.91 and 0.72, while removing any of the other 141 heads changes it almost not at all (median 0.017, max 0.064).",
+ "intended": "Three heads matter: layer 9 head 6, layer 9 head 9 and layer 10 head 0; ablating any of the other 141 heads barely changes the loss.",
+ "verdict": "yes",
+ "reason": "The reader names the same three heads (L9H6, L9H9, L10H0) as the only ones that matter and says ablating the other 141 barely changes the loss."
+}

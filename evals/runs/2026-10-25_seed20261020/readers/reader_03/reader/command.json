@@ -1,0 +1,31 @@
+{
+ "arm": "base",
+ "cwd": "<work_root>/852ef2b4",
+ "exit": 0,
+ "seconds": 8.4,
+ "argv": [
+  "claude",
+  "-p",
+  "<prompt>",
+  "--model",
+  "claude-opus-5-5",
+  "--effort",
+  "high",
+  "--setting-sources",
+  "local",
+  "--strict-mcp-config",
+  "--permission-mode",
+  "bypassPermissions",
+  "--output-format",
+  "stream-json",
+  "--verbose",
+  "--no-session-persistence",
+  "--max-budget-usd",
+  "2",
+  "--settings",
+  "{\"autoMemoryEnabled\": false}",
+  "--tools",
+  "Read"
+ ],
+ "prompt": "Look at figure.png in this directory. In one sentence, say what the figure shows: its main finding, as a reader would take it from the image alone. Reply with that one sentence only."
+}
