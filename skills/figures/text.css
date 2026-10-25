@@ -1,0 +1,37 @@
+/* Figures made of text: a score on every token, and replies side by side. Link this file (it imports diagram.css
+   for the colour tokens and Inter) and text.js, which shades the tokens and draws the colour bar.
+   See examples/token_scores.html and examples/transcripts.html. */
+@import url("diagram.css");
+
+.textfig { width: 1100px; padding: 34px 44px 40px; display: flex; flex-direction: column; gap: 22px; }
+.fig-title { font-weight: 600; font-size: 28px; line-height: 1.2; white-space: nowrap; }  /* the finding, stated literally in one line */
+
+/* Token scores: one row per text, each token shaded by its score, with the colour bar above.
+   <div class="scale" data-label="Deception probe score"></div>
+   <div class="token-row"><div class="row-name">deceptive report</div>
+     <div class="tokens" data-low="-3" data-high="3"></div>
+     <script type="application/json">[["I", -1.2], [" updated", -0.8], ...]</script></div> */
+.token-row { display: grid; grid-template-columns: 190px 1fr; gap: 18px; align-items: baseline; }
+.row-name { font-size: 19px; font-weight: 600; color: var(--muted); text-align: right; }
+.tokens { font-size: 24px; line-height: 2.1; }
+.tokens .t { padding: 4px 3px; border-radius: 5px; }
+.scale { display: flex; align-items: center; gap: 16px; font-size: 19px; color: var(--muted); }
+.scale .bar { width: 280px; height: 14px; border-radius: 3px; }
+.scale .ends { display: flex; justify-content: space-between; width: 280px; font-size: 17px; margin-top: 4px; }
+
+/* Replies side by side: the prompt across the top, one card per condition, an outcome dot at the foot.
+   The card about the intervention takes .accent; mark the phrase that matters with <span class="hl">. */
+.prompt { background: var(--card); border-radius: 14px; padding: 18px 22px; font-size: 22px; line-height: 1.4; }
+.who { font-weight: 600; font-size: 18px; margin-bottom: 8px; }
+.who .note { color: var(--muted); font-weight: 400; margin-left: 10px; }
+.replies { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.reply { border: 1.5px solid var(--line); border-top: 6px solid var(--line); border-radius: 14px; padding: 16px 22px 18px;
+         font-size: 22px; line-height: 1.4; background: var(--white); display: flex; flex-direction: column; }
+.reply.accent { border-top-color: var(--accent); }
+.reply .says { flex: 1; }
+.outcome { margin-top: 14px; font-weight: 600; font-size: 19px; display: flex; gap: 10px; align-items: center;
+           color: var(--ink) !important; }  /* the dot carries the colour; the words stay ink */
+.outcome::before { content: ""; width: 13px; height: 13px; border-radius: 50%; background: var(--muted); flex: none; }
+.outcome.good::before { background: var(--good); }
+.outcome.bad::before { background: var(--bad); }
+.hl { background: var(--accent-soft); border-radius: 4px; padding: 0 3px; }

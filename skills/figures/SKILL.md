@@ -1,6 +1,6 @@
 ---
 name: figures
-description: Use before making any figure a person will read, such as a matplotlib or seaborn plot, a chart in a report or slide, or a diagram of a method or pipeline, and when designing the figures in an experiment spec. It covers choosing what to show, keeping text out of the image, a matplotlib house style with direct labels and a check that runs on save, HTML routes for interactive figures on a page and for diagrams, each with a PNG for slides, the summary figure (Figure 1) that shows an idea, its method and its result with examples and cartoons, and the story figure that lays out the data, the task, a result comparing several methods, and how each method works on one tall page. Not for dashboards (use dataviz).
+description: Use before making any figure a person will read, such as a matplotlib or seaborn plot, a chart in a report or slide, or a diagram of a method or pipeline, and when designing the figures in an experiment spec. It covers choosing what to show, which text goes in the image (a one-line title that states the finding, values, direct labels) and which goes in the caption, a matplotlib house style with direct labels, colour roles shared by a set of figures, sizes for screens, slides and print, and a check that runs on save, worked examples of common interpretability plots, HTML routes for interactive figures on a page, for diagrams and for token scores and transcripts, each with a PNG for slides, the summary figure (Figure 1) that shows an idea, its method and its result with examples and cartoons, and the story figure that lays out the data, the task, a result comparing several methods, and how each method works on one tall page. Not for dashboards (use dataviz).
 ---
 
 # Figures
@@ -9,16 +9,16 @@ The goal is a figure that a busy researcher understands in five seconds, made in
 
 The files named below (`figkit.py`, `render_html.sh`, the CSS and JS, `examples/`, `references/`) are in this skill's directory, `${CLAUDE_SKILL_DIR}`.
 
-**On first use in a project, copy the kit into the project.** `${CLAUDE_SKILL_DIR}` can be a folder in Claude Code's plugin cache whose name includes the plugin's version, so a script or page that points there breaks when the plugin updates, and on a collaborator's machine. Copy `figkit.py`, `fonts/` and the CSS and JS once, into a `_kit/` folder beside the figure scripts, and refer to that copy by a path relative to each script or HTML file. If the project already has a `_kit/` folder, use it.
+**On first use in a project, copy the kit into the project.** `${CLAUDE_SKILL_DIR}` can be a folder in Claude Code's plugin cache whose name includes the plugin's version, so a script or page that points there breaks when the plugin updates, and on a collaborator's machine. Copy `figkit.py`, `fonts/` and the CSS and JS once, into a `_kit/` folder beside the figure scripts, and refer to that copy by a path relative to each script or HTML file. If the project already has a `_kit/` folder, use it. The colour roles go in a `figure-roles.json` beside the scripts (section 4).
 
 ```
 mkdir -p figures/_kit
-for f in figkit.py fonts diagram.css summary.css summary.js story.css story.js; do cp -R "${CLAUDE_SKILL_DIR}/$f" figures/_kit/; done
+for f in figkit.py fonts diagram.css summary.css summary.js story.css story.js text.css text.js; do cp -R "${CLAUDE_SKILL_DIR}/$f" figures/_kit/; done
 ```
 
 `render_html.sh` is a command rather than something a script saves, so run it from `${CLAUDE_SKILL_DIR}`.
 
-Figures go wrong in two ways. They try to show every result, so the figure becomes a table drawn as a plot. And they put the caption's job into the image: definitions, statistics, verdicts, and titles written as sentences. Writing "one idea per figure" doesn't prevent this, because the idea becomes the title and everything is still drawn below it. Reviewing a figure by asking "is every term defined?" makes labels longer. The question to ask is "what can I remove?"
+Figures go wrong in two ways. They try to show every result, so the figure becomes a table drawn as a plot. And they put the caption's job into the image: definitions, statistics, hedges and annotation boxes, under a long title that explains instead of stating the finding. Writing "one idea per figure" doesn't prevent this, because the idea becomes a long title and everything is still drawn below it. A title is welcome when it states the finding in one plain line (section 3); everything a reader needs to interpret the figure goes in the caption. Reviewing a figure by asking "is every term defined?" makes labels longer. The question to ask is "what can I remove?"
 
 ## 1. Decide before drawing
 
@@ -26,11 +26,14 @@ Write this block in your notes, or in the spec when figures are designed there. 
 
 ```
 Claim:    the one sentence the figure argues
+Title:    the claim as one line of about 10 words, stating what was compared and what happened (section 3), or none
 Template: bar | line | scaling | calibration | diverging line | Pareto | scatter | heatmap
 Shows:    the one comparison the claim needs (which series, which subset); the rest goes to a table
 Accent:   the one element the eye should land on (ACCENT colour; everything else grey)
-Text:     every string that will appear in the image, listed, at most about 25 words outside tick labels
+Size:     screen | slide | paper | column (section 4)
+Text:     every string that will appear in the image, listed, at most about 25 words outside the title, tick labels and numbers
 Caption:  bold takeaway sentence; 0-3 sentences of detail on the finding; then what is plotted, how measured, n, error bars (section 3a)
+Alt:      for a figure on a web page: the title, then the data in words, for screen readers
 Sketch:   a 4-line ASCII sketch
 ```
 
@@ -42,7 +45,7 @@ Write the claim first, then choose the template that makes that argument. Each o
 - diverging line plot: this line goes up, this one doesn't;
 - Pareto frontier plot: we push the Pareto frontier.
 
-Scatter plots and heatmaps cover a relation between two measures and a grid of values. If no template fits, the figure is probably trying to say more than one thing; split it or simplify it.
+Scatter plots and heatmaps cover a relation between two measures and a grid of values. If no template fits, the figure is probably trying to say more than one thing; split it or simplify it. Section 4 lists a worked example of each, by the question the figure answers.
 
 At the spec stage, the person approves this block, not a prose description of encodings ("rows: methods × targets; filled vs open markers; verdict in the margin" reads as simple and draws as a wall). Better still, draw the figure once from fake data and show the image.
 
@@ -51,27 +54,40 @@ At the spec stage, the person approves this block, not a prose description of en
 - One panel by default. Use small multiples (at most 4 panels, shared axes) only when the same comparison repeats across conditions.
 - At most 4 series per panel. Keep the ones the claim needs; grey or drop the rest.
 - If you want a verdict column, a statistic printed on every row, "two versions", or a panel per target, you are drawing a table. Put the table on the page and draw the one row that matters.
+- When there are several seeds or runs, draw every one: a dot per seed on its bar, or each seed as a faint line behind the bold mean. Never show one run when there are more.
+- Put categories in order of their values, unless their order means something (layers, model sizes, training steps). The check warns about bars out of order.
 - Diagnostics and secondary results do not go in the figures someone is asked to read.
 
-## 3. Keep text out of the image
+## 3. Text in the image
 
 | Content | In the image? | Where instead |
 |---|---|---|
-| The claim | No sentence titles, no suptitle | the heading or slide title above the figure, or the caption's first sentence |
-| Definitions, n, interval method, thresholds, priors, Bayes factors, sampling notes | No | caption or page text |
+| The finding | Yes, as the title: one line of about 10 words, stated literally (below) | and as the caption's bold first sentence |
+| Definitions, interval method, thresholds, priors, Bayes factors, sampling notes | No | caption or page text |
 | Axis labels | Yes, at most about 6 words, with units | |
 | Series names | Yes, next to the data (`fk.label_lines`, `fk.label_bars`) | a legend only for 5+ categories, and then you have too many |
-| One key number | Yes, if it is the point: one, next to its mark | |
+| Values and counts | Yes: each bar's value at its end (`fk.label_values`), a count beside it ("164 of 400"), or the one key number next to its mark | |
 | Panel names | Yes, at most 4 words | |
 
-The story figure (section 8) is the one exception, and only in two ways. Its panel headers are plain sentences that say what the panel shows ("The task: look at a network's activations and point to its planted circuit"); they describe and define, and still never state the verdict. And its result panel prints each bar's value at the bar's end, with the training details of each method in a grey line under its name, because that chart compares many methods and has no tick labels.
+**The title.** Readers look at a figure's title first and remember it better than the chart ([Borkin et al. 2016](https://vcg.seas.harvard.edu/publications/20150101-beyond-memorability-visualization-recognition-and-recall)), and they remember the title's message even when the chart contradicts it ([Kong et al. 2019](https://doi.org/10.1145/3290605.3300576)). So a title says exactly what the data shows, and nothing the data doesn't.
+- One finding, stated literally: what was compared and what happened, in about 10 plain words, on one line at the figure's size. Draw it with `fk.title(fig, ...)`. If it needs a semicolon, make two figures.
+- It names what the eye sees first: the accented series, or the biggest gap. If the point is a small difference, change the chart (accent it, drop the rest), not the words.
+- Compute its numbers from the data in the script, as the examples do, so the title can't drift from the figure.
+- No colon setups ("The fix: search"), questions, dash asides, full stops, metaphors or wordplay.
+- If the result is mixed, the title says so. If no sentence is true of the whole figure, the figure has no title.
+
+`fk.save` checks a title's length, that it fits on one line, its punctuation and its intensifiers; it can't tell whether the title is true.
+
+Three rules for every word in the image and the caption, title included: say what was measured, not what it means ("chose to stop", not "wanted to stop"; "passed 98% test accuracy", not "generalized"); use numbers, not adjectives ("fell from 41% to 12%", not "dropped sharply"); and use no names coined inside the project, such as a code name for a condition or a nickname for a measure.
+
+The story figure (section 8) differs in one way: its panel headers are plain sentences that say what the panel shows ("The task: look at a network's activations and point to its planted circuit"). They describe and define, and never state the verdict, which goes in the title and the caption. Its result rows also carry a grey line of training details under each method's name.
 
 There are no annotation boxes, no paragraphs, no rotated tick labels, no variable names from the code, and no numbers to four decimals. Rigor belongs in the caption. The image carries only what the eye needs.
 
 ## 3a. Write the caption
 
 A caption has three parts, in this order:
-1. **The takeaway, in bold:** one declarative sentence stating what the figure shows. It is the Claim from the plan block. Never open with "How to read it", "This figure shows" or a description of the axes.
+1. **The takeaway, in bold:** one declarative sentence stating what the figure shows. It is the Claim from the plan block, and it can repeat the title with more precision. Never open with "How to read it", "This figure shows" or a description of the axes.
 2. **Zero to three sentences on the finding:** the key numbers with their intervals, and the qualification a reader most needs.
 3. **What a reader needs to interpret it correctly:** what each line, bar or band is; how it was measured; n; what the error bars are; any reference line; anything excluded.
 
@@ -94,6 +110,7 @@ Choose the medium first:
 - A diagram of a method: use HTML, as described in section 9.
 - The summary figure that opens a post, deck, update or paper: use HTML, as described in section 7.
 - A result that compares several methods on one task, posted where the image must carry the whole story: the story figure, in HTML, as described in section 8.
+- A score on every token, or model replies side by side: HTML, as described in section 11.
 
 Write one standalone script per figure, about 100 lines or fewer. It reads saved tidy data (CSV or parquet) and does nothing else. Don't draw inside the analysis script: helpers built to take any number of rows let rows pile up.
 
@@ -103,27 +120,49 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent / "_kit"))   # the project's copy of the kit
 import figkit as fk
 
-fk.use()                     # house style and the Inter font; call after any sns.set_theme, or instead of it
-fig, ax = plt.subplots()     # 7 x 4 in default; don't enlarge to fit more, since text shrinks when the image is scaled
-ax.plot(k, loss_top, color=fk.ACCENT, label="top heads by patching")
-ax.plot(k, loss_rand, color=fk.GREY, label="random heads")
+fk.use()                     # house style, Inter and the colour roles; call after any sns.set_theme, or instead of it
+fig, ax = plt.subplots()     # the size's default (7 x 4 in); don't enlarge it, since text shrinks when the image is scaled
+ax.plot(k, loss_top, color=fk.color("top heads"), label="top heads")
+ax.plot(k, loss_rand, color=fk.color("random heads"), label="random heads")
 ax.set(xscale="log", xlabel="Heads ablated", ylabel="Loss increase (nats)")
 fk.plain_ticks(ax.xaxis)     # 1, 10, 100 rather than powers of ten
-fk.label_lines(ax)           # names at line ends; fk.label_bars(ax) for bar charts
-fk.save(fig, "fig1.png")   # prints FIGURE CHECK with anything to fix
+fk.label_lines(ax)           # names at line ends; fk.label_bars(ax) names bar series, fk.label_values(ax) writes values
+fk.title(fig, f"Ablating the top heads raised loss {ratio:.0f} times as much as random heads")
+fk.save(fig, "fig1.png")     # prints FIGURE CHECK with anything to fix
 ```
 
 - The Inter font and the palette below are defaults; keep them unless your venue or page requires otherwise. To match a venue's font or a lab's palette, set `rcParams` or the colours after `fk.use()`, and still keep one accent colour with the rest grey.
-- Colours: `fk.ACCENT` for the claim, `fk.GREY` or `fk.LIGHT` for context, `fk.BLUE` for a second highlighted series, and `fk.CATEGORICAL` only when the categories themselves are the point. Keep each colour's meaning fixed across a set of figures.
-- With seaborn, pass `saturation=1` to bar plots and `palette={level: colour}` so the accent stays exact.
+- **Size for where the figure goes.** `fk.use(size=...)` takes `"screen"` (7 × 4 in, the default), `"slide"` (10 × 5.6 in), `"paper"` (6.75 in, the full text width of a two-column paper) or `"column"` (3.25 in, one column of it). Each sets the figure size, and font sizes that print at a readable size there, and the check measures the text at that size. A figure drawn wider than its size shrinks when it is placed, and its text with it; the check says by how much. Save print figures as PDF.
+- **Colour roles.** Name each condition once in a `figure-roles.json` beside the figure scripts, and every figure colours it the same way: `{"control": "random heads", "intervention": "top heads", "second": "half the data", "ordered": ["70M", "410M", "1.4B"]}`. The control is grey, the intervention `fk.ACCENT`, a second intervention `fk.BLUE`, a third to fifth the next Okabe-Ito colours, and conditions with an order of their own (layers, sizes, steps, doses) a light-to-dark blue ramp; a condition without a role is grey. `fk.color(name)`, and `fk.palette(names)` for seaborn, read the file. The check warns when a named condition is drawn in another colour, and when a label nearly matches a role's name ("random heads (n=10)"). Write the file with the figures at the spec stage, so every script and agent working on the write-up uses it.
+- Other colours: `fk.ACCENT` for the claim, `fk.GREY` or `fk.LIGHT` for context, and `fk.CATEGORICAL` only when the categories themselves are the point. The check warns about two colours that look alike to colour-blind readers.
+- With seaborn, pass `saturation=1` to bar plots and `palette=fk.palette(...)` so the colours stay exact.
 - Log axes need `fk.plain_ticks`. Draw the reference line (chance, threshold, y = x) thin and grey, and explain it in the caption.
-- Worked examples, with code and the rendered PNG, are in `${CLAUDE_SKILL_DIR}/examples/`. Their data is made up. View one if you're unsure what the target looks like.
+- **Mocks say so.** Save a figure drawn from fake data, at the spec stage or before the results exist, with `fk.save(fig, path, mock=True)`. It writes "Fake data" in the top right corner, so the figure can't be mistaken for a result once it is passed around. In HTML, write the words in a corner yourself.
+
+**Examples.** Each template has a worked example in `${CLAUDE_SKILL_DIR}/examples/`, with its code, its PNG, and its claim and caption in its header, all on made-up data. Copy the one closest to your question and change the data. The Python examples share `examples/figure-roles.json`.
+
+<!-- examples -->
+- Is one condition higher than another? `bar_comparison.py`, `bars_with_seeds.py`
+- How do several methods rank, and how sure are we? `dot_intervals.py`, `interactive_dots.html`
+- How does a measure change over training, or across layers? `curves_with_seeds.py`, `line_direct_labels.py`
+- How does an effect grow with a dose? `steering_strength.py`
+- Does a trend follow a scaling law? `scaling_log.py`
+- Which method gives the best trade-off? `pareto_frontier.py`
+- How well does a probe or monitor separate two classes? `roc_probe.py`, `score_histograms.py`
+- Is one model better calibrated than another? `calibration.py`
+- Where in the model is the effect? `head_heatmap.py`
+- Where in the text does a score fire? `token_scores.html`
+- What did the model say? `transcripts.html`
+- How does the method work? `diagram.html`
+- What was done and what was found, at a glance? `summary_components.html`, `summary_example.html`
+- Which method does the task best, and how do the methods differ? `story_figure.html`
+<!-- /examples -->
 
 ## 5. Check it once (cheap; do it every time)
 
-1. `fk.save` prints `FIGURE CHECK`. Fix every item, or say in one line why it's deliberate. The limits are defaults: when a figure needs more, change them for that figure with `fk.save(fig, path, words=35, max_panels=6)` (also `max_series`, `min_pt` and `title_words`).
+1. `fk.save` prints `FIGURE CHECK`. Fix every item, or say in one line why it's deliberate. The limits are defaults: when a figure needs more, change them for that figure with `fk.save(fig, path, words=35, max_panels=6)` (also `max_series`, `min_pt`, `title_words`, `panel_title_words`, and `order=False` for bars whose order means something).
 2. Read the PNG once and answer, one line each:
-   - Without the caption, what does the figure say? Is that the Claim?
+   - Without the caption, what does the figure say? Is that the Claim? If it has a title, does the chart show exactly what the title says?
    - What can you remove (text, series, panels, legend, gridlines) without losing the claim? Remove it.
    - Is anything hard to read: small, overlapping, or two colours that look alike?
 3. Fix and save again. Stop there; a second look is needed only if the first changed the structure.
@@ -147,6 +186,7 @@ Rules:
 - **Concrete examples carry the content.** Real User and Assistant exchanges in boxes with role labels, or a base model's prompt in a box without them; for interpretability, a real token, a real unit or a planted circuit. Show two or three examples and a "..." for the rest of a dataset.
 - **Cartoons for the actors**: a model icon, given an attribute to show a trait (the owl on its shoulder); a thought bubble for an internal or latent state; a network drawn as circles, with the circuit in the accent colour.
 - **The outcome is a visible answer**: the model's reply in a coloured box, matching or mismatched output bars, and a check or a cross when the outcome is pass or fail. Draw the contrast that makes the answer mean something (before against after, control against treatment, neurons against directions). Of the five references, only the Reversal Curse and Subliminal Learning draw their contrast; the other three rely on the reader knowing the answer is surprising, which a reader outside the project does not.
+- **A title is optional**: one line above the panels stating the finding, as in section 3. None of the five references has one, because their papers' captions do that job; a figure posted on its own may need it.
 - **No prose outside the examples, and no numbers.** None of the five references prints a result number. If one number is truly needed, it goes in one small inset. (A story figure, section 8, does print its result's numbers, in the result panel only.) The caption follows section 3a: the bold takeaway, up to three sentences on the finding, then what a reader needs to interpret it.
 - Keep the diagram rules of section 9: one accent colour for the thing the figure is about, red only for ablated or failed, green only for passed, a wide canvas.
 
@@ -190,7 +230,7 @@ Use it instead of the summary figure (section 7) when the result compares severa
 
 Rules:
 - **Panels in reading order, each answering the question the one above raises.** The data (full width). The task (left) beside the result (right), so the eye goes from the task straight to the bars. How each method works (a row of cards). A zoom into one mechanism (full width), only if one method is new or needs it. Each panel can be read with only the panels above it.
-- **Headers are plain sentences that say what the panel shows**, about 6 to 14 words, with the panel's role first where it helps: "The data: copies of one small network, each trained with its own planted rule"; "The task: look at a network's activations and point to its planted circuit". The result panel's header names exactly what each number counts ("Test cases where the method picked exactly the planted circuit's units"), which also defines what counts as success, so it is the axis title too. No header states a verdict ("the mask network wins"); the verdict goes in the caption.
+- **Headers are plain sentences that say what the panel shows**, about 6 to 14 words, with the panel's role first where it helps: "The data: copies of one small network, each trained with its own planted rule"; "The task: look at a network's activations and point to its planted circuit". The result panel's header names exactly what each number counts ("Test cases where the method picked exactly the planted circuit's units"), which also defines what counts as success, so it is the axis title too. No header states a verdict ("the mask network wins"); the verdict goes in the figure's title, if it has one, and in the caption.
 - **One running example, drawn as real content.** Real inputs, tokens and outputs, not placeholders. Each actor's item (A's rule, B's rule) has one highlight, a tint and an underline in the actor's colour, and keeps it in every panel where it appears: the training data, the test input, the hidden answer, the method's answer and the zoom.
 - **One colour per actor, fixed across every panel.** A light shade for an unchanged part and the full colour for the part being read or answered. One colour, and only one, for "trained for this task"; never reuse an actor's colour for it. Grey for untrained or unchanged. Green and red only for pass and fail.
 - **Counts as icon arrays.** One small square per item next to one large number: filled for the items methods train on, hollow for the held-out items. The reader sees the split before reading the words.
@@ -248,9 +288,17 @@ See `examples/diagram.html`.
 
 When a figure will live on an HTML page that can run scripts, draw it in HTML and SVG rather than matplotlib by default, unless your venue or page requires otherwise. There are two reasons. First, Claude's design judgment is much better in HTML and CSS. Second, a page can show details on demand. The static view stays clean, and the exact values, intervals, n, verdicts and identifiers appear on hover or click. That takes away the pull to print statistics in the image.
 
-- Start from `examples/interactive_dots.html`. It has colour tokens for light and dark mode, the Inter font, D3 from a CDN, the data inline as JSON, and a tooltip. Have your Python script write the data JSON into a copy of the file, and adapt `draw()`.
+- Start from `examples/interactive_dots.html`. It has colour tokens for light and dark mode, the Inter font, D3 from a CDN, the data inline as JSON, a title, and a tooltip. Have your Python script write the data JSON into a copy of the file, and adapt `draw()`.
 - The static view obeys sections 2 and 3. The tooltip, or a panel that opens on click, carries everything else.
-- Render the PNG for slides from the same file: `sh ${CLAUDE_SKILL_DIR}/render_html.sh figure.html figure.png 900 420`, where 900 and 420 are the size of the `.fig` box. Look at the PNG once, as in step 5. `fk.save`'s check doesn't run here, so apply its limits by eye.
+- Give the chart `role="img"` and an `aria-label` with the data in words (the plan block's Alt line), as the examples do. A PNG on a page takes the same words as its alt text.
+- Render the PNG for slides from the same file: `sh ${CLAUDE_SKILL_DIR}/render_html.sh figure.html figure.png 900 460`, where 900 and 460 are the size of the `.fig` box. Look at the PNG once, as in step 5. `fk.save`'s check doesn't run here, so apply its limits by eye: the title on one line, at most about 25 other words, no text under about 12 px.
+
+## 11. Figures made of text: token scores and replies
+
+For a score on every token (a probe, an attribution, an SAE latent's activation) or model replies side by side, write HTML that links `_kit/text.css` and loads `_kit/text.js`, and render it with `render_html.sh`.
+- **Token scores** (`examples/token_scores.html`): one row per text, each token shaded on a diverging scale (blue below zero, the accent above), with the colour bar above the rows. Give each `.tokens` element its scores as `[[token, score], ...]` JSON in the `<script>` after it; `text.js` draws a token's leading space outside its shading, turns text white on dark shades, and shows the score on hover. Add a row that shows the contrast (the honest answer, the unsteered model), so the shading means something.
+- **Replies side by side** (`examples/transcripts.html`): the prompt across the top, one card per condition, the intervention's card with the accent border, the phrase that matters in `.hl`, and an outcome dot (green for passed, red for failed) whose words stay in ink.
+- Quote real outputs, cut with "…", never paraphrased. The title states the finding, as in section 3, and the caption says how typical the example is.
 
 ## Requirements
 

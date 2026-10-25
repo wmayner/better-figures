@@ -1,9 +1,14 @@
 """Bar plot: the comparison the claim is about, in four settings, with the method of interest in the accent colour.
 
+Answers: Is one condition higher than another?
+Shows: bar plot: the loss increase from ablating the top heads by activation patching against random heads, on
+four tasks
 Claim: ablating the 10 heads that activation patching ranks highest raises the loss several times more
 than ablating 10 random heads, on every task.
-Caption: mean increase in loss on the correct token when 10 attention heads are mean-ablated, over 500
-prompts per task; error bars are 95% bootstrap intervals. Made-up data, drawn to show the style.
+Caption: **Ablating the 10 heads that activation patching ranks highest raised the loss 4 times as much as ablating
+10 random heads, on every task.** Mean increase in loss on the correct token when 10 attention heads are
+mean-ablated, over 500 prompts per task; error bars are 95% bootstrap intervals. Tasks are in order of the effect.
+Made-up data, drawn to show the style.
 """
 import sys
 from pathlib import Path
@@ -25,12 +30,16 @@ for task, effect in [("Induction", 2.1), ("Indirect object", 1.6), ("Greater-tha
         for loss in effect * scale * rng.gamma(4, 0.25, size=500):
             rows.append(dict(task=task, heads=heads, loss_increase=loss))
 df = pd.DataFrame(rows)
+means = df.groupby(["task", "heads"]).loss_increase.mean().unstack()
+order = list(means["top by patching"].sort_values(ascending=False).index)  # tasks in order of the effect
+ratio = (means["top by patching"] / means["random"]).mean()
 
 fk.use()
-fig, ax = plt.subplots(figsize=(7, 4))
-sns.barplot(df, x="task", y="loss_increase", hue="heads",
+fig, ax = plt.subplots()
+sns.barplot(df, x="task", y="loss_increase", hue="heads", order=order,
             palette={"random": fk.LIGHT, "top by patching": fk.ACCENT},
             errorbar=("ci", 95), seed=SEED, saturation=1, width=0.9, err_kws={"color": fk.MUTED, "lw": 1.2})
 fk.label_bars(ax)
 ax.set(xlabel=None, ylabel="Loss increase (nats)")
+fk.title(fig, f"Ablating top heads raised loss {ratio:.0f} times as much as random heads")
 fk.save(fig, HERE / "bar_comparison.png")

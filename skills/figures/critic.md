@@ -9,10 +9,11 @@ Intended claim: <one sentence>
 Answer each question in one line:
 1. Before you reread the intended claim: what does this figure say? Then: does that match the intended claim?
 2. Which template is it (bar, line, scatter, scaling, calibration, diverging line, Pareto, heatmap)? Does the template make the claim's comparison easy to see?
-3. List every piece of text that could be deleted or moved to the caption: titles, notes, statistics, definitions, legend entries that could sit next to the data.
-4. List every series, panel or mark that the claim does not need.
-5. Is the element that carries the claim the most visible thing? If not, what is?
-6. Anything hard to read: small text, overlaps, colours that look alike, crowded ticks?
+3. List every piece of text that could be deleted or moved to the caption: notes, statistics, definitions, legend entries that could sit next to the data. A one-line title that states the finding stays.
+4. If there is a title: does the chart show exactly what it says, in plain words and numbers rather than adjectives? If not, how should it read?
+5. List every series, panel or mark that the claim does not need.
+6. Is the element that carries the claim the most visible thing? If not, what is?
+7. Anything hard to read: small text, overlaps, colours that look alike, crowded ticks?
 
 Then give at most five changes, most important first, each one concrete ("delete the subtitle", "grey every line except X", "drop panels 2-4"). Don't suggest adding text unless the figure cannot be read without it. Stop there.
 ---

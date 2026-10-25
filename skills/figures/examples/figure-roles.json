@@ -1,0 +1,5 @@
+{
+  "control": ["no weight decay"],
+  "intervention": ["weight decay"],
+  "ordered": ["70M", "410M", "1.4B", "6.9B"]
+}

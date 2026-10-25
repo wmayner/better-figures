@@ -2,7 +2,7 @@
 
 A Claude Code skill for making research figures that a busy researcher understands in five seconds. It is written for interpretability researchers who use Claude Code to run experiments and plot the results, though nothing in it is specific to interpretability.
 
-Left to itself, Claude tends to make figures that show every result at once and put the caption's job into the image: sentence titles, definitions, statistics and verdicts drawn above the data. Asking it to "define every term" makes the labels longer. This skill asks a different question before and after drawing: what can be removed?
+Left to itself, Claude tends to make figures that show every result at once and put the caption's job into the image: long titles that explain instead of stating a finding, definitions, statistics and verdicts drawn above the data. Asking it to "define every term" makes the labels longer. This skill asks a different question before and after drawing: what can be removed?
 
 ![A summary figure drawn with the skill: three heads chosen by attribution patching keep the model's answer when all other heads are ablated, and three random heads do not. The result is made up.](skills/figures/examples/summary_example.png)
 
@@ -14,12 +14,15 @@ The plugin has two parts.
 
 **The skill** (`skills/figures/`) loads when Claude is about to make a figure. It has Claude:
 
-- write a short plan before drawing: the one claim the figure argues, the plot template that makes that argument, the one comparison it shows, and every string that will appear in the image;
-- keep definitions, n, intervals and verdicts in the caption, with axis labels and series names next to the data the only text in the image;
+- write a short plan before drawing: the one claim the figure argues, a one-line title that states it, the plot template that makes that argument, the one comparison it shows, and every string that will appear in the image;
+- put in the image only what the eye needs: the title, axis labels, series names next to the data, and values at the ends of bars, with definitions, statistics and how things were measured in the caption;
 - write each caption as the takeaway in bold, then the key numbers, then what a reader needs to interpret the figure;
-- draw with a matplotlib house style (`figkit.py`) that labels lines and bars directly and runs a check on save, which prints what to fix: too many words, a legend that could be direct labels, sentence titles, small or overlapping text;
+- draw with a matplotlib house style (`figkit.py`) that labels lines, bars and values directly, sizes figures for screens, slides and print, and colours each condition by its role in a `figure-roles.json` that a set of figures shares. It runs a check on save, which prints what to fix: too many words, a title that runs long or doesn't state one finding plainly, a legend that could be direct labels, small, overlapping or clipped text, a condition drawn in the wrong colour, colours that look alike to colour-blind readers, and bars out of order;
+- start from a worked example of each kind of figure, grouped by the question it answers, from bars with every seed to ROC curves, heatmaps of attention heads and token scores;
+- mark a figure drawn from fake data as fake, in the image;
 - draw figures for web pages in HTML and SVG, with exact values in a tooltip, and render a PNG from the same file for slides;
 - draw method diagrams and summary figures (the Figure 1 that opens a paper) from HTML parts: chat boxes, a model icon, thought bubbles, network cartoons, ablation marks, check and cross badges;
+- draw figures made of text in HTML: a score on every token, and model replies side by side;
 - draw a story figure when a result compares several methods on one task: one tall image with the data, the task, the result and how each method works, for a reader who sees nothing else;
 - look at the rendered PNG once, and for figures going to a mentor or a paper, ask a fresh subagent with none of the context what the figure says.
 
@@ -53,25 +56,41 @@ Either way, Claude loads the skill when you ask for a figure. You can also call 
 
 ## Examples
 
-`skills/figures/examples/` has one worked example of each kind of figure, each with its source and the rendered PNG. All their data is made up.
+`skills/figures/examples/` has a worked example of each kind of figure, grouped by the question it answers, each with its source, the rendered PNG, and its claim and caption in its header. All their data is made up. This table is generated from the examples' headers by `tools/gallery.py`.
 
-| Example | Kind |
-|---|---|
-| `bar_comparison.py` | bar plot: the loss increase from ablating the top heads by activation patching against random heads, on four tasks |
-| `line_direct_labels.py` | line plot with names at the line ends: probe accuracy by layer, against two controls |
-| `interactive_dots.html` | HTML figure with a tooltip: how closely four attribution methods rank heads the way ablation does |
-| `diagram.html` | method diagram: the three steps of activation patching |
-| `summary_example.html` | summary figure, shown above; `summary_example_check.md` records how three fresh readers read it |
-| `summary_components.html` | each HTML part of a summary figure once, to copy from |
-| `story_figure.html` | story figure: which of six methods finds the circuit planted in a toy network, with the data, the task and how each method works; `story_figure_check.md` records how a fresh reader read it |
+<!-- examples -->
+| Question | Example | What it shows |
+|---|---|---|
+| Is one condition higher than another? | `bar_comparison.py` | bar plot: the loss increase from ablating the top heads by activation patching against random heads, on four tasks |
+|  | `bars_with_seeds.py` | bar plot with every seed as a dot: test accuracy on modular addition with weight decay, with dropout and with neither |
+| How do several methods rank, and how sure are we? | `dot_intervals.py` | dot plot with intervals: how closely five attribution methods rank attention heads the way ablation does, on three models |
+|  | `interactive_dots.html` | HTML figure with a tooltip: how closely four attribution methods rank heads the way ablation does |
+| How does a measure change over training, or across layers? | `curves_with_seeds.py` | line plot with every seed: test accuracy on modular addition over training, with and without weight decay |
+|  | `line_direct_labels.py` | line plot with names at the line ends: probe accuracy by layer, against two controls |
+| How does an effect grow with a dose? | `steering_strength.py` | lines in the ordered ramp: how often steered completions mention a concept as the steering coefficient grows, for four model sizes |
+| Does a trend follow a scaling law? | `scaling_log.py` | scaling plot on log-log axes: SAE reconstruction error against dictionary size |
+| Which method gives the best trade-off? | `pareto_frontier.py` | Pareto plot: loss recovered against active latents per token for three SAE architectures |
+| How well does a probe or monitor separate two classes? | `roc_probe.py` | ROC curves: a deception probe against a black-box baseline, with the operating point at 1% false positives |
+|  | `score_histograms.py` | two histograms and a threshold: a deception probe's scores on honest and deceptive answers |
+| Is one model better calibrated than another? | `calibration.py` | calibration plot: how often a model is right at each stated confidence, before and after fine-tuning |
+| Where in the model is the effect? | `head_heatmap.py` | heatmap: the loss increase from ablating each of a 12-layer model's 144 attention heads |
+| Where in the text does a score fire? | `token_scores.html` | token scores: a deception probe's score on each token of two reports an agent wrote |
+| What did the model say? | `transcripts.html` | replies side by side: a model's reply to a false claim with and without steering against sycophancy |
+| How does the method work? | `diagram.html` | method diagram: the three steps of activation patching |
+| What was done and what was found, at a glance? | `summary_components.html` | each HTML part of a summary figure once, to copy from |
+|  | `summary_example.html` | summary figure, shown at the top of this page: three heads chosen by attribution patching keep the model's answer when all other heads are ablated, and three random heads do not; `summary_example_check.md` records how three fresh readers read it |
+| Which method does the task best, and how do the methods differ? | `story_figure.html` | story figure: which of six methods finds the circuit planted in a toy network, with the data, the task and how each method works; `story_figure_check.md` records how a fresh reader read it |
+<!-- /examples -->
 
-To re-render them, run the Python scripts with any working directory, and `sh skills/figures/render_html.sh <file>.html <file>.png <width> <height>` for the HTML files (the size of each is in a comment at its top).
+To re-render them, run the Python scripts with any working directory, and `sh skills/figures/render_html.sh <file>.html <file>.png <width> <height>` for the HTML files (the size of each is in a comment at its top). The tests in `tests/` check `figkit.py`, check that every Python example passes its own check, and check that this table is current: `uv run --with-requirements evals/requirements.txt --with pytest pytest tests`.
 
 ## References
 
 The rules for summary figures come from the first figures of five papers by Owain Evans's group: Connecting the Dots, the Reversal Curse, Subliminal Learning, Emergent Misalignment, and Tell Me About Yourself. These papers are under arXiv's default license, which doesn't allow redistribution, so their images are not in this repository. Run `sh skills/figures/references/fetch-references.sh` to download the pages from arXiv for your own reference. A sixth figure, from How to Catch an AI Liar, is under CC BY 4.0 and ships in the folder. [`skills/figures/references/README.md`](skills/figures/references/README.md) lists each paper with its license and the thread on X that announced it, with notes on what each figure does well.
 
 The plot templates the skill chooses from (bar, line, scaling law, calibration, diverging line, Pareto frontier) come from Jo Jiao's post [Research lessons I learned at MATS and Redwood](https://www.lesswrong.com/posts/Q4rcvgjbgjTwmn8Xa/research-lessons-i-learned-at-mats-and-redwood), which argues that a plot is an argument in miniature and that plots matching a known template are much easier to read.
+
+Several parts of `figkit.py` follow [viz](https://github.com/safety-research/viz), Joshua Fonseca Rivera's chart library for AI safety research: titles that state the finding and the check on them, colour roles in one file, sizes for where a figure goes, value labels at bar ends, the mark on mock figures, sorting categories by value, examples grouped by the question they answer, and the colour-blindness check, whose code is ported from viz under its MIT license.
 
 ## Does it work?
 

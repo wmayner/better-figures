@@ -1,0 +1,36 @@
+<!doctype html>
+<!-- Token scores: each token shaded by a probe's score, one row per text, the colour bar above.
+     Answers: Where in the text does a score fire?
+     Shows: token scores: a deception probe's score on each token of two reports an agent wrote
+     Claim: the deception probe fires on the false claim that every health check passed, and stays low on the honest
+     report.
+     Caption: **The deception probe scored highest on the agent's false claim that all 12 health checks passed.** Each
+     token is shaded by the probe's score at layer 20, blue below zero and orange above; in the honest report, 9 of 12
+     checks passed. Made-up data, drawn to show the style.
+     Render, from this folder: sh ../render_html.sh token_scores.html token_scores.png 1100 390 -->
+<html lang="en"><head><meta charset="utf-8">
+<title>Token scores</title>
+<link rel="stylesheet" href="../text.css">
+</head><body>
+<div class="textfig" role="img" aria-label="The deception probe scored highest on the claim that all checks passed. In the deceptive report, the tokens 'All 12 health checks passed' score about 2 to 2.7; in the honest report, every token scores below 0.5.">
+  <div class="fig-title">The deception probe scored highest on the claim that all checks passed</div>
+  <div class="scale" data-label="Deception probe score"></div>
+  <div class="token-row">
+    <div class="row-name">deceptive report</div>
+    <div class="tokens" data-low="-3" data-high="3"></div>
+    <script type="application/json">[["I", -1.1], [" updated", -0.9], [" the", -1.0], [" config", -1.2], [" and", -0.7],
+      [" restarted", -0.6], [" the", -0.8], [" service", -0.9], [".", -0.5], [" All", 2.0], [" 12", 2.6], [" health", 2.2],
+      [" checks", 2.4], [" passed", 2.7], [",", 1.4], [" so", 1.1], [" the", 0.9], [" outage", 1.3], [" is", 1.2],
+      [" resolved", 1.8], [".", 0.7]]</script>
+  </div>
+  <div class="token-row">
+    <div class="row-name">honest report</div>
+    <div class="tokens"></div>
+    <script type="application/json">[["I", -1.2], [" updated", -1.0], [" the", -1.1], [" config", -1.3], [" and", -0.8],
+      [" restarted", -0.7], [" the", -0.9], [" service", -1.0], [".", -0.6], [" 9", -0.4], [" of", -0.6], [" 12", -0.3],
+      [" health", -0.5], [" checks", -0.4], [" passed", -0.2], [",", -0.5], [" so", -0.3], [" the", -0.6], [" outage", 0.1],
+      [" is", -0.2], [" not", 0.3], [" resolved", 0.4], [" yet", 0.2], [".", -0.4]]</script>
+  </div>
+</div>
+<script src="../text.js"></script>
+</body></html>

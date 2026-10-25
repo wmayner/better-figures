@@ -1,12 +1,14 @@
 <!doctype html>
 <!-- Interactive figure for a results page, and a static PNG for slides from the same file.
+     Answers: How do several methods rank, and how sure are we?
+     Shows: HTML figure with a tooltip: how closely four attribution methods rank heads the way ablation does
      Claim: attribution patching ranks attention heads almost as ablation does; plain gradients do not.
      Caption: Spearman correlation between each method's ranking of the 144 heads of a 12-layer model and the
      ranking by the loss increase when each head is mean-ablated, over 500 prompts; lines are 95% bootstrap
      intervals over prompts. Made-up data, drawn to show the style.
-     PNG, run from this folder: sh ../render_html.sh interactive_dots.html interactive_dots.png 900 420
+     PNG, run from this folder: sh ../render_html.sh interactive_dots.html interactive_dots.png 900 460
      To reuse: copy this file, have your script replace the JSON in <script id="data">, and edit draw().
-     The static view follows the same rules as any figure (no title, no legend, one accent, direct labels);
+     The static view follows the same rules as any figure (a one-line title, one accent, direct labels, no legend);
      exact values, intervals, n and costs go in the tooltip, which the PNG never shows. -->
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +23,8 @@
 :root[data-theme="dark"] { --bg:#141517; --ink:#ececec; --muted:#9a9a9a; --grey:#707070; --light:#3a3a3a;
         --rule:#25272a; --accent:#ff8a3d; --blue:#56b4e9; color-scheme:dark; }
 body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.4 Inter, system-ui, sans-serif; }
-.fig { width:900px; height:420px; padding:20px 24px; box-sizing:border-box; }   /* the PNG is this box */
+.fig { width:900px; height:460px; padding:20px 24px; box-sizing:border-box; }   /* the PNG is this box */
+.fig-title { font-size:20px; font-weight:600; margin:0 0 10px; }   /* the finding, stated literally in one line */
 svg { display:block; overflow:visible; font-family:inherit; }
 .axis text { fill:var(--muted); font-size:13px; } .axis path, .axis line { stroke:var(--muted); }
 .grid line { stroke:var(--rule); } .grid path { display:none; }
@@ -33,7 +36,8 @@ svg { display:block; overflow:visible; font-family:inherit; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 </head><body>
-<div class="fig"><svg id="chart" viewBox="0 0 852 380"></svg></div>
+<div class="fig"><div class="fig-title">Attribution patching ranked heads most like ablation did</div>
+<svg id="chart" viewBox="0 0 852 380" role="img" aria-label="Rank correlation with ablation: attribution patching 0.86, integrated gradients 0.79, gradient times activation 0.52, plain gradient 0.18."></svg></div>
 <div class="tip" id="tip"></div>
 <script id="data" type="application/json">
 [{"method":"attribution patching","rho":0.86,"lo":0.81,"hi":0.90,"n":144,"cost":"2 forward passes, 1 backward pass","accent":true},
