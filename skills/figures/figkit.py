@@ -148,7 +148,7 @@ def _load_roles(spec):
             raise ValueError(f"unknown role {role!r} in {_roles_from}: use ordered or one of {', '.join(ROLE_COLORS)}")
         labels = [labels] if isinstance(labels, str) else [str(x) for x in labels]
         colors = ramp(len(labels)) if role == "ordered" else [ROLE_COLORS[role]] * len(labels)
-        _roles.update({lab: (role, c) for lab, c in zip(labels, colors)})
+        _roles.update({_key(lab): (role, c) for lab, c in zip(labels, colors)})
 
 
 def roles():
@@ -156,9 +156,13 @@ def roles():
     return {lab: r for lab, (r, _c) in _roles.items()}, _roles_from
 
 
+def _key(label):
+    return " ".join(str(label).split())  # a label wrapped onto two lines is still the same condition
+
+
 def color(label, default=GREY):
     """The colour of a condition's role (fk.ACCENT for the intervention, and so on), or default without one."""
-    return _roles[str(label)][1] if str(label) in _roles else default
+    return _roles[_key(label)][1] if _key(label) in _roles else default
 
 
 def palette(labels, default=GREY):
@@ -517,7 +521,7 @@ def _effective(c, alpha=None):
 
 def _marks(ax):
     """(label, colour as drawn, colour as set) for each mark that carries a name: labelled lines and scatter
-    points, labelled bar series, and single-series bars named by their tick labels."""
+    points, labelled bar series, and unlabelled bars named by the tick labels at their centres."""
     out = []
     for l in ax.get_lines():
         lab_ = l.get_label()
@@ -528,13 +532,12 @@ def _marks(ax):
         if isinstance(coll, PathCollection) and lab_ and not lab_.startswith("_") and len(coll.get_facecolor()):
             fc = coll.get_facecolor()[0]
             out.append((lab_, _effective(fc), mpl.colors.to_hex(fc)))
-    bars = [c for c in ax.containers if isinstance(c, BarContainer) and c.patches]
-    for c in bars:
+    for c in [c for c in ax.containers if isinstance(c, BarContainer) and c.patches]:
         lab_ = c.get_label()
         if lab_ and not lab_.startswith("_"):
             fc = c.patches[0].get_facecolor()
             out.append((lab_, _effective(fc), mpl.colors.to_hex(fc)))
-        elif len(bars) == 1:
+        else:  # an unlabelled series (seaborn draws one per hue level): each bar takes the tick label at its centre
             h = _horizontal(c)
             for p in c.patches:
                 pos = p.get_y() + p.get_height() / 2 if h else p.get_x() + p.get_width() / 2
@@ -561,7 +564,7 @@ def _order_problem(ax):
     vals = [v for _, v in pts if v == v]
     if not any(labels) or any(lab_ and _is_number(lab_) for lab_ in labels):
         return None  # unnamed bars, or numbers (layers, sizes, steps), which have an order of their own
-    if all(_roles.get(lab_, ("",))[0] == "ordered" for lab_ in labels if lab_):
+    if all(_roles.get(_key(lab_), ("",))[0] == "ordered" for lab_ in labels if lab_):
         return None
     if all(a <= b for a, b in zip(vals, vals[1:])) or all(a >= b for a, b in zip(vals, vals[1:])):
         return None
@@ -661,6 +664,7 @@ def check(fig, words=25, min_pt=None, max_series=5, max_panels=4, title_words=12
         out.append("rotated tick labels: shorten them, or swap axes so the labels run horizontally")
     marks = [m for a in axes for m in _marks(a)]
     for lab_, _shown, set_ in marks:  # each named condition takes its role's colour
+        lab_ = _key(lab_)
         if lab_ in _roles:
             role, want = _roles[lab_]
             if set_.lower() != want.lower():
@@ -672,7 +676,7 @@ def check(fig, words=25, min_pt=None, max_series=5, max_panels=4, title_words=12
                            f"from {_roles_from}, or add it there")
     seen = {}  # colour as drawn -> a label that has it
     for lab_, shown, _set in marks:
-        if not _neutral(shown) and _roles.get(lab_, ("",))[0] != "ordered":
+        if not _neutral(shown) and _roles.get(_key(lab_), ("",))[0] != "ordered":
             seen.setdefault(shown.lower(), lab_)
     cols = list(seen)
     for i in range(len(cols)):

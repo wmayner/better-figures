@@ -152,6 +152,25 @@ def test_roles_apply_to_bars_named_by_their_tick_labels():
     assert found(fk.check(fig), "\"inoculation prompt\" is #0072b2 here")
 
 
+def test_roles_apply_to_seaborn_bars_with_one_hue_level_per_bar():
+    import pandas as pd
+    import seaborn as sns
+    fk.use(roles={"control": "plain RL", "intervention": "inoculation prompt"})
+    df = pd.DataFrame({"condition": ["plain RL", "inoculation prompt"], "rate": [41, 12]})
+    fig, ax = plt.subplots()
+    sns.barplot(df, x="condition", y="rate", hue="condition", palette={"plain RL": fk.GREY,
+                "inoculation prompt": fk.BLUE}, saturation=1, legend=False)
+    assert found(fk.check(fig), "\"inoculation prompt\" is #0072b2 here")
+
+
+def test_a_label_wrapped_onto_two_lines_keeps_its_role():
+    fk.use(roles={"control": "no honesty data", "intervention": "honesty data and steering"})
+    assert fk.color("honesty data\nand steering") == fk.ACCENT
+    fig, ax = plt.subplots()
+    ax.bar(["no honesty data", "honesty data\nand steering"], [37, 9], color=[fk.GREY, fk.ACCENT])
+    assert fk.check(fig) == []
+
+
 def test_a_roles_file_above_the_script_is_found(tmp_path, monkeypatch):
     (tmp_path / "figure-roles.json").write_text('{"baseline": "closed book", "intervention": ["with search"]}')
     sub = tmp_path / "figures"
