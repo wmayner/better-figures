@@ -1,4 +1,4 @@
-"""Count the words each run's figure carries outside tick labels, and collect cost and tokens per run.
+"""Count the words each run's figures carry outside tick labels, and collect cost and tokens per run.
 
 usage: python measure.py <run_dir>          writes <run_dir>/measures.csv and measures.json (long format; _v2 if they exist)
        python measure.py --one <make_figure.py> <out.json>   (internal: measure one script)
@@ -7,6 +7,12 @@ Each run's make_figure.py is re-run in a scratch copy of its directory with Figu
 written. For every PNG the script would save, it records the words in visible text objects other than tick labels
 (axis labels, titles, legends, annotations, colorbar labels), the number of panels, and the problems that the
 plugin's figkit.check reports. Adapted from the 15 October 2026 test's counter.
+
+Added for the 25 October 2026 run, alongside the unchanged word count: the title (the figure's suptitle, or a
+single panel's title), the words outside the title, tick labels and numbers (figkit's count, since values and
+counts are allowed in the image from version 0.3.0), the figure's size and smallest font, and the colours each
+label is drawn in (from labelled marks, legends and coloured direct labels), for the colour-consistency task.
+A run with several figure scripts (make_figure1.py, ...) gets one row per figure.
 """
 import contextlib
 import io
@@ -48,9 +54,50 @@ def measure_script(script, out):
         texts = [t for t in fig.findobj(Text) if t.get_visible() and t.get_text().strip() and t not in hidden]
         free = [t.get_text() for t in texts if t not in ticks]
         tick_text = [t.get_text() for t in texts if t in ticks]
-        return dict(words=sum(len(s.split()) for s in free), n_text=len(free),
-                    panels=len([a for a in fig.axes if a.get_label() != "<colorbar>"]),
-                    free_text=free, tick_words=sum(len(s.split()) for s in tick_text))
+        axes = [a for a in fig.axes if a.get_label() != "<colorbar>"]
+        sup = getattr(fig, "_suptitle", None)
+        titles = [sup] if sup is not None and sup.get_text().strip() else []
+        if len(axes) == 1 and not titles:
+            titles = [t for t in (axes[0]._left_title, axes[0].title, axes[0]._right_title) if t.get_text().strip()]
+        body = [t for t in texts if t not in ticks and t not in titles]
+        w, h = fig.get_size_inches()
+        return dict(words=sum(len(s.split()) for s in free), n_text=len(free), panels=len(axes),
+                    free_text=free, tick_words=sum(len(s.split()) for s in tick_text),
+                    title=" | ".join(t.get_text() for t in titles),
+                    words_body=sum(figkit._words(t.get_text()) for t in body),
+                    fig_width_in=float(w), fig_height_in=float(h),
+                    min_font_pt=float(min((t.get_fontsize() for t in texts), default=0)),
+                    label_colors=label_colors(fig))
+
+    def label_colors(fig):
+        """{label: [colours]} from labelled marks, legend entries, and text drawn in a colour (direct labels)."""
+        import matplotlib.colors as mc
+        from matplotlib.collections import PathCollection
+        from matplotlib.lines import Line2D
+        from matplotlib.patches import Patch
+        out = {}
+
+        def add(label, color):
+            lab = " ".join(str(label).lower().split())
+            if lab and not lab.startswith("_"):
+                out.setdefault(lab, set()).add(mc.to_hex(color))
+
+        for a in fig.axes:
+            for lab, _shown, set_ in figkit._marks(a):
+                add(lab, set_)
+        for lg in [a.get_legend() for a in fig.axes if a.get_legend()] + list(fig.legends):
+            for txt, hd in zip(lg.get_texts(), lg.legend_handles):
+                if isinstance(hd, Line2D):
+                    add(txt.get_text(), hd.get_color())
+                elif isinstance(hd, Patch):
+                    add(txt.get_text(), hd.get_facecolor())
+                elif isinstance(hd, PathCollection) and len(hd.get_facecolor()):
+                    add(txt.get_text(), hd.get_facecolor()[0])
+        for t in fig.findobj(Text):
+            r, g, b = mc.to_rgb(t.get_color())
+            if t.get_visible() and t.get_text().strip() and 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.03:
+                add(t.get_text(), t.get_color())  # near-black text (ticks, axis labels) says nothing about colour
+        return {k: sorted(v) for k, v in out.items()}
 
     def patched(self, fname, *a, **k):
         if not str(fname).endswith(".png"):
@@ -83,24 +130,31 @@ def measure_run_dir(run_dir):
                    cost_usd=meta["total_cost_usd"], num_turns=meta["num_turns"], duration_s=(meta["duration_ms"] or 0) / 1000,
                    skills_invoked=";".join(meta["skills_invoked"]), figure_exists=meta["figure_exists"], **tokens(meta["usage"]))
         row["total_tokens"] = sum(tokens(meta["usage"]).values())
-        script = d / "files" / "make_figure.py"
-        with tempfile.TemporaryDirectory() as tmp:
-            work = Path(tmp) / "w"
-            shutil.copytree(d / "files", work)
-            out = Path(tmp) / "m.json"
-            p = subprocess.run([sys.executable, __file__, "--one", str(work / "make_figure.py"), str(out)],
-                               capture_output=True, text=True)
-            recs = json.loads(out.read_text()) if out.exists() else []
-        rec = next((r for r in reversed(recs) if r["file"] == "figure.png"), recs[-1] if recs else None)
-        if rec is None:
-            row.update(words=None, method="failed: " + (p.stderr.strip().splitlines() or ["no PNG saved"])[-1])
-        else:
-            row.update(words=rec["words"], n_text=rec["n_text"], panels=rec["panels"], tick_words=rec["tick_words"],
-                       n_check_problems=len(rec["problems"]), free_text=json.dumps(rec["free_text"]),
-                       check_problems=json.dumps(rec["problems"]), method="matplotlib text objects",
-                       script_exists=script.exists())
-        rows.append(row)
-        print(d.name, row.get("words"), row["method"])
+        numbered = sorted((d / "files").glob("make_figure[0-9]*.py"))
+        scripts = numbered or [d / "files" / "make_figure.py"]  # several figures: one script and one row each
+        for script in scripts:
+            png = "figure" + script.stem[len("make_figure"):] + ".png"
+            fig_row = dict(row, figure=png)
+            with tempfile.TemporaryDirectory() as tmp:
+                work = Path(tmp) / "w"
+                shutil.copytree(d / "files", work)
+                out = Path(tmp) / "m.json"
+                p = subprocess.run([sys.executable, __file__, "--one", str(work / script.name), str(out)],
+                                   capture_output=True, text=True)
+                recs = json.loads(out.read_text()) if out.exists() else []
+            rec = next((r for r in reversed(recs) if r["file"] == png), recs[-1] if recs else None)
+            if rec is None:
+                fig_row.update(words=None, method="failed: " + (p.stderr.strip().splitlines() or ["no PNG saved"])[-1])
+            else:
+                fig_row.update(words=rec["words"], n_text=rec["n_text"], panels=rec["panels"],
+                               tick_words=rec["tick_words"], n_check_problems=len(rec["problems"]),
+                               free_text=json.dumps(rec["free_text"]), check_problems=json.dumps(rec["problems"]),
+                               method="matplotlib text objects", script_exists=script.exists(), title=rec["title"],
+                               words_body=rec["words_body"], fig_width_in=rec["fig_width_in"],
+                               fig_height_in=rec["fig_height_in"], min_font_pt=rec["min_font_pt"],
+                               label_colors=json.dumps(rec["label_colors"]))
+            rows.append(fig_row)
+            print(d.name, png, fig_row.get("words"), fig_row["method"])
     return rows
 
 

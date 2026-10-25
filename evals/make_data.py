@@ -1,11 +1,12 @@
-"""Generate the three made-up datasets for the figure test, each with a planted answer.
+"""Generate the made-up datasets for the figure test, each with a planted answer.
 
 usage: python make_data.py --seed 20261020 --out runs/2026-10-20_seed20261020
 
 Writes, under <out>/tasks/<task>/:
   data.csv        the only file a drawing run sees
 Writes, under <out>/:
-  answers.json    the planted fact for each task, in one sentence (never copied into a run directory)
+  answers.json    the planted fact for each task with a fresh-reader check, in one sentence (never copied into a run
+                  directory); task4_set and task5_column test colour roles and print sizes, and have no reader check
   seed.json       the seed and the generator settings
 """
 import argparse
@@ -31,6 +32,11 @@ METHODS = {  # method: mean rank correlation with ablation across models
     "activation magnitude": 0.18,
 }
 MODELS = {"GPT-2 small": 144, "Pythia-410M": 384, "Gemma-2-2B": 208}  # model: number of heads compared
+CONDITIONS = {  # condition: final sycophancy rate (%), final helpfulness (1 to 10)
+    "no honesty data": (38.0, 7.1),
+    "honesty data": (21.0, 7.0),
+    "honesty data and steering": (9.0, 6.9),
+}
 
 
 def task1_probes(rng):
@@ -89,7 +95,26 @@ def task3_methods(rng):
     return pd.DataFrame(rows), answer, dict(method_means=METHODS, models=MODELS)
 
 
-TASKS = {"task1_probes": task1_probes, "task2_heads": task2_heads, "task3_attribution": task3_methods}
+def task4_set(rng):
+    """Three figures for one write-up, sharing three conditions: does each condition keep one colour?"""
+    rows = []
+    steps = np.arange(0, 2001, 100)
+    for condition, (final, helpful) in CONDITIONS.items():
+        for seed in range(5):
+            end = final + rng.normal(0, 1.5)
+            curve = end + (40 - end) * np.exp(-steps / 500) + rng.normal(0, 1.0, len(steps))
+            rows += [dict(condition=condition, seed=seed, step=int(t), measure="sycophancy_rate_percent",
+                          value=round(float(v), 2)) for t, v in zip(steps, curve)]
+            rows.append(dict(condition=condition, seed=seed, step=int(steps[-1]), measure="helpfulness_1_to_10",
+                             value=round(float(helpful + rng.normal(0, 0.15)), 2)))
+    answer = ("Honesty data cut final sycophancy from about 38% to 21%, and honesty data with steering to about 9%, "
+              "with helpfulness unchanged at about 7 out of 10.")
+    return pd.DataFrame(rows), answer, dict(conditions=CONDITIONS)
+
+
+TASKS = {"task1_probes": task1_probes, "task2_heads": task2_heads, "task3_attribution": task3_methods,
+         "task4_set": task4_set}  # new tasks go last, so a seed gives the earlier tasks the same data as before
+COPIES = {"task5_column": "task1_probes"}  # the probe data again, for a figure in one column of a paper
 
 
 def main():
@@ -108,6 +133,12 @@ def main():
         df.to_csv(d / "data.csv", index=False)
         answers[name] = answer
         settings[name] = planted
+    for name, source in COPIES.items():
+        d = args.out / "tasks" / name
+        d.mkdir(parents=True)
+        (d / "data.csv").write_text((args.out / "tasks" / source / "data.csv").read_text())
+        settings[name] = dict(copy_of=source)
+    answers = {k: v for k, v in answers.items() if k in ("task1_probes", "task2_heads", "task3_attribution")}
     (args.out / "answers.json").write_text(json.dumps(answers, indent=1))
     (args.out / "seed.json").write_text(json.dumps(dict(seed=args.seed, planted=settings), indent=1))
     print("wrote", args.out)

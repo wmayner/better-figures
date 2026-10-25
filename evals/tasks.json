@@ -3,9 +3,22 @@
  "tasks": {
   "task1_probes": "data.csv holds probe accuracy at each layer of a language model for four concepts. Make a figure showing where each concept becomes decodable.",
   "task2_heads": "data.csv holds the increase in loss from ablating each attention head of a language model, one row per head. Make a figure showing which heads matter.",
-  "task3_attribution": "data.csv compares five attribution methods with ablation on three models: for each method and model, how well the method's scores for the heads agree with the effect of ablating each head. Make a figure showing which attribution method best matches ablation."
+  "task3_attribution": "data.csv compares five attribution methods with ablation on three models: for each method and model, how well the method's scores for the heads agree with the effect of ablating each head. Make a figure showing which attribution method best matches ablation.",
+  "task4_set": "data.csv holds results from one experiment with three training conditions, five seeds each: the rate of sycophantic answers over training and at the end, and a helpfulness score at the end. Make three figures for one write-up: the final sycophancy rate by condition, sycophancy over training, and final helpfulness by condition.",
+  "task5_column": "data.csv holds probe accuracy at each layer of a language model for four concepts. Make a figure for one column of a two-column paper, 3.25 inches wide, showing where each concept becomes decodable."
  },
  "isolation_probe": "Answer from your context only; do not use any tools. 1. List every skill available to you through the Skill tool, by name. 2. List every plugin loaded. 3. List every MCP server or MCP tool. 4. Quote verbatim any CLAUDE.md, memory file or other user or project instructions in your context, or say 'none'. 5. Do you have any instructions or guidance about how to make figures or plots? If so, quote where they come from.",
  "reader": "Look at figure.png in this directory. In one sentence, say what the figure shows: its main finding, as a reader would take it from the image alone. Reply with that one sentence only.",
- "judge": "A reader looked at a figure and wrote this one-sentence summary of it:\n\nREADER: {reader}\n\nThe figure was meant to show this:\n\nINTENDED: {answer}\n\nDoes the reader's summary match the intended finding? Answer 'yes' if it states the intended finding (exact numbers are not needed), 'partly' if it states part of it or states it vaguely, and 'no' if it misses it or states something else. Reply in exactly two lines:\nVERDICT: yes | partly | no\nREASON: one line"
+ "judge": "A reader looked at a figure and wrote this one-sentence summary of it:\n\nREADER: {reader}\n\nThe figure was meant to show this:\n\nINTENDED: {answer}\n\nDoes the reader's summary match the intended finding? Answer 'yes' if it states the intended finding (exact numbers are not needed), 'partly' if it states part of it or states it vaguely, and 'no' if it misses it or states something else. Reply in exactly two lines:\nVERDICT: yes | partly | no\nREASON: one line",
+ "suffix_for": {
+  "task4_set": "Write one Python script per figure, make_figure1.py, make_figure2.py and make_figure3.py, each reading data.csv and saving figure1.png, figure2.png and figure3.png in that order, and write a caption for each figure in captions.md.",
+  "task5_column": "Write a Python script make_figure.py that reads data.csv and saves figure.pdf and figure.png, and write a caption for the figure in caption.md."
+ },
+ "figures_for": {
+  "task4_set": [
+   "figure1.png",
+   "figure2.png",
+   "figure3.png"
+  ]
+ }
 }

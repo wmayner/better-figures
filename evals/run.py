@@ -76,14 +76,14 @@ def draw_one(job, run_dir, work_root):
         return name, "exists, skipped"
     work = fresh_dir(work_root)
     shutil.copy(run_dir / "tasks" / task / "data.csv", work / "data.csv")
-    prompt = SPEC["tasks"][task] + " " + SPEC["suffix"]
+    prompt = SPEC["tasks"][task] + " " + SPEC.get("suffix_for", {}).get(task, SPEC["suffix"])
     result, events = harness.run(arm, prompt, work, out / "session", transcripts(run_dir, out / "session"))
     shutil.copytree(work, out / "files", ignore=shutil.ignore_patterns("__pycache__", ".venv", "*.pyc"))
     scrub(out / "files", work)
     meta = dict(task=task, arm=arm, rep=rep, work_dir=harness.public(work, work), skills_invoked=harness.skills_invoked(events),
                 is_error=result.get("is_error"), total_cost_usd=result.get("total_cost_usd"),
                 num_turns=result.get("num_turns"), duration_ms=result.get("duration_ms"), usage=result.get("usage"),
-                figure_exists=(work / "figure.png").exists())
+                figure_exists=all((work / f).exists() for f in SPEC.get("figures_for", {}).get(task, ["figure.png"])))
     (out / "meta.json").write_text(json.dumps(meta, indent=1))
     return name, f"cost {meta['total_cost_usd']}, skills {meta['skills_invoked']}, figure {meta['figure_exists']}"
 
@@ -135,8 +135,8 @@ def read_one(item, run_dir, work_root, answers):
 
 def read(run_dir, work_root, parallel):
     answers = json.loads((run_dir / "answers.json").read_text())
-    names = sorted(p.name for p in (run_dir / "drawings").iterdir()
-                   if p.is_dir() and (p / "files" / "figure.png").exists())
+    names = sorted(p.name for p in (run_dir / "drawings").iterdir()  # only the tasks with a planted answer
+                   if p.is_dir() and (p / "files" / "figure.png").exists() and p.name.split("__")[0] in answers)
     random.Random(seed_of(run_dir) + 1).shuffle(names)  # reader ids do not reveal task or arm order
     (run_dir / "readers").mkdir(exist_ok=True)
     (run_dir / "readers" / "order.json").write_text(json.dumps(names))
