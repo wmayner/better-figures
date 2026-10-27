@@ -1,7 +1,8 @@
 """House style, palette, colour roles, direct labels and a clutter check for matplotlib figures.
 
     import figkit as fk
-    fk.use()                          # style, font and colour roles; size="paper" or "column" for print
+    fk.use()                          # style, font and colour roles; size="paper" or "column" for print,
+                                      # "post" for an image posted on its own
     fig, ax = plt.subplots()          # the size's default figure size; don't enlarge it
     ax.plot(x, a, color=fk.color("linear probe"), label="linear probe")
     ax.plot(x, b, color=fk.GREY, label="random baseline")
@@ -50,6 +51,8 @@ SIZES = {
     "slide": {"figsize": (10, 5.625), "font": 16, "ticks": 14, "title": 18, "min_pt": 14, "width": 10},
     "paper": {"figsize": (6.75, 3.2), "font": 9, "ticks": 8, "title": 10, "min_pt": 7, "width": 6.75},
     "column": {"figsize": (3.25, 2.4), "font": 8, "ticks": 7, "title": 9, "min_pt": 7, "width": 3.25},
+    # an image posted on its own on X or in Slack, which crop or shrink wide images: 1200 x 960 px at 200 dpi
+    "post": {"figsize": (6, 4.8), "font": 13, "ticks": 12, "title": 15, "min_pt": 11, "width": 6},
 }
 
 _FONTS = [Path(__file__).resolve().with_name("fonts")]
@@ -329,6 +332,19 @@ def _make_room(ax, texts, grow_low=False):
         ax.set_ylim(y0, y1)
         if not grew:
             return
+
+
+def random_draws(ax, values, at, horizontal=True, height=0.6, color=GREY):
+    """Draw a control made of matched random draws as one grey tick mark per draw, on the effect's own axis.
+
+    values are the draws' effects (say, 20 random neurons from the same layer, each steered like the real one); at
+    is the row (or, with horizontal=False, the column) of the bar or dot they are the control for. The reader then
+    sees whether the effect lies outside the draws, which one bar for their mean hides.
+    """
+    lo, hi = at - height / 2, at + height / 2
+    if horizontal:
+        return ax.vlines(values, lo, hi, color=color, linewidth=1.2 * mpl.rcParams["lines.linewidth"] / 2.2, zorder=3)
+    return ax.hlines(values, lo, hi, color=color, linewidth=1.2 * mpl.rcParams["lines.linewidth"] / 2.2, zorder=3)
 
 
 def plain_ticks(axis):

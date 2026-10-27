@@ -241,6 +241,20 @@ def test_each_size_draws_a_passing_figure_at_its_default_size(size):
     assert fk.check(fig) == []
 
 
+# ------------------------------------------------------------------------------------------------- controls
+
+def test_random_draws_put_one_tick_per_draw_in_the_effect_row_and_the_figure_still_passes():
+    fig, ax = plt.subplots()
+    ax.barh(["afraid", "relieved", "hope"], [2.4, 1.8, 0.5], color=fk.ACCENT)
+    rng = np.random.default_rng(0)
+    ticks = [fk.random_draws(ax, rng.normal(0, 0.6, 20), at=i) for i in range(3)]
+    ax.set(xlabel="Change in choice preference (nats)")
+    assert all(len(t.get_segments()) == 20 for t in ticks)
+    y0, y1 = ticks[1].get_segments()[0][:, 1]
+    assert y0 < 1 < y1
+    assert fk.check(fig) == []
+
+
 # ------------------------------------------------------------------------------------------------- order
 
 def test_bars_out_of_value_order_get_a_warning_unless_told_otherwise():

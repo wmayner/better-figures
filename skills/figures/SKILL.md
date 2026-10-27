@@ -30,7 +30,7 @@ Title:    the claim as one line of about 10 words, stating what was compared and
 Template: bar | line | scaling | calibration | diverging line | Pareto | scatter | heatmap
 Shows:    the one comparison the claim needs (which series, which subset); the rest goes to a table
 Accent:   the one element the eye should land on (ACCENT colour; everything else grey)
-Size:     screen | slide | paper | column (section 4)
+Size:     screen | slide | paper | column | post (section 4)
 Text:     every string that will appear in the image, listed, at most about 25 words outside the title, tick labels and numbers
 Caption:  bold takeaway sentence; 0-3 sentences of detail on the finding; then what is plotted, how measured, n, error bars (section 3a)
 Alt:      for a figure on a web page: the title, then the data in words, for screen readers
@@ -55,6 +55,9 @@ At the spec stage, the person approves this block, not a prose description of en
 - At most 4 series per panel. Keep the ones the claim needs; grey or drop the rest.
 - If you want a verdict column, a statistic printed on every row, "two versions", or a panel per target, you are drawing a table. Put the table on the page and draw the one row that matters.
 - When there are several seeds or runs, draw every one: a dot per seed on its bar, or each seed as a faint line behind the bold mean. Never show one run when there are more.
+- **When the control is a set of matched random draws, draw every draw, on the effect's own axis.** For each of seven neurons, a bar for the change it makes in the model's choice, with 20 grey tick marks in the same row for 20 random neurons from its layer, steered by the same amount (`fk.random_draws(ax, values, at=row)`), or the draws' range as a grey band behind the bar. The reader sees whether the effect lies outside the draws, which one grey bar or line for their mean hides, and an effect inside the spread shows as weak.
+- **For steering or another intervention, show its size and where it acts.** Mark the steering value on a histogram of the unit's activations over ordinary text, so the reader sees how far outside its usual range it is set. Draw the model's layers as a strip of cells with the intervened layers coloured.
+- A single before-and-after can be two large numbers with an arrow ("25% → 32%"), with the control's number beside it, in place of two bars.
 - Put categories in order of their values, unless their order means something (layers, model sizes, training steps). The check warns about bars out of order.
 - Diagnostics and secondary results do not go in the figures someone is asked to read.
 
@@ -63,11 +66,11 @@ At the spec stage, the person approves this block, not a prose description of en
 | Content | In the image? | Where instead |
 |---|---|---|
 | The finding | Yes, as the title: one line of about 10 words, stated literally (below) | and as the caption's bold first sentence |
-| Definitions, interval method, thresholds, priors, Bayes factors, sampling notes | No | caption or page text |
+| Definitions, interval method, thresholds, priors, Bayes factors, sampling notes | No (except short definitions in an image posted on its own, below) | caption or page text |
 | Axis labels | Yes, at most about 6 words, with units | |
 | Series names | Yes, next to the data (`fk.label_lines`, `fk.label_bars`) | a legend only for 5+ categories, and then you have too many |
 | Values and counts | Yes: each bar's value at its end (`fk.label_values`), a count beside it ("164 of 400"), or the one key number next to its mark | |
-| Panel names | Yes, at most 4 words | |
+| Panel names | Yes, at most 4 words, or a line stating that panel's finding (below) | |
 
 **The title.** Readers look at a figure's title first and remember it better than the chart ([Borkin et al. 2016](https://vcg.seas.harvard.edu/publications/20150101-beyond-memorability-visualization-recognition-and-recall)), and they remember the title's message even when the chart contradicts it ([Kong et al. 2019](https://doi.org/10.1145/3290605.3300576)). So a title says exactly what the data shows, and nothing the data doesn't.
 - One finding, stated literally: what was compared and what happened, in about 10 plain words, on one line at the figure's size. Draw it with `fk.title(fig, ...)`. If it needs a semicolon, make two figures.
@@ -79,6 +82,10 @@ At the spec stage, the person approves this block, not a prose description of en
 `fk.save` checks a title's length, that it fits on one line, its punctuation and its intensifiers; it can't tell whether the title is true.
 
 Three rules for every word in the image and the caption, title included: say what was measured, not what it means ("chose to stop", not "wanted to stop"; "passed 98% test accuracy", not "generalized"); use numbers, not adjectives ("fell from 41% to 12%", not "dropped sharply"); and use no names coined inside the project, such as a code name for a condition or a nickname for a measure.
+
+**Panel titles may state the panel's finding**, like the figure title, and may start with the model's name: "Qwen3-8B: zeroing 6 neurons lowers caving to pushback from 44% to 0%". A model name before the colon is not the colon setup forbidden above. Pass `panel_title_words=14` to `fk.save`. The figure still argues one idea: panels that make several unrelated claims are several figures.
+
+**An image posted on its own** (on X or in Slack, where no caption travels with it) may define its terms in the image, briefly: one grey line of at most about 12 words under a bold label ("Layer targeting" over "the concept only at the layer asked for"), zero named in words ("0 = unsteered"), and both ends of an axis named in words. Raise `words=` for that figure. Statistics (p-values, n, how intervals were computed) still stay out of the image and go in the post's text.
 
 The story figure (section 8) differs in one way: its panel headers are plain sentences that say what the panel shows ("The task: look at a network's activations and point to its planted circuit"). They describe and define, and never state the verdict, which goes in the title and the caption. Its result rows also carry a grey line of training details under each method's name.
 
@@ -132,7 +139,7 @@ fk.save(fig, "fig1.png")     # prints FIGURE CHECK with anything to fix
 ```
 
 - The Inter font and the palette below are defaults; keep them unless your venue or page requires otherwise. To match a venue's font or a lab's palette, set `rcParams` or the colours after `fk.use()`, and still keep one accent colour with the rest grey.
-- **Size for where the figure goes.** `fk.use(size=...)` takes `"screen"` (7 × 4 in, the default), `"slide"` (10 × 5.6 in), `"paper"` (6.75 in, the full text width of a two-column paper) or `"column"` (3.25 in, one column of it). Each sets the figure size, and font sizes that print at a readable size there, and the check measures the text at that size. A figure drawn wider than its size shrinks when it is placed, and its text with it; the check says by how much. Save print figures as PDF.
+- **Size for where the figure goes.** `fk.use(size=...)` takes `"screen"` (7 × 4 in, the default), `"slide"` (10 × 5.6 in), `"paper"` (6.75 in, the full text width of a two-column paper), `"column"` (3.25 in, one column of it) or `"post"` (6 × 4.8 in, 1200 × 960 px, for an image posted on its own; X and Slack crop or shrink wide images, so keep such images about 1200 px wide and 1:1 to 4:3, in HTML too). Each sets the figure size, and font sizes that print at a readable size there, and the check measures the text at that size. A figure drawn wider than its size shrinks when it is placed, and its text with it; the check says by how much. Save print figures as PDF.
 - **Colour roles.** Name each condition once in a `figure-roles.json` beside the figure scripts, and every figure colours it the same way: `{"control": "random heads", "intervention": "top heads", "second": "half the data", "ordered": ["70M", "410M", "1.4B"]}`. The control is grey, the intervention `fk.ACCENT`, a second intervention `fk.BLUE`, a third to fifth the next Okabe-Ito colours, and conditions with an order of their own (layers, sizes, steps, doses) a light-to-dark blue ramp; a condition without a role is grey. `fk.color(name)`, and `fk.palette(names)` for seaborn, read the file. The check warns when a named condition is drawn in another colour, and when a label nearly matches a role's name ("random heads (n=10)"). Write the file with the figures at the spec stage, so every script and agent working on the write-up uses it.
 - Other colours: `fk.ACCENT` for the claim, `fk.GREY` or `fk.LIGHT` for context, and `fk.CATEGORICAL` only when the categories themselves are the point. The check warns about two colours that look alike to colour-blind readers.
 - With seaborn, pass `saturation=1` to bar plots and `palette=fk.palette(...)` so the colours stay exact.
@@ -187,7 +194,7 @@ Rules:
 - **Cartoons for the actors**: a model icon, given an attribute to show a trait (the owl on its shoulder); a thought bubble for an internal or latent state; a network drawn as circles, with the circuit in the accent colour.
 - **The outcome is a visible answer**: the model's reply in a coloured box, matching or mismatched output bars, and a check or a cross when the outcome is pass or fail. Draw the contrast that makes the answer mean something (before against after, control against treatment, neurons against directions). Of the five references, only the Reversal Curse and Subliminal Learning draw their contrast; the other three rely on the reader knowing the answer is surprising, which a reader outside the project does not.
 - **A title is optional**: one line above the panels stating the finding, as in section 3. None of the five references has one, because their papers' captions do that job; a figure posted on its own may need it.
-- **No prose outside the examples, and no numbers.** None of the five references prints a result number. If one number is truly needed, it goes in one small inset. (A story figure, section 8, does print its result's numbers, in the result panel only.) The caption follows section 3a: the bold takeaway, up to three sentences on the finding, then what a reader needs to interpret it.
+- **No prose outside the examples, and almost no numbers.** None of the five references prints a result number. Two kinds are allowed. A real model output on an example card may carry its count, with the control's count beside it ("18/30 about the military", "0/600 for random pairs"), which answers "is this cherry-picked?" where the reader is looking. And one before-and-after may be two large numbers with an arrow ("25% → 32%"), with the control beside it. No other numbers. (A story figure, section 8, does print its result's numbers, in the result panel only.) The caption follows section 3a: the bold takeaway, up to three sentences on the finding, then what a reader needs to interpret it.
 - Keep the diagram rules of section 9: one accent colour for the thing the figure is about, red only for ablated or failed, green only for passed, a wide canvas.
 
 Plan it before drawing, as in section 1:
@@ -244,7 +251,7 @@ Rules:
 - **Text big enough for a slide:** nothing smaller than about 14 px at 1100 px wide (26 px at 2000 px), panel headers about 20 px, values at bar ends bold. No text crosses a line, a bar or other text.
 - About 1100 px wide and as tall as it needs (roughly 1:1.5), stacking to one column on a phone without horizontal scroll.
 
-The rules on text size, pronouns, illustrative values, sources, fair comparison and drawing the real computation are adapted from the figure guide in the SauersML/params repository.
+The rules on text size, pronouns, illustrative values, sources, fair comparison and drawing the real computation are adapted from the figure guide in the SauersML/params repository by Scott Sauers ([@Sauers_](https://x.com/Sauers_)).
 
 Plan it before drawing, as in section 1:
 
@@ -280,7 +287,7 @@ The same rules apply, in this form:
 - Red only for ablated or failed, green only for passed.
 - One concrete running example (a real token or a real unit) that appears in every panel.
 - The same symbol always means the same thing.
-- A wide canvas, 2:1 to 3:1.
+- A wide canvas, 2:1 to 3:1, or square to 4:3 for an image posted on its own.
 
 See `examples/diagram.html`.
 
@@ -298,7 +305,11 @@ When a figure will live on an HTML page that can run scripts, draw it in HTML an
 For a score on every token (a probe, an attribution, an SAE latent's activation) or model replies side by side, write HTML that links `_kit/text.css` and loads `_kit/text.js`, and render it with `render_html.sh`.
 - **Token scores** (`examples/token_scores.html`): one row per text, each token shaded on a diverging scale (blue below zero, the accent above), with the colour bar above the rows. Give each `.tokens` element its scores as `[[token, score], ...]` JSON in the `<script>` after it; `text.js` draws a token's leading space outside its shading, turns text white on dark shades, and shows the score on hover. Add a row that shows the contrast (the honest answer, the unsteered model), so the shading means something.
 - **Replies side by side** (`examples/transcripts.html`): the prompt across the top, one card per condition, the intervention's card with the accent border, the phrase that matters in `.hl`, and an outcome dot (green for passed, red for failed) whose words stay in ink.
-- Quote real outputs, cut with "…", never paraphrased. The title states the finding, as in section 3, and the caption says how typical the example is.
+- Quote real outputs, cut with "…", never paraphrased. The title states the finding, as in section 3. Put the count on the card when you have one ("18/30 about the military", with the unsteered count beside it), and the caption says how the outputs were sampled.
+
+## Sources
+
+Random draws as the control, the size and place of an intervention, large before-and-after numbers, counts on example cards, short definitions and the square size for images posted on their own, and panel titles that state findings come from Scott Sauers's figures on X ([@Sauers_](https://x.com/Sauers_)), October 2026.
 
 ## Requirements
 
