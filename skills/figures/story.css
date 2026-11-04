@@ -1,4 +1,4 @@
-/* Components for the story figure (SKILL.md section 8): one tall image read top to bottom, with the data, the task,
+/* Components for the story figure (guides/story-figure.md): one tall image read top to bottom, with the data, the task,
    the result, how each method works and a zoom into one mechanism. Link this file (it imports summary.css, which
    imports diagram.css for the tokens and Inter) and story.js (cell stacks, icon arrays, the result chart), then
    summary.js if the figure uses network cartoons or icons. See examples/story_figure.html for a whole figure.
