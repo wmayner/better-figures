@@ -1,7 +1,7 @@
 {
   "name": "better-figures",
-  "version": "0.4.0",
-  "description": "A skill that helps Claude make research figures a busy reader understands at a glance: one claim per figure, text kept out of the image, a matplotlib house style with a check on save, HTML routes for interactive figures and diagrams, and summary and story figures.",
+  "version": "0.5.0",
+  "description": "Skills that help Claude make research figures a busy reader understands at a glance: one claim per figure, a matplotlib house style with a check on save, worked examples, HTML routes for interactive figures, diagrams, summary and story figures, and illustrated explainers of how code computes something.",
   "author": { "name": "Will Mayner" },
   "homepage": "https://github.com/wmayner/better-figures",
   "repository": "https://github.com/wmayner/better-figures",
