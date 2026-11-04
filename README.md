@@ -10,9 +10,9 @@ Left to itself, Claude tends to make figures that show every result at once and 
 
 ## What it does
 
-The plugin has two parts.
+The plugin has two skills and a workflow.
 
-**The skill** (`skills/figures/`) loads when Claude is about to make a figure. It has Claude:
+**The figures skill** (`skills/figures/`) loads when Claude is about to make a figure. Its `SKILL.md` covers plots; guides in `guides/` cover summary figures, story figures, diagrams, figures for a page and figures made of text, and Claude reads one only when it draws that kind of figure. It has Claude:
 
 - write a short plan before drawing: the one claim the figure argues, a one-line title that states it, the plot template that makes that argument, the one comparison it shows, and every string that will appear in the image;
 - put in the image only what the eye needs: the title, axis labels, series names next to the data, and values at the ends of bars, with definitions, statistics and how things were measured in the caption;
@@ -25,6 +25,8 @@ The plugin has two parts.
 - draw figures made of text in HTML: a score on every token, and model replies side by side;
 - draw a story figure when a result compares several methods on one task: one tall image with the data, the task, the result and how each method works, for a reader who sees nothing else;
 - look at the rendered PNG once, and for figures going to a mentor or a paper, ask a fresh subagent with none of the context what the figure says.
+
+**The method-explainer skill** (`skills/method-explainer/`) makes an illustrated explainer of how code computes something: one tall figure that follows a single real example through every step of a method, drawn from the code at a pinned commit, with every number about the example computed by saved scripts, and published on a page that carries the explanation. It builds on the figures skill's kit, comes with a brief template for handing the work to a subagent, and records what each test of it changed in `LESSONS.md`.
 
 **The workflow** ([`WORKFLOW.md`](WORKFLOW.md)) covers the part a skill can't enforce on its own: figures are designed at the spec stage, before an experiment runs. You approve each figure as its plan block, or as a mock drawn from fake data, never as a prose description of its encodings. Each figure argues one claim, a set of experiments gets at most five figures, and they are published together on one page, each with a short caption. `WORKFLOW.md` ends with a block of rules you can paste into your own `CLAUDE.md`.
 
@@ -46,7 +48,7 @@ git clone https://github.com/wmayner/better-figures
 cp -r better-figures/skills/figures ~/.claude/skills/
 ```
 
-Either way, Claude loads the skill when you ask for a figure. You can also call it directly: `/better-figures:figures` for the plugin, `/figures` for the copy.
+Either way, Claude loads the skill when you ask for a figure. You can also call it directly: `/better-figures:figures` for the plugin, `/figures` for the copy. With the plugin, `/better-figures:method-explainer` makes an explainer; to copy it instead, copy `skills/method-explainer` beside `skills/figures`, since it uses the figures skill's files.
 
 ### Requirements
 
@@ -91,6 +93,8 @@ The rules for summary figures come from the first figures of five papers by Owai
 The plot templates the skill chooses from (bar, line, scaling law, calibration, diverging line, Pareto frontier) come from Jo Jiao's post [Research lessons I learned at MATS and Redwood](https://www.lesswrong.com/posts/Q4rcvgjbgjTwmn8Xa/research-lessons-i-learned-at-mats-and-redwood), which argues that a plot is an argument in miniature and that plots matching a known template are much easier to read.
 
 Several parts of `figkit.py` follow [viz](https://github.com/safety-research/viz), Joshua Fonseca Rivera's chart library for AI safety research: titles that state the finding and the check on them, colour roles in one file, sizes for where a figure goes, value labels at bar ends, the mark on mock figures, sorting categories by value, examples grouped by the question they answer, and the colour-blindness check, whose code is ported from viz under its MIT license.
+
+The advice on random draws as a control, the size and place of an intervention, before-and-after numbers, counts on example cards, short definitions in images posted on their own, panel titles that state findings and the post size comes from Scott Sauers's figures on X ([@Sauers_](https://x.com/Sauers_)), October 2026, and the story figure's rules on text size, pronouns, illustrative values, sources, fair comparison and drawing the real computation are adapted from the figure guide in his SauersML/params repository.
 
 ## Does it work?
 
