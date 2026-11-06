@@ -1,11 +1,16 @@
 ---
 name: figures
-description: Use before making any figure a person will read, such as a matplotlib or seaborn plot, a chart for a report or slide, a diagram of a method, the summary figure that opens a paper or post, or the figures in an experiment spec. Covers what to show, titles and captions, a house style with a check on save, colour roles, print sizes, worked examples, and HTML for figures on a page, diagrams, summary, story and text figures. Not for dashboards (use dataviz).
+description: Use before making a figure that is planned or that goes to someone other than the person you are talking to: the figures of an experiment spec (designed and approved before anything runs), and figures for a mentor, collaborators, a deck, a report, a paper or a post (with a fresh critic, and the summary or story figure). Covers what to show, titles and captions, a house style with a check on save, colour roles, print sizes, worked examples, and HTML for figures on a page, diagrams, summary, story and text figures. For a quick figure the person you are talking to will look at now, use better-figures:sketch instead. Not for dashboards (use dataviz).
 ---
 
 # Figures
 
 The goal is a figure that a busy researcher understands in five seconds, made in one pass.
+
+**Which tier.** Three kinds of request use this plugin:
+- *A quick look for the person you are talking to* ("make me a figure of X", "plot Y"): use `better-figures:sketch`, which draws in under a minute without the steps below.
+- *The figures of an experiment*, designed at the spec stage: sections 1 to 5 here, with the plan block approved before anything runs (`WORKFLOW.md`).
+- *Figures for someone else*: a mentor, collaborators, a deck, a report, a paper or a post: sections 1 to 6, including the fresh critic, and the summary or story figure guides when the figure opens or carries a piece.
 
 The files named below (`figkit.py`, `render_html.sh`, the CSS and JS, `guides/`, `examples/`, `references/`) are in this skill's directory, `${CLAUDE_SKILL_DIR}`.
 
