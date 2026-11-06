@@ -12,7 +12,7 @@ A first image within a minute, then fast changes as the person says what to cut.
 1. **In one turn**, look at the data (one shell command that prints the columns or array shapes and a few rows) and read the gallery example closest to the request (below). Read only the code you need. Keep the Taste section below in mind; it is what the person will judge.
 2. **Adapt that example.** No plan block, no caption, no figures skill, no subagent or critic. Plotting a saved table is light work and runs here.
    **If the data needs heavy processing** (hundreds of files, gigabytes, minutes of compute), don't queue a batch job for a sketch: on a shared cluster the queue alone can take ten minutes. Draw the sketch from a subsample that runs here in seconds (say 30 of 1,370 files), say so in your reply, and offer the full run as a batch job once the person likes the figure.
-3. **Write the script and run it in one command**, with the house style from the figures skill:
+3. **Write the script and run it in one command**, with every label in plain words from the start (map code names to phrases in a small dict), and the house style from the figures skill:
    ```
    uv run --no-project --with matplotlib,seaborn,pandas,pyarrow python sketch_<slug>.py
    ```
