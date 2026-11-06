@@ -10,7 +10,7 @@ Left to itself, Claude tends to make figures that show every result at once and 
 
 ## What it does
 
-The plugin has two skills and a workflow.
+The plugin has three skills and a workflow.
 
 **The figures skill** (`skills/figures/`) loads when Claude is about to make a figure. Its `SKILL.md` covers plots; guides in `guides/` cover summary figures, story figures, diagrams, figures for a page and figures made of text, and Claude reads one only when it draws that kind of figure. It has Claude:
 
@@ -25,6 +25,8 @@ The plugin has two skills and a workflow.
 - draw figures made of text in HTML: a score on every token, and model replies side by side;
 - draw a story figure when a result compares several methods on one task: one tall image with the data, the task, the result and how each method works, for a reader who sees nothing else;
 - look at the rendered PNG once, and for figures going to a mentor or a paper, ask a fresh subagent with none of the context what the figure says.
+
+**The sketch skill** (`skills/sketch/`) is for a quick figure you want to look at yourself, now: "plot X", "make me a figure of Y". The session that you are talking to draws it straight away: it looks at the data and the closest worked example in one step, adapts the example, runs the script, looks at the image once and sends it to you, usually within a minute. It writes no plan block and calls no critic, and when the data would take minutes to process it draws from a sample and tells you so. If the folder `~/figure-references/sketch/` exists, the session writes down your reactions to each sketch in its `notes.md` and keeps the figures you approve in its `gallery/`, so the next sketch starts from your taste. In a trial of five figure requests, each run twice in fresh sessions, the sketch skill gave a first image in a median of 32 seconds and the figures skill in 99 seconds. Use the figures skill for figures that are planned before an experiment runs or that go to someone else.
 
 **The method-explainer skill** (`skills/method-explainer/`) makes an illustrated explainer of how code computes something: one tall figure that follows a single real example through every step of a method, drawn from the code at a pinned commit, with every number about the example computed by saved scripts, and published on a page that carries the explanation. It builds on the figures skill's kit, comes with a brief template for handing the work to a subagent, and records what each test of it changed in `LESSONS.md`.
 
@@ -48,7 +50,7 @@ git clone https://github.com/wmayner/better-figures
 cp -r better-figures/skills/figures ~/.claude/skills/
 ```
 
-Either way, Claude loads the skill when you ask for a figure. You can also call it directly: `/better-figures:figures` for the plugin, `/figures` for the copy. With the plugin, `/better-figures:method-explainer` makes an explainer; to copy it instead, copy `skills/method-explainer` beside `skills/figures`, since it uses the figures skill's files.
+Either way, Claude loads the skill when you ask for a figure. You can also call it directly: `/better-figures:figures` for the plugin, `/figures` for the copy. With the plugin, `/better-figures:sketch` draws a quick figure and `/better-figures:method-explainer` makes an explainer; to copy it instead, copy `skills/method-explainer` beside `skills/figures`, since it uses the figures skill's files.
 
 ### Requirements
 
