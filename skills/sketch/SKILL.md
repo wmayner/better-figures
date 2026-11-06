@@ -10,7 +10,8 @@ A first image within a minute, then fast changes as the person says what to cut.
 ## Steps
 
 1. **In one turn**, look at the data (one shell command that prints the columns or array shapes and a few rows) and read the gallery example closest to the request (below). Read only the code you need.
-2. **Adapt that example.** No plan block, no caption, no figures skill, no subagent or critic, no Slurm: plotting saved data is light work and runs here.
+2. **Adapt that example.** No plan block, no caption, no figures skill, no subagent or critic. Plotting a saved table is light work and runs here.
+   **If the data needs heavy processing** (hundreds of files, gigabytes, minutes of compute), don't queue a batch job for a sketch: on a shared cluster the queue alone can take ten minutes. Draw the sketch from a subsample that runs here in seconds (say 30 of 1,370 files), say so in your reply, and offer the full run as a batch job once the person likes the figure.
 3. **Write the script and run it in one command**, with the house style from the figures skill:
    ```
    uv run --no-project --with matplotlib,seaborn,pandas,pyarrow python sketch_<slug>.py
@@ -22,7 +23,7 @@ A first image within a minute, then fast changes as the person says what to cut.
    ...
    fk.save(fig, out)              # prints a check; act only on overlap, clipping or tiny text
    ```
-   Save the script and PNG in a `sketches/` folder in your scratch directory, as `<slug>_v1.png`; each change is `_v2`, `_v3`, never an overwrite. Diagrams: write HTML that links `${CLAUDE_SKILL_DIR}/../figures/diagram.css` and render it with `sh ${CLAUDE_SKILL_DIR}/../figures/render_html.sh in.html out.png W H` (about 7 seconds).
+   Save the script and PNG together in a `sketches/` folder in your scratch directory (not in the repository), as `<slug>_v1.png`; each change is `_v2`, `_v3`, never an overwrite. Diagrams: write HTML that links `${CLAUDE_SKILL_DIR}/../figures/diagram.css` and render it with `sh ${CLAUDE_SKILL_DIR}/../figures/render_html.sh in.html out.png W H` (about 7 seconds).
 4. **Look at the PNG once.** Fix only what is broken: overlapping or clipped text, an empty panel, unreadable labels. Don't polish.
 5. **Send it.** Use SendUserFile with the PNG if you have the tool: it reaches the person's phone and the claude.ai app in about a second, even when they work in a terminal over SSH. Also print the PNG's absolute path. Add at most two lines: what the figure shows, and the one choice they may want changed ("log scale; MLP layers left out").
 6. **When they say what to change**, edit the same script, rerun, look, send. Each round should take seconds, not minutes.
