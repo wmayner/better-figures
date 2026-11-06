@@ -9,7 +9,7 @@ A first image within a minute, then fast changes as the person says what to cut.
 
 ## Steps
 
-1. **In one turn**, look at the data (one shell command that prints the columns or array shapes and a few rows) and read the gallery example closest to the request (below). Read only the code you need.
+1. **In one turn**, look at the data (one shell command that prints the columns or array shapes and a few rows) and read the gallery example closest to the request (below). Read only the code you need. Keep the Taste section below in mind; it is what the person will judge.
 2. **Adapt that example.** No plan block, no caption, no figures skill, no subagent or critic. Plotting a saved table is light work and runs here.
    **If the data needs heavy processing** (hundreds of files, gigabytes, minutes of compute), don't queue a batch job for a sketch: on a shared cluster the queue alone can take ten minutes. Draw the sketch from a subsample that runs here in seconds (say 30 of 1,370 files), say so in your reply, and offer the full run as a batch job once the person likes the figure.
 3. **Write the script and run it in one command**, with the house style from the figures skill:
@@ -24,7 +24,7 @@ A first image within a minute, then fast changes as the person says what to cut.
    fk.save(fig, out)              # prints a check; act only on overlap, clipping or tiny text
    ```
    Save the script and PNG together in a `sketches/` folder in your scratch directory (not in the repository), as `<slug>_v1.png`; each change is `_v2`, `_v3`, never an overwrite. Diagrams: write HTML that links `${CLAUDE_SKILL_DIR}/../figures/diagram.css` and render it with `sh ${CLAUDE_SKILL_DIR}/../figures/render_html.sh in.html out.png W H` (about 7 seconds).
-4. **Look at the PNG once.** Fix only what is broken: overlapping or clipped text, an empty panel, unreadable labels. Don't polish.
+4. **Look at the PNG once.** Fix only what is broken: overlapping or clipped text, an empty panel, unreadable labels, and any code name left in the image (a column value like `oasst1_es` or `rand0` becomes plain words such as "OpenAssistant, Spanish" or "random nodes"; if you can't tell what one means, keep it and say so in your reply). Don't polish.
 5. **Send it.** Use SendUserFile with the PNG if you have the tool: it reaches the person's phone and the claude.ai app in about a second, even when they work in a terminal over SSH. Also print the PNG's absolute path. Add at most two lines: what the figure shows, and the one choice they may want changed ("log scale; MLP layers left out").
 6. **When they say what to change**, edit the same script, rerun, look, send. Each round should take seconds, not minutes.
 
@@ -40,7 +40,23 @@ Private folder: `~/figure-references/sketch/` (it holds unpublished figures; nev
 
 ## Taste
 
-See `taste.md` in this folder (about 350 words). Read it at step 1, in the same turn.
+What this plugin's author has asked for, again and again, distilled from his comments on figures (October and November 2026). Quotes are his words.
+
+**One idea, the crucial comparison.** "very simple and clear, showing the crucial comparison." Draw the one comparison the request is about. Leave the rest out, or offer it in one line of your reply. A figure that shows every result is a table drawn as a plot.
+
+**Less text than you think.** His most frequent note is "there is still too much text"; AI figures are "polluted by a lot of verbiage and context that hasn't been defined." In the image: axis labels of a few plain words with units, series names, and tick labels. No definitions, statistics, method notes, hedges or annotation boxes. If a term needs defining, use a plainer term or say it in your reply.
+
+**Labels a newcomer can read.** "short, clear text labels, that don't require a lot of familiarity with the setup." No variable names, column names or code names for conditions ("fisher estimates", `rand0`, `neurons_heads`); write what was measured in plain words.
+
+**Proper charts.** "a proper figure": a standard template (bars, lines, scatter, histogram, heatmap) that a reader decodes at once. Grouped bars may carry a legend. No numbers on top of bars unless the number is the point.
+
+**Show the spread honestly.** Draw every seed or run, faint behind the mean, or as range lines when there are many. Controls and random baselines go in grey beside the result, on the same axis.
+
+**Titles: one plain line or none.** A title states the finding literally in about ten words. He has called a title on another researcher's figure "ridiculous"; when unsure, leave the title off.
+
+**Diagrams: show what actually flows.** The diagram he called "a good figure" (another researcher's, of an oracle's inputs) runs left to right from the model's forward pass, gives each input kind one colour kept throughout, shows the real shapes and a concrete example of what lands in the prompt, and uses short pill labels instead of sentences. Method figures that show the method and the result together, with cartoons and almost no text, are what he wants for explainers; their point is "to help the reader understand what is being done."
+
+**Style.** Inter, one accent colour for the thing the figure is about, greys for context, white background, big readable text, plenty of space. Screen proportions, about 7 by 4 inches; very wide figures were a complaint. Log axes with plain ticks (1, 10, 100) when values span orders of magnitude.
 
 ## Gallery
 
