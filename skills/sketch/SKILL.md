@@ -23,10 +23,10 @@ A first image within a minute, then fast changes as the person says what to cut.
    ...
    fk.save(fig, out)              # prints a check; act only on overlap, clipping or tiny text
    ```
-   Save the script and PNG together in a `sketches/` folder in your scratch directory (not in the repository), as `<slug>_v1.png`; each change is `_v2`, `_v3`, never an overwrite. Diagrams: write HTML that links `${CLAUDE_SKILL_DIR}/../figures/diagram.css` and render it with `sh ${CLAUDE_SKILL_DIR}/../figures/render_html.sh in.html out.png W H` (about 7 seconds).
+   **Where to save:** if the project's instructions (CLAUDE.md or its rules files) name a folder for quick figures, save the script and PNG there, with the names, archiving and commits those instructions ask for, and follow them again on every change. Only if they say nothing, save them together in a `sketches/` folder in your scratch directory (not in the repository), as `<slug>_v1.png`; each change is `_v2`, `_v3`, never an overwrite. Diagrams: write HTML that links `${CLAUDE_SKILL_DIR}/../figures/diagram.css` and render it with `sh ${CLAUDE_SKILL_DIR}/../figures/render_html.sh in.html out.png W H` (about 7 seconds).
 4. **Look at the PNG once.** Fix only what is broken: overlapping or clipped text, an empty panel, unreadable labels, and any code name left in the image (a column value like `oasst1_es` or `rand0` becomes plain words such as "OpenAssistant, Spanish" or "random nodes"; if you can't tell what one means, keep it and say so in your reply). Don't polish.
 5. **Send it.** Use SendUserFile with the PNG if you have the tool: it reaches the person's phone and the claude.ai app in about a second, even when they work in a terminal over SSH. Also print the PNG's absolute path. Add at most two lines: what the figure shows, and the one choice they may want changed ("log scale; MLP layers left out").
-6. **When they say what to change**, edit the same script, rerun, look, send. Each round should take seconds, not minutes.
+6. **When they say what to change**, edit the same script (archiving the old version first if the project's instructions ask for it), rerun, look, send. Each round should take seconds, not minutes.
 
 ## Learn from each round
 
