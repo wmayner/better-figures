@@ -14,7 +14,7 @@ The goal is a figure that a busy researcher understands in five seconds, made in
 
 The files named below (`figkit.py`, `render_html.sh`, the CSS and JS, `guides/`, `examples/`, `references/`) are in this skill's directory, `${CLAUDE_SKILL_DIR}`.
 
-**On first use in a project, copy the kit into the project.** `${CLAUDE_SKILL_DIR}` can be a folder in Claude Code's plugin cache whose name includes the plugin's version, so a script or page that points there breaks when the plugin updates, and on a collaborator's machine. Copy `figkit.py`, `fonts/` and the CSS and JS once, into a `_kit/` folder beside the figure scripts, and refer to that copy by a path relative to each script or HTML file. If the project already has a `_kit/` folder, use it. The colour roles go in a `figure-roles.json` beside the scripts (section 4).
+**On first use in a project, copy the kit into the project.** `${CLAUDE_SKILL_DIR}` can be a folder in Claude Code's plugin cache whose name includes the plugin's version, so a script or page that points there breaks when the plugin updates, and on a collaborator's machine. Copy `figkit.py`, `fonts/` and the CSS and JS once, into a `_kit/` folder beside the figure scripts, and refer to that copy by a path relative to each script or HTML file. If the project already has a `_kit/` folder, use it; if its `figkit.py` is older than this skill's (it has no `fk.interval`), copy the new one over it first. The colour roles go in a `figure-roles.json` beside the scripts (section 4).
 
 ```
 mkdir -p figures/_kit
