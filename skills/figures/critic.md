@@ -14,6 +14,7 @@ Answer each question in one line:
 5. List every series, panel or mark that the claim does not need.
 6. Is the element that carries the claim the most visible thing? If not, what is?
 7. Anything hard to read: small text, overlaps, colours that look alike, crowded ticks?
+8. From the image alone, how sure would you be of the claim? What does the image draw to show it (every seed or unit, an interval, each unit's difference)? Does the title state a difference that the drawn spread does not support, or hedge one that it does?
 
-Then give at most five changes, most important first, each one concrete ("delete the subtitle", "grey every line except X", "drop panels 2-4"). Don't suggest adding text unless the figure cannot be read without it. Stop there.
+Then give at most five changes, most important first, each one concrete ("delete the subtitle", "grey every line except X", "drop panels 2-4"). Don't suggest adding text unless the figure cannot be read without it; missing uncertainty is fixed with marks (seeds, intervals), not words. Stop there.
 ---

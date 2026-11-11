@@ -17,6 +17,7 @@ TARGETS = [ROOT / "README.md", ROOT / "skills" / "figures" / "SKILL.md"]
 QUESTIONS = [
     "Is one condition higher than another?",
     "How do several methods rank, and how sure are we?",
+    "Do two conditions differ, when both were measured on the same units?",
     "How does a measure change over training, or across layers?",
     "How does an effect grow with a dose?",
     "Does a trend follow a scaling law?",

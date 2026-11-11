@@ -301,3 +301,124 @@ def test_a_cluttered_figure_fails_on_every_count():
     for phrase in ["title of 17 words", "semicolon", "question", "dramatically", "text in boxes", "legend with 7",
                    "6 panels", "7 series", "shrinks to 71%", "overlapping"]:
         assert found(problems, phrase), (phrase, problems)
+
+
+# ------------------------------------------------------------------------------------------------ uncertainty
+
+def two_bars(seeds=False, intervals=False):
+    fig, ax = plt.subplots()
+    ax.bar(["with weight decay", "without"], [0.9, 0.6], color=[fk.ACCENT, fk.GREY])
+    ax.set(ylabel="Test accuracy")
+    if seeds:
+        ax.scatter([0, 0, 0, 1, 1, 1], [0.88, 0.9, 0.92, 0.55, 0.6, 0.65], s=20, color=fk.INK, zorder=3)
+    if intervals:
+        rng = np.random.default_rng(0)
+        fk.intervals(ax, [0, 1], [fk.interval(rng.normal(m, 0.05, 30), unit="seeds") for m in (0.9, 0.6)])
+    return fig
+
+
+@pytest.mark.parametrize("df, want", [(1, 12.706), (4, 2.776), (30, 2.042), (7.5, 2.335)])
+def test_students_t_critical_values_match_the_tables(df, want):
+    assert fk._t_crit(df, 0.95) == pytest.approx(want, abs=2e-3)
+
+
+def test_below_ten_units_the_interval_is_students_t():
+    est = fk.interval([1.0, 2.0, 3.0, 4.0, 5.0], unit="seeds")
+    half = 2.776 * np.std([1, 2, 3, 4, 5], ddof=1) / np.sqrt(5)
+    assert (est.value, est.n, est.method) == (3.0, 5, "t-interval")
+    assert (est.lo, est.hi) == pytest.approx((3 - half, 3 + half), abs=2e-3)
+    assert est.caption() == "95% t-interval over 5 seeds"
+
+
+def test_an_interval_resamples_units_not_the_rows_that_share_one():
+    rng = np.random.default_rng(0)
+    unit = np.repeat(np.arange(20), 200)                      # 20 fine-tunes, 200 questions each
+    values = rng.normal(0, 1, 20)[unit] + rng.normal(0, 0.3, 4000)
+    by_row, by_unit = fk.interval(values), fk.interval(values, groups=unit, unit="fine-tunes")
+    assert (by_row.n, by_unit.n) == (4000, 20)
+    assert by_unit.hi - by_unit.lo > 5 * (by_row.hi - by_row.lo)
+    assert by_unit.method == "bootstrap interval"
+    again = fk.interval(values, groups=unit, unit="fine-tunes")
+    assert (again.lo, again.hi) == (by_unit.lo, by_unit.hi)   # seeded, so it repeats
+
+
+def test_one_unit_has_no_interval():
+    with pytest.raises(ValueError, match="no spread"):
+        fk.interval([0.4, 0.5, 0.6], groups=["a", "a", "a"])
+
+
+def test_a_proportion_gets_its_wilson_interval():
+    est = fk.proportion(164, 400)
+    assert (est.lo, est.hi) == pytest.approx((0.3629, 0.4588), abs=5e-4)
+
+
+def test_a_paired_difference_sees_what_separate_intervals_hide():
+    rng = np.random.default_rng(1)
+    base = rng.normal(60, 12, 20)                             # units differ far more than the conditions do
+    a, b = base + 2 + rng.normal(0, 1, 20), base
+    assert fk.difference(a, b, paired=True, unit="models").clear
+    assert not fk.difference(a, b, paired=False, unit="models").clear
+
+
+def test_the_author_must_say_whether_a_difference_is_paired():
+    with pytest.raises(TypeError):
+        fk.difference([1, 2, 3], [1, 2, 4])
+    with pytest.raises(ValueError, match="aligned"):
+        fk.difference([1, 2, 3], [1, 2], paired=True)
+
+
+def test_a_title_comparing_conditions_needs_spread_in_the_image():
+    for kw, ok in [({}, False), ({"seeds": True}, True), ({"intervals": True}, True)]:
+        fig = two_bars(**kw)
+        fk.title(fig, "Weight decay raised test accuracy from 60% to 90%")
+        hit = [p for p in fk.check(fig) if "draws no spread" in p]
+        assert bool(hit) != ok, (kw, hit)
+    fig = two_bars()
+    fk.title(fig, "Weight decay raised test accuracy from 60% to 90%")
+    assert not [p for p in fk.check(fig, spread=False) if "spread" in p]
+
+
+def test_a_title_that_states_no_difference_or_names_one_series_is_left_alone():
+    fig = two_bars()
+    fk.title(fig, "The two settings did not clearly differ in test accuracy")
+    assert not [p for p in fk.check(fig) if "spread" in p]
+    fig, ax = plt.subplots()
+    ax.plot(np.arange(10), np.linspace(3, 1, 10), color=fk.ACCENT, label="training loss")
+    ax.set(xlabel="Step", ylabel="Loss")
+    fk.title(fig, "Training loss fell from 3 to 1 in this run")
+    assert not [p for p in fk.check(fig) if "spread" in p]
+
+
+def test_a_claimed_difference_whose_interval_includes_zero_is_refused():
+    rng = np.random.default_rng(2)
+    base = rng.normal(60, 12, 20)
+    for shift, ok in [(8.0, True), (0.3, False)]:
+        fig, ax = plt.subplots()
+        gain = fk.paired(ax, base + shift + rng.normal(0, 4, 20), base, names=("with circuits", "without"),
+                         unit="fine-tunes")
+        ax.set(ylabel="Accuracy (%)")
+        fk.title(fig, "Adding circuits raised accuracy on held-out fine-tunes", claims=gain)
+        hit = [p for p in fk.check(fig) if "includes 0" in p]
+        assert bool(hit) != ok, (shift, gain, hit)
+        assert not [p for p in fk.check(fig) if "draws no spread" in p]
+
+
+def test_differences_draw_every_unit_the_interval_and_zero_and_the_figure_passes():
+    rng = np.random.default_rng(3)
+    base = rng.normal(60, 12, 20)
+    gain = fk.difference(base + 6 + rng.normal(0, 3, 20), base, paired=True, unit="models")
+    fig, ax = plt.subplots()
+    assert fk.differences(ax, gain, at=0) is gain
+    ax.set_yticks([0], ["Activation probe"])
+    ax.set(xlabel="Accuracy gain over baseline (points)")
+    fk.title(fig, "The probe beat the baseline on the same 20 models", claims=gain)
+    assert fk.check(fig) == [], fk.check(fig)
+    assert len(ax.collections[0].get_offsets()) == 20
+    with pytest.raises(ValueError, match="paired=True"):
+        fk.differences(ax, fk.difference(base, base[:15] + 1, paired=False))
+
+
+def test_a_figure_from_a_random_subsample_says_so(tmp_path):
+    fig, _ = line_figure()
+    assert fk.save(fig, tmp_path / "sample.png", sample="30 of 1,370 files") == []
+    assert any(t.get_text() == "Random sample: 30 of 1,370 files" for t in fig.texts)

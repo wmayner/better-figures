@@ -7,13 +7,13 @@ Figures go wrong when no one decides which result each one is for. Sometimes the
 ## At the spec stage
 
 1. **Decide what the set of experiments should show.** Keep to the fewest figures the result needs, and at most five. Results that don't earn a figure go in tables on the results page or in the report, not on the figures page.
-2. **Write one plan block per figure** (section 1 of `SKILL.md`): the claim the figure argues, in one sentence; its title, the claim in one line; the template (bar, line, scaling law, calibration, diverging line, Pareto frontier, scatter, heatmap); the one comparison it shows; the one element in the accent colour; every string that will appear in the image; the caption; and a four-line sketch. Choose the template from the claim. If no template fits, the figure is probably trying to say more than one thing; split it or simplify it. Name the colour of each condition once, in a `figure-roles.json` beside the figure scripts, so that every figure, and every agent that draws one, colours it the same way.
+2. **Write one plan block per figure** (section 1 of `SKILL.md`): the claim the figure argues, in one sentence; its title, the claim in one line; the template (bar, line, scaling law, calibration, diverging line, Pareto frontier, scatter, heatmap); the one comparison it shows; the control; how the image shows the spread (every seed or unit, an interval over the unit that was sampled independently, or each unit's difference when conditions share units); the one element in the accent colour; every string that will appear in the image; the caption; and a four-line sketch. Choose the template from the claim. If no template fits, the figure is probably trying to say more than one thing; split it or simplify it. Name the colour of each condition once, in a `figure-roles.json` beside the figure scripts, so that every figure, and every agent that draws one, colours it the same way.
 3. **Approve the plan block, or a mock drawn from fake data.** Never approve a prose description of the encodings ("rows are methods by targets, filled against open markers, verdict in the margin"). It reads as simple and draws as a wall of marks. A mock from fake data is the best check, because you see the figure you will get. Save it with `fk.save(..., mock=True)`, which writes "Fake data" in a corner, so it can't be mistaken for a result.
 4. **Nothing runs before the whole spec is approved**, its figures included. Changing a figure after the results are in is fine, but the change is reported.
 
 ## When the results are in
 
-1. **Draw the approved figures** with the skill. Fill in each claim from the actual results; if a result goes the other way, the claim says so.
+1. **Draw the approved figures** with the skill. Fill in each claim from the actual results; if a result goes the other way, the claim says so, and a null is drawn on the planned axes, not dropped.
 2. **Report every figure that was dropped or changed**, and why.
 3. **Save the PNG, a PDF, and the plotted data** next to each other, so a figure can be redrawn without rerunning anything.
 4. **Publish the figures together on one page**, each with a caption written as in section 3a of `SKILL.md`: the takeaway in bold, up to three sentences on the finding, then what is plotted, how it was measured, n, and what the error bars are. The page holds the figures and their captions and nothing else; other results go in tables on the results page. The figures are a deliverable in their own right, separate from any written report, which can show them too.
@@ -44,6 +44,9 @@ Paste this into your project's `CLAUDE.md` (or `~/.claude/CLAUDE.md`) so the rul
 - Each figure stands on its own with a caption that opens with the takeaway in bold.
   Definitions and statistics go in the caption, not the image; a one-line title may state
   the finding.
+- Uncertainty is drawn in the image: every seed or unit, or an interval over the unit that was
+  sampled independently. Conditions measured on the same units are compared unit by unit. A title
+  states a difference only when the interval of that difference supports it, and then plainly.
 - Each condition keeps one colour across the set of figures, named in figure-roles.json.
   Mocks drawn from fake data say so in the image.
 - Publish the figures together on one page, each with its caption. Report any figure that was

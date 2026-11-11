@@ -10,6 +10,10 @@
     fk.title(fig, "A linear probe reads tense from layer 6 on")   # the finding, in one line
     fk.save(fig, "fig1.png")          # runs check() and prints what to fix
 
+Uncertainty is drawn, not written: fk.interval and fk.difference compute an interval over the unit that was sampled
+independently, fk.intervals, fk.paired and fk.differences draw it, and fk.title(fig, text, claims=d) ties a title
+that states a difference to the interval of that difference.
+
 Single file on purpose: the figures skill copies it, with fonts/, into a _kit/
 folder in each project, and figure scripts import that copy. Fonts are read from
 the fonts/ folder next to this file; without it they fall back to DejaVu Sans.
@@ -17,14 +21,16 @@ the fonts/ folder next to this file; without it they fall back to DejaVu Sans.
 import json
 import math
 import re
+import statistics
 import sys
 from pathlib import Path
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib import font_manager, ticker
-from matplotlib.collections import LineCollection, PathCollection
-from matplotlib.container import BarContainer
+from matplotlib.collections import LineCollection, PathCollection, PolyCollection, QuadMesh
+from matplotlib.container import BarContainer, ErrorbarContainer
 from matplotlib.text import Text
 
 INK = "#1F1F1F"       # text and the most important dark mark
@@ -117,8 +123,15 @@ def use(size="screen", roles=None):
     _load_roles(roles)
 
 
-def title(fig, text):
-    """Give the figure its title: the finding, stated literally in one line of about 10 words, left-aligned."""
+def title(fig, text, claims=None):
+    """Give the figure its title: the finding, stated literally in one line of about 10 words, left-aligned.
+
+    If the title states a difference, pass that difference as claims (an Estimate from fk.difference, fk.paired or
+    fk.differences, or a list of them). The check on save then refuses the title when the interval of the difference
+    includes zero.
+    """
+    if claims is not None:
+        fig._figkit_claims = list(claims) if isinstance(claims, (list, tuple)) else [claims]
     w = fig.get_size_inches()[0]
     pad = mpl.rcParams["figure.constrained_layout.w_pad"]
     return fig.suptitle(text, x=pad / w, ha="left", fontsize=SIZES[_size]["title"], fontweight="semibold")
@@ -345,6 +358,203 @@ def random_draws(ax, values, at, horizontal=True, height=0.6, color=GREY):
     if horizontal:
         return ax.vlines(values, lo, hi, color=color, linewidth=1.2 * mpl.rcParams["lines.linewidth"] / 2.2, zorder=3)
     return ax.hlines(values, lo, hi, color=color, linewidth=1.2 * mpl.rcParams["lines.linewidth"] / 2.2, zorder=3)
+
+
+# ---------------------------------------------------------------------------------------------- uncertainty
+
+class Estimate:
+    """A mean, a proportion or a mean difference, with its interval and what the interval resamples.
+
+    value, lo, hi: the estimate and its interval. n: the number of units. unit: what a unit is, in the plural
+    ("fine-tunes", "seeds", "prompts"). method: how the interval was computed. kind: "mean", "proportion",
+    "paired difference" or "difference". units: each unit's value (for a paired difference, each unit's difference).
+    """
+
+    def __init__(self, value, lo, hi, n, unit, level, method, kind, units=None):
+        self.value, self.lo, self.hi, self.n, self.unit = float(value), float(lo), float(hi), n, unit
+        self.level, self.method, self.kind, self.units = level, method, kind, units
+
+    @property
+    def clear(self):
+        """Whether the interval excludes zero. For a difference: whether the figure may say the two differ."""
+        return self.lo > 0 or self.hi < 0
+
+    def caption(self):
+        """The words for the caption: what the interval is and what it resamples."""
+        return f"{self.level:.0%} {self.method} over {self.n} {self.unit}"
+
+    def __repr__(self):
+        return f"Estimate({self.value:.4g}, {self.lo:.4g} to {self.hi:.4g}; {self.kind}; {self.caption()})"
+
+
+def _t_crit(df, level):
+    """Two-sided critical value of Student's t, by integrating its density (no scipy needed)."""
+    c = math.exp(math.lgamma((df + 1) / 2) - math.lgamma(df / 2)) / math.sqrt(df * math.pi)
+    target = (1 + level) / 2
+    def cdf(x):
+        t = np.linspace(0, x, 20001)
+        y = c * (1 + t * t / df) ** (-(df + 1) / 2)
+        return 0.5 + float(np.sum((y[1:] + y[:-1]) / 2) * (t[1] - t[0]))
+    lo, hi = 0.0, 1e4
+    for _ in range(80):
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if cdf(mid) < target else (lo, mid)
+    return (lo + hi) / 2
+
+
+def _unit_means(values, groups):
+    """One number per unit: the values themselves, or each group's mean. Returns (unit ids or None, means)."""
+    v = np.asarray(values, dtype=float).ravel()
+    if np.isnan(v).any():
+        raise ValueError("values contain NaN: drop or explain the missing rows before computing an interval")
+    if groups is None:
+        return None, v
+    g = np.asarray(groups).ravel()
+    if len(g) != len(v):
+        raise ValueError(f"groups has {len(g)} entries for {len(v)} values")
+    ids, inv = np.unique(g, return_inverse=True)
+    return ids, np.bincount(inv, weights=v) / np.bincount(inv)
+
+
+def _mean_interval(m, level, n_boot, seed):
+    """Interval for the mean of one number per unit: Student's t below 10 units (a bootstrap over so few is too
+    narrow), a percentile bootstrap that resamples units from 10 up."""
+    n = len(m)
+    if n < 2:
+        raise ValueError("one unit has no spread: plot the point itself, and make no claim about a difference")
+    if n < 10:
+        half = _t_crit(n - 1, level) * m.std(ddof=1) / math.sqrt(n)
+        return m.mean() - half, m.mean() + half, "t-interval"
+    rng = np.random.default_rng(seed)
+    boots, step = [], max(1, 2_000_000 // n)
+    for start in range(0, n_boot, step):
+        idx = rng.integers(0, n, size=(min(step, n_boot - start), n))
+        boots.append(m[idx].mean(axis=1))
+    lo, hi = np.quantile(np.concatenate(boots), [(1 - level) / 2, (1 + level) / 2])
+    return lo, hi, "bootstrap interval"
+
+
+def interval(values, groups=None, unit="units", level=0.95, n_boot=10_000, seed=0):
+    """The mean with an interval that resamples the unit that was sampled independently.
+
+    values holds one number per row. If several rows come from one unit (many questions about each fine-tune, many
+    prompts per seed), pass groups, the unit of each row: each unit is reduced to its mean first, and units, not
+    rows, are resampled. Resampling rows that share a unit gives an interval that is far too narrow. unit names the
+    units in the plural, for the caption. Below 10 units the interval is Student's t; draw every unit as well.
+    """
+    _ids, m = _unit_means(values, groups)
+    lo, hi, method = _mean_interval(m, level, n_boot, seed)
+    return Estimate(m.mean(), lo, hi, len(m), unit, level, method, "mean", m)
+
+
+def proportion(k, n, unit="items", level=0.95):
+    """A proportion k of n independent items with its Wilson interval."""
+    if not 0 <= k <= n or n < 1:
+        raise ValueError(f"k={k}, n={n}: need 0 <= k <= n and n >= 1")
+    z = statistics.NormalDist().inv_cdf((1 + level) / 2)
+    ph = k / n
+    mid = (ph + z * z / (2 * n)) / (1 + z * z / n)
+    half = z * math.sqrt(ph * (1 - ph) / n + z * z / (4 * n * n)) / (1 + z * z / n)
+    return Estimate(ph, max(0.0, mid - half), min(1.0, mid + half), n, unit, level, "Wilson interval", "proportion")
+
+
+def difference(a, b, *, paired, groups=None, groups_b=None, unit="units", level=0.95, n_boot=10_000, seed=0):
+    """The mean of a minus the mean of b, with its interval. paired has no default: decide it.
+
+    paired=True when the two conditions were measured on the same units (the same models, seeds or prompts): a and
+    b are aligned row by row, the interval is of each unit's difference, and noise shared by a unit cancels. With
+    groups (the unit of each row, the same for a and b), rows are first averaged within each unit.
+    paired=False when the units differ: each side is resampled on its own (groups for a, groups_b for b).
+    """
+    if paired:
+        a_, b_ = np.asarray(a, dtype=float).ravel(), np.asarray(b, dtype=float).ravel()
+        if len(a_) != len(b_):
+            raise ValueError(f"paired=True needs a and b aligned row by row, got {len(a_)} and {len(b_)} rows")
+        _ids, d = _unit_means(a_ - b_, groups)
+        lo, hi, method = _mean_interval(d, level, n_boot, seed)
+        return Estimate(d.mean(), lo, hi, len(d), unit, level, method, "paired difference", d)
+    _, ma = _unit_means(a, groups)
+    _, mb = _unit_means(b, groups_b)
+    value = ma.mean() - mb.mean()
+    if min(len(ma), len(mb)) < 2:
+        raise ValueError("one unit on a side has no spread: plot the points, and make no claim about a difference")
+    if min(len(ma), len(mb)) < 10:  # Welch's t-interval
+        va, vb = ma.var(ddof=1) / len(ma), mb.var(ddof=1) / len(mb)
+        se = math.sqrt(va + vb)
+        df = (va + vb) ** 2 / (va ** 2 / (len(ma) - 1) + vb ** 2 / (len(mb) - 1)) if se > 0 else 1.0
+        half = _t_crit(df, level) * se
+        lo, hi, method = value - half, value + half, "Welch t-interval"
+    else:
+        rng = np.random.default_rng(seed)
+        boots = (ma[rng.integers(0, len(ma), size=(n_boot, len(ma)))].mean(axis=1)
+                 - mb[rng.integers(0, len(mb), size=(n_boot, len(mb)))].mean(axis=1))
+        lo, hi = np.quantile(boots, [(1 - level) / 2, (1 + level) / 2])
+        method = "bootstrap interval"
+    return Estimate(value, lo, hi, (len(ma), len(mb)), unit, level, method, "difference")
+
+
+def _register(ax, est):
+    fig = ax.figure
+    fig._figkit_estimates = getattr(fig, "_figkit_estimates", []) + [est]
+    return est
+
+
+def intervals(ax, positions, estimates, horizontal=False, color=MUTED):
+    """Draw each estimate's interval as a line at its position: on a bar, or through a dot.
+
+    Use it in place of a plotting library's default error bars when rows share a unit, since those resample rows:
+    fk.intervals(ax, x, [fk.interval(df.score[df.model == m], groups=df.finetune[df.model == m]) for m in models]).
+    """
+    lw = 1.6 * mpl.rcParams["lines.linewidth"] / 2.2
+    los, his = [e.lo for e in estimates], [e.hi for e in estimates]
+    for e in estimates:
+        _register(ax, e)
+    if horizontal:
+        return ax.hlines(positions, los, his, color=color, linewidth=lw, zorder=4)
+    return ax.vlines(positions, los, his, color=color, linewidth=lw, zorder=4)
+
+
+def paired(ax, a, b, names=("A", "B"), unit="units", color=None, **interval_kw):
+    """Two conditions measured on the same units: each unit's two values joined by a thin grey line, and the two
+    means joined in the accent colour. Returns the Estimate of the paired difference (a minus b), for the title's
+    claims and the caption. A reader sees at once whether the units move the same way."""
+    a_, b_ = np.asarray(a, dtype=float).ravel(), np.asarray(b, dtype=float).ravel()
+    est = difference(a_, b_, paired=True, unit=unit, **interval_kw)
+    k = mpl.rcParams["lines.linewidth"] / 2.2
+    alpha = float(np.clip(12 / max(len(a_), 1), 0.15, 0.9))
+    ax.plot([0, 1], np.vstack([a_, b_]), color=GREY, linewidth=0.9 * k, alpha=alpha, zorder=2)
+    ax.plot([0, 1], [a_.mean(), b_.mean()], color=color or ACCENT, marker="o", zorder=4)
+    ax.set_xticks([0, 1], names)
+    ax.set_xlim(-0.35, 1.35)
+    ax.grid(False, axis="x")
+    return _register(ax, est)
+
+
+def differences(ax, est, at=0, horizontal=True, color=None, height=0.5, seed=0):
+    """A paired difference drawn against zero: each unit's difference as a small grey dot, the mean as a dot in the
+    accent colour with its interval as a line, and a thin line at zero. est comes from fk.difference(...,
+    paired=True); at is the row (or column) it is drawn in, so several comparisons can share one axis. An interval
+    that crosses the zero line is a difference the figure does not establish."""
+    if est.units is None:
+        raise ValueError("fk.differences draws each unit's difference: pass an Estimate from fk.difference(..., "
+                         "paired=True)")
+    k = mpl.rcParams["lines.linewidth"] / 2.2
+    jitter = at + np.random.default_rng(seed).uniform(-height / 2, height / 2, len(est.units))
+    zero = dict(color=MUTED, linewidth=0.9 * k, zorder=1)
+    if horizontal:
+        ax.scatter(est.units, jitter, s=14 * k, color=GREY, alpha=0.7, linewidths=0, zorder=2)
+        ax.hlines(at, est.lo, est.hi, color=color or ACCENT, linewidth=2.4 * k, zorder=4)
+        ax.plot([est.value], [at], "o", color=color or ACCENT, zorder=5)
+        if not getattr(ax, "_figkit_zero", False):
+            ax.axvline(0, **zero)
+    else:
+        ax.scatter(jitter, est.units, s=14 * k, color=GREY, alpha=0.7, linewidths=0, zorder=2)
+        ax.vlines(at, est.lo, est.hi, color=color or ACCENT, linewidth=2.4 * k, zorder=4)
+        ax.plot([at], [est.value], "o", color=color or ACCENT, zorder=5)
+        if not getattr(ax, "_figkit_zero", False):
+            ax.axhline(0, **zero)
+    ax._figkit_zero = True
+    return _register(ax, est)
 
 
 def plain_ticks(axis):
@@ -588,11 +798,61 @@ def _order_problem(ax):
             "steps); fk.save(..., order=False) keeps it without this warning")
 
 
+COMPARES = re.compile(
+    r"\b(rais\w+|lower\w*|higher|highest|lowest|more|most|less|least|fewer|beat\w*|outperform\w*|improv\w+|increas\w+|"
+    r"decreas\w+|reduc\w+|fell|falls?|rose|rises?|drop\w*|gain\w*|better|best|worse|worst|exceed\w*|faster|slower|"
+    r"doubl\w+|halv\w+|tripl\w+|than|times as)\b|\bfrom\s+\S*\d\S*\s+to\s+\S*\d", re.IGNORECASE)
+NO_DIFFERENCE = re.compile(r"\b(did not|didn't|does not|doesn't|not clearly|no clear|no difference|about the same|"
+                           r"as well as|as much as|matched?)\b", re.IGNORECASE)
+
+
+def _draws_spread(fig, axes):
+    """Whether the image shows uncertainty or individual data: intervals, bands, every seed or unit as a mark."""
+    if getattr(fig, "_figkit_estimates", None):
+        return True
+    for a in axes:
+        if any(isinstance(c, ErrorbarContainer) for c in a.containers):
+            return True
+        for coll in a.collections:
+            if isinstance(coll, (LineCollection, PolyCollection)) and not isinstance(coll, QuadMesh):
+                return True  # interval lines, ticks for random draws, bands
+            if isinstance(coll, PathCollection) and len(coll.get_offsets()) >= 3:
+                return True  # individual points
+        for l in a.get_lines():  # unnamed lines in data coordinates: error bars, a faint line per seed, seed dots
+            if l.get_label().startswith("_") and l.get_transform().contains_branch(a.transData) and len(l.get_xdata()):
+                return True
+    return False
+
+
+def _spread_problems(fig, axes, titles):
+    out = []
+    for est in getattr(fig, "_figkit_claims", []):
+        if "difference" in est.kind and not est.clear:
+            n = est.n if isinstance(est.n, int) else " and ".join(str(x) for x in est.n)
+            out.append(f"the title states a difference, but the {est.level:.0%} interval of that difference "
+                       f"({est.lo:.3g} to {est.hi:.3g}, over {n} {est.unit}) includes 0: the title says the two did "
+                       "not clearly differ, and the drawn interval shows how wide the uncertainty is")
+    text = " ".join(t.get_text() for t in titles)
+    if getattr(fig, "_figkit_claims", None) or not COMPARES.search(text) or NO_DIFFERENCE.search(text):
+        return out
+    if any(a.images or any(isinstance(c, QuadMesh) for c in a.collections) for a in axes):
+        return out  # a heatmap shows a grid of values, not a comparison with a spread
+    named = {_key(m[0]) for a in axes for m in _marks(a)}
+    if len(named) >= 2 and not _draws_spread(fig, axes):
+        out.append("the title compares conditions, but the image draws no spread: draw every seed or unit as a dot "
+                   "(few), or an interval over the unit that was sampled independently (fk.intervals, fk.paired, "
+                   "fk.differences), so the image shows how sure the difference is. With one run per condition "
+                   "there is nothing to draw: plot the two values as points, title the figure with what that run "
+                   "measured, and pass spread=False")
+    return out
+
+
 def check(fig, words=25, min_pt=None, max_series=5, max_panels=4, title_words=12, panel_title_words=6, order=True,
-          size=None):
-    """Return a list of problems: too much text, a title that doesn't state one finding plainly, boxed text, legends
-    that could be direct labels, crowded panels, small text for where the figure goes, overlapping or clipped
-    text, colours that break the roles or look alike to colour-blind readers, and bars out of order."""
+          size=None, spread=True):
+    """Return a list of problems: too much text, a title that doesn't state one finding plainly, a title that states
+    a difference the drawn uncertainty doesn't support, boxed text, legends that could be direct labels, crowded
+    panels, small text for where the figure goes, overlapping or clipped text, colours that break the roles or look
+    alike to colour-blind readers, and bars out of order."""
     size = size or _size
     s = SIZES[size]
     min_pt = s["min_pt"] if min_pt is None else min_pt
@@ -706,24 +966,29 @@ def check(fig, words=25, min_pt=None, max_series=5, max_panels=4, title_words=12
             p = _order_problem(a)
             if p:
                 out.append(p)
+    if spread:
+        out += _spread_problems(fig, axes, titles)
     counts = {}
     for m in out:  # one line per kind of problem
         counts[m] = counts.get(m, 0) + 1
     return [m if n == 1 else f"{m} (x{n})" for m, n in counts.items()]
 
 
-def save(fig, path, mock=False, **check_kw):
+def save(fig, path, mock=False, sample=None, **check_kw):
     """Check the figure, print what to fix, and save it. The extension sets the format; PNG at 200 dpi on screens
     and slides, 300 dpi for print sizes.
 
     mock=True writes "Fake data" in the top right corner, for a figure drawn before the real results exist.
+    sample="30 of 1,370 files" writes "Random sample: 30 of 1,370 files" there, for a figure drawn from a random
+    subsample of the data; draw the subsample with a seeded generator.
     """
-    if mock:  # on the title's line, at the right; without a title, a strip is kept for it
+    stamp = "Fake data" if mock else f"Random sample: {sample}" if sample else None
+    if stamp:  # on the title's line, at the right; without a title, a strip is kept for it
         fs = SIZES[_size]["ticks"]
         eng = fig.get_layout_engine()
         if getattr(fig, "_suptitle", None) is None and eng is not None and "rect" in eng.get():
             eng.set(rect=(0, 0, 1, 1 - fs * 1.8 / 72 / fig.get_size_inches()[1]))
-        fig.text(0.995, 0.995, "Fake data", ha="right", va="top", color=MUTED, style="italic", fontsize=fs,
+        fig.text(0.995, 0.995, stamp, ha="right", va="top", color=MUTED, style="italic", fontsize=fs,
                  gid=MOCK_GID)
     problems = check(fig, **check_kw)
     path = Path(path)
@@ -758,5 +1023,12 @@ if __name__ == "__main__":  # self-check: a cluttered figure fails, a clean one 
     label_lines(ax)
     ax.set(xlabel="Layer", ylabel="Probe error")
     title(fig, "The probe's error falls faster than the baseline's")
+    assert any("draws no spread" in p for p in check(fig)), check(fig)  # two bare lines can't carry a comparison
+    for power, c in ((-0.9, ACCENT), (-0.4, GREY)):  # a band for the interval over seeds
+        ax.fill_between(x, 0.9 * x ** power, 1.1 * x ** power, color=c, alpha=0.2, linewidth=0)
     assert check(fig) == [], check(fig)
+    rng = np.random.default_rng(0)
+    base = rng.normal(60, 12, 20)
+    assert difference(base + 2 + rng.normal(0, 1, 20), base, paired=True).clear
+    assert not difference(base + 2 + rng.normal(0, 1, 20), base, paired=False).clear
     print("figkit self-check ok;", len(bad), "problems found in the cluttered figure")

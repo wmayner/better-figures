@@ -18,6 +18,7 @@ The plugin has three skills and a workflow.
 - put in the image only what the eye needs: the title, axis labels, series names next to the data, and values at the ends of bars, with definitions, statistics and how things were measured in the caption;
 - write each caption as the takeaway in bold, then the key numbers, then what a reader needs to interpret the figure;
 - draw with a matplotlib house style (`figkit.py`) that labels lines, bars and values directly, sizes figures for screens, slides, posts on X or Slack, and print, and colours each condition by its role in a `figure-roles.json` that a set of figures shares. It runs a check on save, which prints what to fix: too many words, a title that runs long or doesn't state one finding plainly, a legend that could be direct labels, small, overlapping or clipped text, a condition drawn in the wrong colour, colours that look alike to colour-blind readers, and bars out of order;
+- draw uncertainty in the image and tie the title to it: `fk.interval` and `fk.difference` compute an interval over the unit that was sampled independently (a bootstrap over units, Student's t below 10 units), `fk.intervals`, `fk.paired` and `fk.differences` draw it, and the check refuses a title that compares conditions when the image draws no spread, or that states a difference whose interval includes zero;
 - start from a worked example of each kind of figure, grouped by the question it answers, from bars with every seed to ROC curves, heatmaps of attention heads and token scores;
 - mark a figure drawn from fake data as fake, in the image;
 - draw figures for web pages in HTML and SVG, with exact values in a tooltip, and render a PNG from the same file for slides;
@@ -69,6 +70,7 @@ Either way, Claude loads the skill when you ask for a figure. You can also call 
 |  | `bars_with_seeds.py` | bar plot with every seed as a dot: test accuracy on modular addition with weight decay, with dropout and with neither |
 | How do several methods rank, and how sure are we? | `dot_intervals.py` | dot plot with intervals: how closely five attribution methods rank attention heads the way ablation does, on three models |
 |  | `interactive_dots.html` | HTML figure with a tooltip: how closely four attribution methods rank heads the way ablation does |
+| Do two conditions differ, when both were measured on the same units? | `paired_differences.py` | paired differences: how much more often an activation probe and sparse autoencoder features detect a hidden objective than a black-box baseline, on the same 20 fine-tuned models |
 | How does a measure change over training, or across layers? | `curves_with_seeds.py` | line plot with every seed: test accuracy on modular addition over training, with and without weight decay |
 |  | `line_direct_labels.py` | line plot with names at the line ends: probe accuracy by layer, against two controls |
 | How does an effect grow with a dose? | `steering_strength.py` | lines in the ordered ramp: how often steered completions mention a concept as the steering coefficient grows, for four model sizes |
